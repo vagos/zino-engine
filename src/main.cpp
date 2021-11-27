@@ -97,17 +97,21 @@ struct Skybox : public zge::ModeledObject
 
     void doRender(zge::Engine &eng) override
     {
+        glDepthMask(GL_FALSE);
+
         shader_file->doUse();
         model_file->doUse();
         s_cubemap.doUse();
 
         zge::Matrix4x4 mvp = eng.camera.getProjection() * zge::Matrix4x4(zge::Matrix3x3(eng.camera.getView())) * model_matrix;
-        // zge::Matrix4x4 mvp = eng.camera.getProjection() * eng.camera.getView() * model_matrix;
+
         shader_file->sendUniform("mvp", mvp);
 
         shader_file->sendUniform("skybox", s_cubemap.getTextureUnit());
 
         glDrawArrays(GL_TRIANGLES, 0, model_file->vertices.size());
+
+        glDepthMask(GL_TRUE);
     }
 
 };
