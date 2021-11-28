@@ -40,7 +40,7 @@ namespace zge
             std::shared_ptr<Model> model_file = nullptr;
             std::shared_ptr<Shader> shader_file = nullptr;
 
-            void setModelMatrix(Matrix4x4 mat) {model_matrix = mat;}
+            void setModelMatrix(Matrix4x4 mat) {model_matrix = mat; position = model_matrix * Vector4(position, 1.0);}
             Matrix4x4& getModelMatrix() {return model_matrix;}
 
             void setModelFile(std::shared_ptr<Model>& model) {model_file = model;}
@@ -57,6 +57,7 @@ namespace zge
 
             Plane(float w, float h);
     };
+
 };
 
 #endif /* OBJECT_HPP */

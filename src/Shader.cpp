@@ -93,7 +93,7 @@ namespace zge
         uniform_locations[u_n] = glGetUniformLocation(program_id, u_n.c_str());
     }
 
-    void Shader::sendUniform(std::string u_n, Matrix4x4 &matrix)
+    void Shader::sendUniform(std::string u_n, const Matrix4x4 &matrix)
     {
        glUniformMatrix4fv(uniform_locations[u_n], 1, GL_FALSE, &matrix[0][0]);
     }
@@ -101,6 +101,11 @@ namespace zge
     void Shader::sendUniform(std::string u_n, int n)
     {
         glUniform1i(uniform_locations[u_n], n);
+    }
+
+    void Shader::sendUniform(std::string u_n, const Vector3& vec)
+    {
+        glUniform3f(uniform_locations[u_n], vec.x, vec.y, vec.z);
     }
 
 }

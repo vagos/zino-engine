@@ -1,8 +1,12 @@
 ## TODO
 - [X] Load textures
 - [X] Fix skybox
+- [X] Add (bascic) lighting 
 - [ ] Fix Plane rendering
-- [ ] Add lighting
+- [ ] Look at simple collisions
+- [ ] Look at simple animations
+- [ ] Generate terrain
+- [ ] Fix model/mesh abstractions
 
 
 ## EXTRA

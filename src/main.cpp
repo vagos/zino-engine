@@ -1,7 +1,13 @@
 #include "Engine.hpp"
+#include "Common.hpp"
 #include "Object.hpp"
 #include "Texture.hpp"
-#include "Common.hpp"
+#include "Skybox.hpp"
+#include "Lighting.hpp"
+#include <glm/ext/matrix_transform.hpp>
+#include <glm/gtx/string_cast.hpp>
+
+std::shared_ptr<zge::LightSource> main_light = nullptr;
 
 struct Suzanne : public zge::ModeledObject
 {
@@ -14,7 +20,6 @@ struct Suzanne : public zge::ModeledObject
 
     void doRender(zge::Engine &eng) override
     {
-
         shader_file->doUse();
         model_file->doUse();
         texture.doUse();
@@ -23,106 +28,23 @@ struct Suzanne : public zge::ModeledObject
 
         shader_file->sendUniform("mvp", mvp);
         shader_file->sendUniform("texture_sampler", texture.getTextureUnit());
+        shader_file->sendUniform("light_position", main_light->position);
+        shader_file->sendUniform("view_position", eng.camera.position);
 
         glDrawArrays(GL_TRIANGLES, 0, model_file->vertices.size());
-    }
-
-};
-
-struct Skybox : public zge::ModeledObject
-{
-    zge::Cubemap s_cubemap;
-
-    Skybox(): s_cubemap({"./assets/textures/skybox/right.bmp",
-                "./assets/textures/skybox/left.bmp",
-                "./assets/textures/skybox/top.bmp",
-                "./assets/textures/skybox/bottom.bmp",
-                "./assets/textures/skybox/front.bmp",
-                "./assets/textures/skybox/back.bmp",
-                })
-    {
-        auto s_shader = std::make_shared<zge::Shader>("./assets/shaders/skybox.vert", "./assets/shaders/skybox.frag");
-        s_shader->createUniform("skybox");
-        s_shader->createUniform("mvp");
-        setShaderFile(s_shader);
-
-        auto cubeModel = std::make_shared<zge::Model>();
-        std::vector<zge::Vector3> skyboxVertices{
-            // positions          
-            zge::Vector3(-1.0f,  1.0f, -1.0f),
-            zge::Vector3(-1.0f, -1.0f, -1.0f),
-            zge::Vector3( 1.0f, -1.0f, -1.0f),
-            zge::Vector3( 1.0f, -1.0f, -1.0f),
-            zge::Vector3( 1.0f,  1.0f, -1.0f),
-            zge::Vector3(-1.0f,  1.0f, -1.0f),
-
-            zge::Vector3(-1.0f, -1.0f,  1.0f),
-            zge::Vector3(-1.0f, -1.0f, -1.0f),
-            zge::Vector3(-1.0f,  1.0f, -1.0f),
-            zge::Vector3(-1.0f,  1.0f, -1.0f),
-            zge::Vector3(-1.0f,  1.0f,  1.0f),
-            zge::Vector3(-1.0f, -1.0f,  1.0f),
-
-            zge::Vector3( 1.0f, -1.0f, -1.0f),
-            zge::Vector3( 1.0f, -1.0f,  1.0f),
-            zge::Vector3( 1.0f,  1.0f,  1.0f),
-            zge::Vector3( 1.0f,  1.0f,  1.0f),
-            zge::Vector3( 1.0f,  1.0f, -1.0f),
-            zge::Vector3( 1.0f, -1.0f, -1.0f),
-
-            zge::Vector3(-1.0f, -1.0f,  1.0f),
-            zge::Vector3(-1.0f,  1.0f,  1.0f),
-            zge::Vector3( 1.0f,  1.0f,  1.0f),
-            zge::Vector3( 1.0f,  1.0f,  1.0f),
-            zge::Vector3( 1.0f, -1.0f,  1.0f),
-            zge::Vector3(-1.0f, -1.0f,  1.0f),
-
-            zge::Vector3(-1.0f,  1.0f, -1.0f),
-            zge::Vector3( 1.0f,  1.0f, -1.0f),
-            zge::Vector3( 1.0f,  1.0f,  1.0f),
-            zge::Vector3( 1.0f,  1.0f,  1.0f),
-            zge::Vector3(-1.0f,  1.0f,  1.0f),
-            zge::Vector3(-1.0f,  1.0f, -1.0f),
-
-            zge::Vector3(-1.0f, -1.0f, -1.0f),
-            zge::Vector3(-1.0f, -1.0f,  1.0f),
-            zge::Vector3( 1.0f, -1.0f, -1.0f),
-            zge::Vector3( 1.0f, -1.0f, -1.0f),
-            zge::Vector3(-1.0f, -1.0f,  1.0f),
-            zge::Vector3( 1.0f, -1.0f,  1.0f)
-        };
-        cubeModel->setVertices(skyboxVertices);
-        setModelFile(cubeModel);
-    }
-
-    void doRender(zge::Engine &eng) override
-    {
-        glDepthMask(GL_FALSE);
-
-        shader_file->doUse();
-        model_file->doUse();
-        s_cubemap.doUse();
-
-        zge::Matrix4x4 mvp = eng.camera.getProjection() * zge::Matrix4x4(zge::Matrix3x3(eng.camera.getView())) * model_matrix;
-
-        shader_file->sendUniform("mvp", mvp);
-
-        shader_file->sendUniform("skybox", s_cubemap.getTextureUnit());
-
-        glDrawArrays(GL_TRIANGLES, 0, model_file->vertices.size());
-
-        glDepthMask(GL_TRUE);
     }
 
 };
 
 class PokemonEngine : public zge::Engine
 {
+
     void onCreate() override
     {
-        auto heart_model = std::make_shared<zge::Model>("./assets/objs/suzanne.obj");
-        auto basic_shader = std::make_shared<zge::Shader>("./assets/shaders/basic.vert", "./assets/shaders/basic.frag");
-        auto basic_shader_b = std::make_shared<zge::Shader>("./assets/shaders/basic.vert", "./assets/shaders/basic_b.frag");
+        auto cube_model = std::make_shared<zge::Model>("./assets/objs/cube.obj");
+        auto suzanne_model = std::make_shared<zge::Model>("./assets/objs/suzanne.obj");
+        auto basic_shader = std::make_shared<zge::Shader>("./assets/shaders/basic.vert", "./assets/shaders/basic.frag"); // testing ligthing
+        auto lighting_shader = std::make_shared<zge::Shader>("./assets/shaders/basic.vert", "./assets/shaders/lighting.frag"); 
 
         auto texture_shader = std::make_shared<zge::Shader>("./assets/shaders/texture_shader.vert", "./assets/shaders/texture_shader.frag");
 
@@ -132,7 +54,7 @@ class PokemonEngine : public zge::Engine
 
         for (int i = 0; i < 10; i++)
         {
-            auto myObj = std::make_shared<zge::ModeledObject>(heart_model);
+            auto myObj = std::make_shared<zge::ModeledObject>(cube_model);
             myObj->setShaderFile(basic_shader);
         
             myObj->setModelMatrix(glm::translate(myObj->getModelMatrix(), 
@@ -142,29 +64,39 @@ class PokemonEngine : public zge::Engine
                             getRandomInt(-10, 10)
                             )));
         
-            addObject(myObj);
+            // addObject(myObj);
         }
 
-        auto plane_object = std::make_shared<zge::Plane>(2, 2);
-        plane_object->setShaderFile(basic_shader_b);
-        
-        plane_object->setModelMatrix(glm::translate(plane_object->getModelMatrix(),
-                    zge::Vector3(0, 0, 0)));
-
+        // auto plane_object = std::make_shared<zge::Plane>(2, 2);
+        // plane_object->setShaderFile(basic_shader_b);
+        // plane_object->setModelMatrix(glm::translate(plane_object->getModelMatrix(),
+        //            zge::Vector3(0, 0, 0)));
         // addObject(plane_object);
 
-        auto suzanneObject = std::make_shared<Suzanne>();
-        suzanneObject->setShaderFile(texture_shader);
-        suzanneObject->setModelFile(heart_model);
-        addObject(suzanneObject);
+        main_light = std::make_shared<zge::LightSource>();
+        main_light->setShaderFile(lighting_shader);
+        main_light->setModelFile(cube_model);
+        addObject(main_light);
+
+        auto other_cube = std::make_shared<Suzanne>();
+        other_cube->setShaderFile(texture_shader);
+        other_cube->setModelFile(suzanne_model);
+        // other_cube->setModelMatrix(glm::translate(other_cube->getModelMatrix(), zge::Vector3(0, 0, 10)));
+        addObject(other_cube);
 
         basic_shader->createUniform("mvp");
         texture_shader->createUniform("texture_sampler");
+        texture_shader->createUniform("light_position");
+        texture_shader->createUniform("view_position");
     }
 
     void doUpdate() override
     {
-
+        if (isKeyPressed(Key(J)))
+        {
+            main_light->setModelMatrix(glm::translate(zge::Matrix4x4(1), camera.position));
+            // std::clog << glm::to_string(main_light->position) << '\n';
+        }
     }
 
     void doRender() override

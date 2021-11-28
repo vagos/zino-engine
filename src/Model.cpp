@@ -100,17 +100,27 @@ void Model::createContext()
         glEnableVertexAttribArray(0);
     }
 
+    if (normals.size())
+    {
+        glGenBuffers(1, &model_normals_vbo);
+        glBindBuffer(GL_ARRAY_BUFFER, model_normals_vbo);
+        glBufferData(GL_ARRAY_BUFFER, normals.size() * sizeof(normals[0]),
+                     &normals[0], GL_STATIC_DRAW);
+        glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, NULL);
+        glEnableVertexAttribArray(1);
+    }
+
     if (uvs.size())
     {
         glGenBuffers(1, &model_uvs_vbo);
         glBindBuffer(GL_ARRAY_BUFFER, model_uvs_vbo);
         glBufferData(GL_ARRAY_BUFFER, uvs.size() * sizeof(Vector2),
             &uvs[0], GL_STATIC_DRAW);
-        glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 0, NULL);
-        glEnableVertexAttribArray(1);
+        glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 0, NULL);
+        glEnableVertexAttribArray(2);
     }
 
-    std::clog << vertices.size() << ' ' << uvs.size() << '\n';
+    std::clog << vertices.size() << ' ' << uvs.size() << ' ' << normals.size() << '\n';
 }
 
 

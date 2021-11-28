@@ -39,6 +39,7 @@ namespace zge
         void doExit() { running = false; }
 
         float getElapsedTime() { return elapsed_time; }
+        float getTime() { return glfwGetTime(); }
 
         Vector2 getWindowSize();
         Vector2 getCursorPosition();

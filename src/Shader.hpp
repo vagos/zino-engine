@@ -17,7 +17,8 @@ class Shader
         void doUse() { glUseProgram(program_id); }
         void createUniform(std::string u_n);
 
-        void sendUniform(const std::string u_n, Matrix4x4& matrix);
+        void sendUniform(const std::string u_n, const Matrix4x4& matrix);
+        void sendUniform(const std::string u_n, const Vector3& vec);
         void sendUniform(const std::string u_n, float f);
         void sendUniform(const std::string u_n, int n);
 
