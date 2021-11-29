@@ -17,17 +17,17 @@ namespace zge
 
 std::vector<std::shared_ptr<Object>>  Object::objects;
 
-Object::Object(): exists(true)
+Object::Object(): exists(true), model_matrix(Matrix4x4(1))
 {
 }
 
 
-ModeledObject::ModeledObject(std::shared_ptr<Model>& model): model_file(model), model_matrix(Matrix4x4(1))
+ModeledObject::ModeledObject(std::shared_ptr<Model>& model): model_file(model)
 {
 
 }
 
-ModeledObject::ModeledObject() :model_matrix(Matrix4x4(1))
+ModeledObject::ModeledObject()
 {
 }
 

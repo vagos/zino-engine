@@ -11,18 +11,18 @@ static void compileShader(GLuint& shaderID, std::string file) {
 
     if (shaderStream.is_open()) 
     {
-        std::string Line = "";
+        std::string line = "";
         
-        while (getline(shaderStream, Line)) 
+        while (getline(shaderStream, line)) 
         {
-            shaderCode += "\n" + Line;
+            shaderCode += "\n" + line;
         }
 
         shaderStream.close();
     } 
     else 
     {
-        throw std::runtime_error("Can't open shader file");
+        throw std::runtime_error(std::string("Can't open shader file: ") + file);
     }
 
     GLint result = GL_FALSE;
@@ -88,24 +88,24 @@ namespace zge
         program_id = programID;
     }
 
-    void Shader::createUniform(std::string u_n)
-    {
-        uniform_locations[u_n] = glGetUniformLocation(program_id, u_n.c_str());
-    }
+    // void Shader::createUniform(std::string u_n)
+    // {
+    //     uniform_locations[u_n] = glGetUniformLocation(program_id, u_n.c_str());
+    // }
 
     void Shader::sendUniform(std::string u_n, const Matrix4x4 &matrix)
     {
-       glUniformMatrix4fv(uniform_locations[u_n], 1, GL_FALSE, &matrix[0][0]);
+       glUniformMatrix4fv(glGetUniformLocation(program_id, u_n.c_str()), 1, GL_FALSE, &matrix[0][0]);
     }
 
     void Shader::sendUniform(std::string u_n, int n)
     {
-        glUniform1i(uniform_locations[u_n], n);
+        glUniform1i(glGetUniformLocation(program_id, u_n.c_str()), n);
     }
 
     void Shader::sendUniform(std::string u_n, const Vector3& vec)
     {
-        glUniform3f(uniform_locations[u_n], vec.x, vec.y, vec.z);
+        glUniform3f(glGetUniformLocation(program_id, u_n.c_str()), vec.x, vec.y, vec.z);
     }
 
 }

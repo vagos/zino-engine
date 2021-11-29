@@ -28,8 +28,8 @@ struct Suzanne : public zge::ModeledObject
 
         shader_file->sendUniform("mvp", mvp);
         shader_file->sendUniform("texture_sampler", texture.getTextureUnit());
-        shader_file->sendUniform("light_position", main_light->position);
-        shader_file->sendUniform("view_position", eng.camera.position);
+        shader_file->sendUniform("light_position", main_light->getPosition());
+        shader_file->sendUniform("view_position", eng.camera.getPosition());
 
         glDrawArrays(GL_TRIANGLES, 0, model_file->vertices.size());
     }
@@ -67,10 +67,9 @@ class PokemonEngine : public zge::Engine
             // addObject(myObj);
         }
 
-        // auto plane_object = std::make_shared<zge::Plane>(2, 2);
-        // plane_object->setShaderFile(basic_shader_b);
-        // plane_object->setModelMatrix(glm::translate(plane_object->getModelMatrix(),
-        //            zge::Vector3(0, 0, 0)));
+        auto plane_object = std::make_shared<zge::Plane>(2, 2);
+        plane_object->setShaderFile(basic_shader);
+        plane_object->setModelMatrix(glm::translate(plane_object->getModelMatrix(), zge::Vector3(0, 0, 0)));
         // addObject(plane_object);
 
         main_light = std::make_shared<zge::LightSource>();
@@ -83,18 +82,14 @@ class PokemonEngine : public zge::Engine
         other_cube->setModelFile(suzanne_model);
         // other_cube->setModelMatrix(glm::translate(other_cube->getModelMatrix(), zge::Vector3(0, 0, 10)));
         addObject(other_cube);
-
-        basic_shader->createUniform("mvp");
-        texture_shader->createUniform("texture_sampler");
-        texture_shader->createUniform("light_position");
-        texture_shader->createUniform("view_position");
     }
+
 
     void doUpdate() override
     {
         if (isKeyPressed(Key(J)))
         {
-            main_light->setModelMatrix(glm::translate(zge::Matrix4x4(1), camera.position));
+            main_light->setModelMatrix(glm::translate(zge::Matrix4x4(1), camera.getPosition()));
             // std::clog << glm::to_string(main_light->position) << '\n';
         }
     }

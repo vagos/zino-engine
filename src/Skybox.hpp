@@ -19,8 +19,6 @@ struct Skybox : public zge::ModeledObject // TODO Turn this into proper class.
                 })
     {
         auto s_shader = std::make_shared<zge::Shader>("./assets/shaders/skybox.vert", "./assets/shaders/skybox.frag");
-        s_shader->createUniform("skybox");
-        s_shader->createUniform("mvp");
         setShaderFile(s_shader);
 
         auto cubeModel = std::make_shared<zge::Model>();
@@ -81,7 +79,6 @@ struct Skybox : public zge::ModeledObject // TODO Turn this into proper class.
         s_cubemap.doUse();
 
         zge::Matrix4x4 mvp = eng.camera.getProjection() * zge::Matrix4x4(zge::Matrix3x3(eng.camera.getView())) * model_matrix;
-
         shader_file->sendUniform("mvp", mvp);
 
         shader_file->sendUniform("skybox", s_cubemap.getTextureUnit());

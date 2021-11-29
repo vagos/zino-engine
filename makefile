@@ -1,4 +1,4 @@
-MY_FLAGS  = -ggdb -I./include -lglfw -lGL -lGLEW -lGLU -lX11 -lpthread -lXrandr -lXi -ldl
+MY_FLAGS  = -I./include -lglfw -lGL -lGLEW -lGLU -lX11 -lpthread -lXrandr -lXi -ldl
 
 TARGET_EXEC ?= main
 
