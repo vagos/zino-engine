@@ -8,21 +8,24 @@ namespace zge
 {
 
 
-class LightSource : public ModeledObject
+class LightSource : public Object
 {
-    public:
+public:
 
     LightSource()
     {
-        model_matrix = glm::translate(model_matrix, Vector3(1.2f, 1.0f, 2.0f)); 
-        model_matrix = glm::scale(model_matrix, Vector3(0.2f));
-        setModelMatrix(model_matrix);
+        ambient =  zge::Vector3(0.2f, 0.2f, 0.2f);
+        diffuse = zge::Vector3(0.5f, 0.5f, 0.5f); 
+        specular = zge::Vector3(1.0f, 1.0f, 1.0f); 
     }
 
-    private:
-        
+    zge::Vector3 position;
+         
     zge::Vector3 color;
 
+    zge::Vector3 ambient;
+    zge::Vector3 diffuse;
+    zge::Vector3 specular;
 };
 
 };

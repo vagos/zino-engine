@@ -108,4 +108,9 @@ namespace zge
         glUniform3f(glGetUniformLocation(program_id, u_n.c_str()), vec.x, vec.y, vec.z);
     }
 
+    void Shader::sendUniform(const std::string u_n, float f)
+    {
+        glUniform1f(glGetUniformLocation(program_id, u_n.c_str()), f);
+    }
+
 }

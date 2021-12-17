@@ -13,6 +13,7 @@ static std::vector<unsigned int> VEC_UINT_DEFAUTL_VALUE{}; // What the honk is t
 Model::Model(std::string m_path)
 {
     doLoad(m_path);
+    debug_name = m_path;
 }
 
 Model::Model()
@@ -21,7 +22,7 @@ Model::Model()
 
 Model::~Model()
 {
-    std::clog << "Got destroyed!\n";
+    std::clog << "Got destroyed! " << "Name: " << debug_name << '\n';
     glDeleteBuffers(1, &model_vertices_vbo);
     glDeleteBuffers(1, &model_uvs_vbo);
     glDeleteVertexArrays(1, &model_vao);
@@ -29,6 +30,8 @@ Model::~Model()
 
 void Model::doLoad(std::string m_path)
 {
+    std::clog << "Loading object: " << m_path;
+
     tinyobj::attrib_t attrib;
     std::vector<tinyobj::shape_t> shapes;
     std::vector<tinyobj::material_t> materials;
@@ -135,7 +138,15 @@ void Model::setVertices(std::vector<Vector3> verts)
 void Model::doUse()
 {
     glBindVertexArray(model_vao);
+
+    if (texture) texture->doUse();
 }
+
+void Model::doRender(Engine &eng)
+{
+    glDrawArrays(GL_TRIANGLES, 0, vertices.size());
+}
+
 
 }
 

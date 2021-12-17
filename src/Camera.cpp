@@ -24,7 +24,7 @@ void zge::Camera::doUpdate(Engine& eng)
     horizontal_view_angle += glm::radians(eng.mouse_sensitivity * float(window_size.x/2.0f - mouse_position.x));
     vertical_view_angle   += glm::radians(eng.mouse_sensitivity * float(window_size.y/2.0f - mouse_position.y));
 
-    Vector3 view_direction{
+    view_direction = Vector3{
         glm::cos(vertical_view_angle) * sin(horizontal_view_angle), 
         sin(vertical_view_angle),
         cos(vertical_view_angle) * cos(horizontal_view_angle)
@@ -43,7 +43,7 @@ void zge::Camera::doUpdate(Engine& eng)
     if (eng.isKeyPressed(Key(D))) position += glm::normalize(right_to_view)  * eng.getElapsedTime() * speed;
     if (eng.isKeyPressed(Key(A))) position -= glm::normalize(right_to_view)  * eng.getElapsedTime() * speed;
 
-    // position.y = 0; // player can't fly
+    position.y = 0; // player can't fly
 
     projection = glm::perspective(glm::radians(fov), window_size.x / window_size.y, 0.1f, 100.0f);
 

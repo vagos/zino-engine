@@ -5,17 +5,17 @@
 #include <unordered_map>
 
 #include "Common.hpp"
+#include "Asset.hpp"
 
 namespace zge
 {
 
-class Shader 
+class Shader : public Asset
 {
     public:
         Shader(std::string v_s_path, std::string f_s_path);
 
         void doUse() { glUseProgram(program_id); }
-        // void createUniform(std::string u_n);
 
         void sendUniform(const std::string u_n, const Matrix4x4& matrix);
         void sendUniform(const std::string u_n, const Vector3& vec);

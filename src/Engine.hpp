@@ -8,6 +8,7 @@
 
 #include "Common.hpp"
 #include "Camera.hpp"
+#include "Asset.hpp"
 
 class Window_c // Wrapper for a Window backend. (Not implemented)
 {
@@ -35,6 +36,9 @@ namespace zge
         bool doConsturct(int w, int h, std::string& app_name);
 
         void addObject(std::shared_ptr<Object> obj);
+
+        void addAsset(std::shared_ptr<Asset> asset, std::string asset_name);
+        std::shared_ptr<Asset> getAsset(std::string asset_name);
 
         void doExit() { running = false; }
 
@@ -66,6 +70,8 @@ namespace zge
 
         // GLuint basic_shader_program_id; 
         GLuint mvp_uniform_location;
+
+        std::unordered_map<std::string, std::shared_ptr<Asset>> assets;
 
         friend Object;
 

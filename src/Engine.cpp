@@ -6,6 +6,9 @@
 #include "Object.hpp"
 #include "Common.hpp"
 
+namespace zge
+{
+
 void zge::Engine::doStart()
 {
     running = true;    
@@ -143,4 +146,20 @@ bool zge::Engine::isKeyPressed(int key)
 int zge::Engine::getRandomInt(int a, int b)
 {
     return a + ( random() % (b - a) );
+}
+
+void Engine::addAsset(std::shared_ptr<Asset> asset, std::string asset_name)
+{
+    assets[asset_name] = asset;
+}
+
+std::shared_ptr<Asset> Engine::getAsset(std::string asset_name)
+{
+    auto asset = assets[asset_name];
+
+    if (!asset) std::runtime_error("Asset not found!");
+
+    return assets[asset_name];
+}
+
 }

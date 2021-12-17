@@ -22,29 +22,7 @@ Object::Object(): exists(true), model_matrix(Matrix4x4(1))
 }
 
 
-ModeledObject::ModeledObject(std::shared_ptr<Model>& model): model_file(model)
-{
-
-}
-
-ModeledObject::ModeledObject()
-{
-}
-
-
-void ModeledObject::doRender(Engine &eng)
-{
-    assert(shader_file); 
-    shader_file->doUse();
-    model_file->doUse();
-
-    Matrix4x4 mvp = eng.camera.getProjection() * eng.camera.getView() * model_matrix;
-
-    shader_file->sendUniform("mvp", mvp);
-    glDrawArrays(GL_TRIANGLES, 0, model_file->vertices.size());
-}
-
-Plane::Plane(float w, float h): ModeledObject()
+/* Plane::Plane(float w, float h)
 {
    auto plane_model = std::make_shared<Model>();
 
@@ -62,5 +40,6 @@ Plane::Plane(float w, float h): ModeledObject()
 
    model_file = std::move(plane_model);
 }
+*/
 
 }

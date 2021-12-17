@@ -4,11 +4,15 @@
 #include "Texture.hpp"
 #include "Skybox.hpp"
 #include "Lighting.hpp"
+#include "Shader.hpp"
+#include "Ball.hpp"
+
 #include <glm/ext/matrix_transform.hpp>
 #include <glm/gtx/string_cast.hpp>
 
 std::shared_ptr<zge::LightSource> main_light = nullptr;
 
+/*
 struct Suzanne : public zge::ModeledObject
 {
     zge::Texture texture;
@@ -28,60 +32,119 @@ struct Suzanne : public zge::ModeledObject
 
         shader_file->sendUniform("mvp", mvp);
         shader_file->sendUniform("texture_sampler", texture.getTextureUnit());
-        shader_file->sendUniform("light_position", main_light->getPosition());
-        shader_file->sendUniform("view_position", eng.camera.getPosition());
+        shader_file->sendUniform("view_position", eng.camera.position);
 
+        shader_file->sendUniform("material.ambient", zge::Vector3(1.0f, 0.5f, 0.31f));
+        shader_file->sendUniform("material.diffuse", zge::Vector3(1.0f, 0.5f, 0.31f));
+        shader_file->sendUniform("material.specular",zge::Vector3( 0.5f, 0.5f, 0.5f));
+        shader_file->sendUniform("material.shininess", 32.0f);
+
+        // glm::vec3 lightColor;
+        // lightColor.x = sin(eng.getTime() * 2.0f);
+        // lightColor.y = sin(eng.getTime() * 0.7f);
+        // lightColor.z = sin(eng.getTime() * 1.3f);
+        //   
+        // main_light->diffuse = lightColor   * glm::vec3(0.5f); 
+        // main_light->ambient = main_light->diffuse * glm::vec3(0.2f); 
+
+        shader_file->sendUniform("light.position", main_light->position);
+        shader_file->sendUniform("light.ambient", main_light->ambient);
+        shader_file->sendUniform("light.diffuse", main_light->diffuse);
+        shader_file->sendUniform("light.specular", main_light->specular);
+        
+        shader_file->sendUniform("light.Kc", 1.0f);
+        shader_file->sendUniform("light.Kl", 0.09f);
+        shader_file->sendUniform("light.Kq", 0.032f);
+        
         glDrawArrays(GL_TRIANGLES, 0, model_file->vertices.size());
     }
 
 };
+*/
 
-class PokemonEngine : public zge::Engine
+struct Tree : public zge::Object
 {
+
+    std::shared_ptr<zge::Shader> texture_shader = nullptr;
+
+    Tree(zge::Engine& eng) 
+    {
+        setModelMatrix(glm::scale(getModelMatrix(), zge::Vector3(0.2f)));
+
+        model = std::static_pointer_cast<zge::Model>(eng.getAsset("Tree Model"));
+
+    }
+
+    void doRender(zge::Engine &eng) override
+    {
+        texture_shader->doUse();
+        model->doUse();
+
+        zge::Matrix4x4 mvp = eng.camera.getProjection() * eng.camera.getView() * model_matrix;
+
+        texture_shader->sendUniform("mvp", mvp);
+        texture_shader->sendUniform("texture_sampler", model->texture->getTextureUnit());
+
+        glDrawArrays(GL_TRIANGLES, 0, model->vertices.size());
+    }
+
+};
+
+class TestingEngine : public zge::Engine
+{
+    std::shared_ptr<Ball> ball;
 
     void onCreate() override
     {
-        auto cube_model = std::make_shared<zge::Model>("./assets/objs/cube.obj");
-        auto suzanne_model = std::make_shared<zge::Model>("./assets/objs/suzanne.obj");
+        // auto cube_model = std::make_shared<zge::Model>("./assets/objs/cube.obj");
+        // auto suzanne_model = std::make_shared<zge::Model>("./assets/objs/suzanne.obj");
+        // auto heart_model = std::make_shared<zge::Model>("./assets/objs/heart.obj");
+        auto tree_model = std::make_shared<zge::Model>("./assets/objs/tree.obj");
+        auto sphere_model = std::make_shared<zge::Model>("./assets/objs/sphere.obj"); 
+        std::shared_ptr<zge::Texture> moss_texture = std::make_shared<zge::Texture>("./assets/textures/trees/Mossy_Tr.bmp");
+
+        addAsset(tree_model, "Tree Model");
+        addAsset(sphere_model, "Sphere Model");
+
         auto basic_shader = std::make_shared<zge::Shader>("./assets/shaders/basic.vert", "./assets/shaders/basic.frag"); // testing ligthing
         auto lighting_shader = std::make_shared<zge::Shader>("./assets/shaders/basic.vert", "./assets/shaders/lighting.frag"); 
-
         auto texture_shader = std::make_shared<zge::Shader>("./assets/shaders/texture_shader.vert", "./assets/shaders/texture_shader.frag");
 
+        addAsset(basic_shader, "Basic Shader");
+
         // cubemap stuff (skybox)
-        auto skybox = std::make_shared<Skybox>();
+        auto skybox = std::make_shared<zge::Skybox>();
+        skybox->name = std::string("Skybox");
         addObject(skybox);
 
-        for (int i = 0; i < 10; i++)
+        for (int i = 0; i < 10; i++) // create trees
         {
-            auto myObj = std::make_shared<zge::ModeledObject>(cube_model);
-            myObj->setShaderFile(basic_shader);
+            auto new_tree = std::make_shared<Tree>(*this);
+
+            new_tree->model->texture = moss_texture;
+
+            new_tree->texture_shader = texture_shader;
         
-            myObj->setModelMatrix(glm::translate(myObj->getModelMatrix(), 
+            new_tree->setModelMatrix(glm::translate(new_tree->getModelMatrix(), 
                         zge::Vector3(
-                            getRandomInt(-10, 10),
-                            getRandomInt(-10, 10),
-                            getRandomInt(-10, 10)
+                            getRandomInt(-100, 100),
+                            -5,
+                            getRandomInt(-100, 100)                            
                             )));
-        
-            // addObject(myObj);
+
+
+            addObject(new_tree);
         }
 
-        auto plane_object = std::make_shared<zge::Plane>(2, 2);
-        plane_object->setShaderFile(basic_shader);
-        plane_object->setModelMatrix(glm::translate(plane_object->getModelMatrix(), zge::Vector3(0, 0, 0)));
-        // addObject(plane_object);
+        // main_light = std::make_shared<zge::LightSource>();
+        // main_light->setShaderFile(lighting_shader);
+        // main_light->setModelFile(cube_model);
+        // addObject(main_light);
 
-        main_light = std::make_shared<zge::LightSource>();
-        main_light->setShaderFile(lighting_shader);
-        main_light->setModelFile(cube_model);
-        addObject(main_light);
-
-        auto other_cube = std::make_shared<Suzanne>();
-        other_cube->setShaderFile(texture_shader);
-        other_cube->setModelFile(suzanne_model);
-        // other_cube->setModelMatrix(glm::translate(other_cube->getModelMatrix(), zge::Vector3(0, 0, 10)));
-        addObject(other_cube);
+        // auto monkey = std::make_shared<Suzanne>();
+        // monkey->setShaderFile(texture_shader);
+        // monkey->setModelFile(suzanne_model);
+        // addObject(monkey);
     }
 
 
@@ -89,8 +152,19 @@ class PokemonEngine : public zge::Engine
     {
         if (isKeyPressed(Key(J)))
         {
-            main_light->setModelMatrix(glm::translate(zge::Matrix4x4(1), camera.getPosition()));
-            // std::clog << glm::to_string(main_light->position) << '\n';
+            // main_light->setModelMatrix(glm::translate(zge::Matrix4x4(1), camera.position));
+        }
+
+        if (isKeyPressed(Key(T))) // throw ball 
+        {
+            auto new_ball = std::make_shared<Ball>();
+            new_ball->model = std::static_pointer_cast<zge::Model>(getAsset("Sphere Model"));
+
+            new_ball->rigid_body->position = camera.position + 5.0f * camera.view_direction;
+            new_ball->rigid_body->mass = 10.0f;
+            new_ball->rigid_body->applyForce(camera.view_direction * 5000.0f);
+            
+            addObject(new_ball);
         }
     }
 
@@ -100,11 +174,12 @@ class PokemonEngine : public zge::Engine
     }
 };
 
+
 int main()
 {
-    PokemonEngine engine{};
+    TestingEngine engine{};
 
-    std::string name{"Pokemon Game"};
+    std::string name{"Testing"};
 
     if (engine.doConsturct(1024, 576, name))
         engine.doStart();

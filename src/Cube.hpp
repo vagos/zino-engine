@@ -1,0 +1,4 @@
+#ifndef CUBE_HPP_FEXYNUDV
+#define CUBE_HPP_FEXYNUDV
+
+#endif /* CUBE_HPP_FEXYNUDV */

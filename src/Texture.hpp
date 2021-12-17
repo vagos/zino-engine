@@ -5,6 +5,7 @@
 #include <vector>
 
 #include "Common.hpp"
+#include "Asset.hpp"
 
 namespace zge 
 {
@@ -27,7 +28,7 @@ struct Image
     }
 };
 
-class Texture 
+class Texture : public Asset
 {
     public:
         Texture(const std::string t_path); 
