@@ -29,6 +29,7 @@ namespace zge
         // zge::Matrix4x4 mvp = eng.camera.getProjection() * eng.camera.getView() * model_matrix;
 
         s_shader.sendUniform("mvp", mvp);
+        s_shader.sendUniform("time", eng.getTime());
 
         s_shader.sendUniform("skybox", model->texture->getTextureUnit());
 

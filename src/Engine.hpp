@@ -17,6 +17,9 @@ class Window_c // Wrapper for a Window backend. (Not implemented)
 
 #define Key(k_n) GLFW_KEY_##k_n
 
+#define getAssetTyped(model_n, model_t) std::static_pointer_cast<model_t>(getAsset(model_n))
+#define eng_getAssetTyped(model_n, model_t) std::static_pointer_cast<model_t>(eng.getAsset(model_n))
+
 namespace zge 
 {
     class Object;

@@ -111,6 +111,7 @@ class TestingEngine : public zge::Engine
         auto texture_shader = std::make_shared<zge::Shader>("./assets/shaders/texture_shader.vert", "./assets/shaders/texture_shader.frag");
 
         addAsset(basic_shader, "Basic Shader");
+        addAsset(texture_shader, "Texture Shader");
 
         // cubemap stuff (skybox)
         auto skybox = std::make_shared<zge::Skybox>();
@@ -158,7 +159,7 @@ class TestingEngine : public zge::Engine
         if (isKeyPressed(Key(T))) // throw ball 
         {
             auto new_ball = std::make_shared<Ball>();
-            new_ball->model = std::static_pointer_cast<zge::Model>(getAsset("Sphere Model"));
+            new_ball->model = getAssetTyped("Tree Model", zge::Model);
 
             new_ball->rigid_body->position = camera.position + 5.0f * camera.view_direction;
             new_ball->rigid_body->mass = 10.0f;

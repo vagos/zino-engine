@@ -4,7 +4,7 @@
 
 void Ball::doRender(zge::Engine &eng) 
 {
-    std::shared_ptr<zge::Shader> basic_shader = std::static_pointer_cast<zge::Shader>(eng.getAsset("Basic Shader"));
+    std::shared_ptr<zge::Shader> basic_shader = eng_getAssetTyped("Texture Shader", zge::Shader);
     
     model->doUse();
     
