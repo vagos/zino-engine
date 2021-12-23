@@ -6,6 +6,8 @@
 #include "Object.hpp"
 #include "Common.hpp"
 
+#define KEY_COOLDOWN 0.5f
+
 namespace zge
 {
 
@@ -44,6 +46,7 @@ void zge::Engine::_doUpdate()
     float current_time = glfwGetTime(); // Calculate elpapsed time.
     elapsed_time =  current_time - previous_time;
     previous_time = current_time;
+    key_cooldown = key_cooldown < 0 ? KEY_COOLDOWN : key_cooldown - elapsed_time; 
 
     doUpdate();
 
@@ -136,6 +139,12 @@ void zge::Engine::addObject(std::shared_ptr<Object> obj)
 }
 
 bool zge::Engine::isKeyPressed(int key)
+{
+    if (key_cooldown < 0) return glfwGetKey(window, key) == GLFW_PRESS;
+    return false;
+}
+
+bool zge::Engine::isKeyHeld(int key)
 {
     return glfwGetKey(window, key) == GLFW_PRESS;
 }

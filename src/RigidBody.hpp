@@ -38,6 +38,8 @@ public:
     void applyForce(Vector3 force_direction);
     void applyGravity();
 
+    void doCollision(Vector3& collision_direction, RigidBody& o_rb);
+
 private:
 
     void updateStateVector();

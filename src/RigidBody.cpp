@@ -1,7 +1,7 @@
 #include "RigidBody.hpp"
 #include "Common.hpp"
 #include "Engine.hpp"
-
+#include <glm/gtx/dual_quaternion.hpp>
 
 namespace zge 
 {
@@ -9,6 +9,17 @@ namespace zge
 RigidBody::RigidBody(): rotation(1.0f), mass(1.0f), position(0.0f), velocity(0.0f), 
     angular_velocity(0.0f), momentum(0.0f), angular_momentum(0.0f), state_vector(n_states, 0.0f), force_vector(6, 0.0f)
 {
+
+}
+
+void RigidBody::doCollision(Vector3 &collision_direction, RigidBody &o_rb)
+{
+
+    velocity = velocity - ( 2*o_rb.mass / (mass + o_rb.mass) ) * (position - o_rb.position);
+    momentum = mass * velocity;
+    // position += glm::normalize(velocity) * 10.0f; // TODO check if this works
+    
+    std::clog << "vel: " << glm::to_string(velocity) << ' ' <<  2*o_rb.mass / (mass + o_rb.mass) << ' ' << glm::dot(velocity - o_rb.velocity, position - o_rb.position)  << '\n';
 
 }
 
@@ -180,5 +191,7 @@ std::vector<float> RigidBody::RungeKuta4(const std::vector<float>& state_0, floa
 
     return state_4;
 }
+
+
 
 } // nespace zge

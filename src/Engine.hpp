@@ -52,6 +52,7 @@ namespace zge
         Vector2 getCursorPosition();
         void setCursorPosition(Vector2&& pos);
         bool isKeyPressed(int key);
+        bool isKeyHeld(int key);
 
         int getRandomInt(int a, int b);
 
@@ -66,6 +67,7 @@ namespace zge
 
         float previous_time;
         float elapsed_time;
+        float key_cooldown;
     
         const float mouse_sensitivity = 0.01f;
 

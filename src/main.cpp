@@ -1,5 +1,7 @@
+#include "Collider.hpp"
 #include "Engine.hpp"
 #include "Common.hpp"
+#include "Model.hpp"
 #include "Object.hpp"
 #include "Texture.hpp"
 #include "Skybox.hpp"
@@ -9,6 +11,7 @@
 
 #include <glm/ext/matrix_transform.hpp>
 #include <glm/gtx/string_cast.hpp>
+#include <memory>
 
 std::shared_ptr<zge::LightSource> main_light = nullptr;
 
@@ -66,13 +69,20 @@ struct Tree : public zge::Object
 {
 
     std::shared_ptr<zge::Shader> texture_shader = nullptr;
+    std::shared_ptr<zge::Model> debug_model = nullptr;
 
     Tree(zge::Engine& eng) 
     {
         setModelMatrix(glm::scale(getModelMatrix(), zge::Vector3(0.2f)));
 
         model = std::static_pointer_cast<zge::Model>(eng.getAsset("Tree Model"));
+        rigid_body = std::make_shared<zge::RigidBody>();
+        rigid_body->mass = 1000000.0f;
 
+        collider = std::make_shared<zge::SphereCollider>(rigid_body->position);
+        collider->radius = 10.0f;
+
+        debug_model = eng_getAssetTyped("Sphere Model", zge::Model);
     }
 
     void doRender(zge::Engine &eng) override
@@ -86,6 +96,17 @@ struct Tree : public zge::Object
         texture_shader->sendUniform("texture_sampler", model->texture->getTextureUnit());
 
         glDrawArrays(GL_TRIANGLES, 0, model->vertices.size());
+
+
+        debug_model->doUse();
+
+        zge::Matrix4x4 d_mvp = eng.camera.getProjection() * eng.camera.getView() * glm::scale(zge::Matrix4x4(1), zge::Vector3(collider->radius))
+            * model_matrix;
+        
+        texture_shader->sendUniform("mvp", d_mvp);
+        texture_shader->sendUniform("texture_sampler", model->texture->getTextureUnit());
+
+        debug_model->doRender(eng);
     }
 
 };
@@ -118,21 +139,21 @@ class TestingEngine : public zge::Engine
         skybox->name = std::string("Skybox");
         addObject(skybox);
 
-        for (int i = 0; i < 10; i++) // create trees
+        for (int i = 0; i < 1; i++) // create trees
         {
             auto new_tree = std::make_shared<Tree>(*this);
 
             new_tree->model->texture = moss_texture;
-
             new_tree->texture_shader = texture_shader;
         
-            new_tree->setModelMatrix(glm::translate(new_tree->getModelMatrix(), 
-                        zge::Vector3(
-                            getRandomInt(-100, 100),
-                            -5,
-                            getRandomInt(-100, 100)                            
-                            )));
-
+            // new_tree->setModelMatrix(glm::translate(new_tree->getModelMatrix(), 
+            //             zge::Vector3(
+            //                 getRandomInt(-100, 100),
+            //                 -5,
+            //                 getRandomInt(-100, 100)                            
+            //                 )));
+            
+            new_tree->rigid_body->position = zge::Vector3(10.0f, 0.0f, 0.0f);
 
             addObject(new_tree);
         }
@@ -159,13 +180,15 @@ class TestingEngine : public zge::Engine
         if (isKeyPressed(Key(T))) // throw ball 
         {
             auto new_ball = std::make_shared<Ball>();
-            new_ball->model = getAssetTyped("Tree Model", zge::Model);
+            new_ball->model = getAssetTyped("Sphere Model", zge::Model);
 
-            new_ball->rigid_body->position = camera.position + 5.0f * camera.view_direction;
-            new_ball->rigid_body->mass = 10.0f;
-            new_ball->rigid_body->applyForce(camera.view_direction * 5000.0f);
+            new_ball->rigid_body->position = camera.position + 10.0f * camera.view_direction;
+            new_ball->rigid_body->mass = 100.0f;
+            new_ball->rigid_body->applyForce(camera.view_direction * 50000.0f);
             
             addObject(new_ball);
+
+            // std::clog << "new ball\n";
         }
     }
 

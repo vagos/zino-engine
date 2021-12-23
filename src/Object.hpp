@@ -26,9 +26,9 @@ namespace zge
         virtual void doUpdate(Engine& eng) {}
         virtual void doRender(Engine& eng) {}
 
-        std::shared_ptr<Model> model          = nullptr;
-        std::shared_ptr<RigidBody> rigid_body = nullptr;
-        std::shared_ptr<Collider> collider    = nullptr;
+        std::shared_ptr<Model> model             = nullptr;
+        std::shared_ptr<RigidBody> rigid_body    = nullptr;
+        std::shared_ptr<SphereCollider> collider = nullptr;
         
         void setModelMatrix(Matrix4x4 mat) {model_matrix = mat;}
         Matrix4x4& getModelMatrix() {return model_matrix;}

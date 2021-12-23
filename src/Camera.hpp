@@ -36,7 +36,7 @@ namespace zge
         float horizontal_view_angle;
         float vertical_view_angle;
 
-        const float speed = 3.0f;
+        const float speed = 10.0f;
 
 
     };

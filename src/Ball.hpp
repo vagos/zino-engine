@@ -6,11 +6,7 @@
 class Ball : public zge::Object
 {
 public:
-    Ball()
-    {
-        rigid_body = std::make_shared<zge::RigidBody>();
-    }
-
+    Ball();
     
     void doUpdate(zge::Engine &eng) override;
     void doRender(zge::Engine &eng) override;
