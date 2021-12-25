@@ -6,7 +6,7 @@
 class Ball : public zge::Object
 {
 public:
-    Ball();
+    Ball(zge::Engine& eng);
     
     void doUpdate(zge::Engine &eng) override;
     void doRender(zge::Engine &eng) override;

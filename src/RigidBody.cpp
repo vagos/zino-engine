@@ -14,13 +14,9 @@ RigidBody::RigidBody(): rotation(1.0f), mass(1.0f), position(0.0f), velocity(0.0
 
 void RigidBody::doCollision(Vector3 &collision_direction, RigidBody &o_rb)
 {
-
-    velocity = velocity - ( 2*o_rb.mass / (mass + o_rb.mass) ) * (position - o_rb.position);
+    velocity = velocity - 2.0f * glm::dot(velocity, collision_direction) * collision_direction;
     momentum = mass * velocity;
-    // position += glm::normalize(velocity) * 10.0f; // TODO check if this works
-    
-    std::clog << "vel: " << glm::to_string(velocity) << ' ' <<  2*o_rb.mass / (mass + o_rb.mass) << ' ' << glm::dot(velocity - o_rb.velocity, position - o_rb.position)  << '\n';
-
+    // position += glm::normalize(velocity) * 3.0f; // TODO check if this works
 }
 
 void RigidBody::applyGravity()
@@ -191,7 +187,5 @@ std::vector<float> RigidBody::RungeKuta4(const std::vector<float>& state_0, floa
 
     return state_4;
 }
-
-
 
 } // nespace zge

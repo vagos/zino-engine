@@ -28,7 +28,7 @@ namespace zge
 
         std::shared_ptr<Model> model             = nullptr;
         std::shared_ptr<RigidBody> rigid_body    = nullptr;
-        std::shared_ptr<SphereCollider> collider = nullptr;
+        std::shared_ptr<CubeCollider> collider = nullptr;
         
         void setModelMatrix(Matrix4x4 mat) {model_matrix = mat;}
         Matrix4x4& getModelMatrix() {return model_matrix;}

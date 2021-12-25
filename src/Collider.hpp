@@ -3,6 +3,7 @@
 
 #include "Common.hpp"
 #include "RigidBody.hpp"
+#include "Model.hpp"
 
 namespace zge 
 {
@@ -31,7 +32,16 @@ public:
     {
     }
 
+    CubeCollider(Model& model, Vector3& position): Collider(position)
+    {
+        setCorners(model);
+    }
+
     bool isColliding(CubeCollider& other, Vector3& collision_direction);
+    void setCorners(Model& model);
+
+private:
+    bool has_collided = false; // TODO remove
 };
 
 class SphereCollider : public Collider 

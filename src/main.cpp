@@ -8,6 +8,7 @@
 #include "Lighting.hpp"
 #include "Shader.hpp"
 #include "Ball.hpp"
+#include "Cube.hpp"
 
 #include <glm/ext/matrix_transform.hpp>
 #include <glm/gtx/string_cast.hpp>
@@ -79,8 +80,7 @@ struct Tree : public zge::Object
         rigid_body = std::make_shared<zge::RigidBody>();
         rigid_body->mass = 1000000.0f;
 
-        collider = std::make_shared<zge::SphereCollider>(rigid_body->position);
-        collider->radius = 10.0f;
+        collider = std::make_shared<zge::CubeCollider>(*model, rigid_body->position);
 
         debug_model = eng_getAssetTyped("Sphere Model", zge::Model);
     }
@@ -100,8 +100,10 @@ struct Tree : public zge::Object
 
         debug_model->doUse();
 
-        zge::Matrix4x4 d_mvp = eng.camera.getProjection() * eng.camera.getView() * glm::scale(zge::Matrix4x4(1), zge::Vector3(collider->radius))
-            * model_matrix;
+        // zge::Matrix4x4 d_mvp = eng.camera.getProjection() * eng.camera.getView() * glm::scale(zge::Matrix4x4(1), zge::Vector3(collider->radius))
+        //     * model_matrix;
+
+        zge::Matrix4x4 d_mvp = eng.camera.getProjection() * eng.camera.getView() * model_matrix;
         
         texture_shader->sendUniform("mvp", d_mvp);
         texture_shader->sendUniform("texture_sampler", model->texture->getTextureUnit());
@@ -117,18 +119,19 @@ class TestingEngine : public zge::Engine
 
     void onCreate() override
     {
-        // auto cube_model = std::make_shared<zge::Model>("./assets/objs/cube.obj");
         // auto suzanne_model = std::make_shared<zge::Model>("./assets/objs/suzanne.obj");
         // auto heart_model = std::make_shared<zge::Model>("./assets/objs/heart.obj");
+        auto cube_model = std::make_shared<zge::Model>("./assets/objs/cube.obj");
         auto tree_model = std::make_shared<zge::Model>("./assets/objs/tree.obj");
         auto sphere_model = std::make_shared<zge::Model>("./assets/objs/sphere.obj"); 
         std::shared_ptr<zge::Texture> moss_texture = std::make_shared<zge::Texture>("./assets/textures/trees/Mossy_Tr.bmp");
 
         addAsset(tree_model, "Tree Model");
         addAsset(sphere_model, "Sphere Model");
+        addAsset(cube_model, "Cube Model");
 
-        auto basic_shader = std::make_shared<zge::Shader>("./assets/shaders/basic.vert", "./assets/shaders/basic.frag"); // testing ligthing
-        auto lighting_shader = std::make_shared<zge::Shader>("./assets/shaders/basic.vert", "./assets/shaders/lighting.frag"); 
+        auto basic_shader = std::make_shared<zge::Shader>("./assets/shaders/basic.vert", "./assets/shaders/basic.frag"); 
+        auto lighting_shader = std::make_shared<zge::Shader>("./assets/shaders/basic.vert", "./assets/shaders/lighting.frag"); // testing ligthing
         auto texture_shader = std::make_shared<zge::Shader>("./assets/shaders/texture_shader.vert", "./assets/shaders/texture_shader.frag");
 
         addAsset(basic_shader, "Basic Shader");
@@ -138,6 +141,10 @@ class TestingEngine : public zge::Engine
         auto skybox = std::make_shared<zge::Skybox>();
         skybox->name = std::string("Skybox");
         addObject(skybox);
+
+        // add cube
+        auto cube = std::make_shared<Cube>(*this);
+        addObject(cube);
 
         for (int i = 0; i < 1; i++) // create trees
         {
@@ -155,7 +162,7 @@ class TestingEngine : public zge::Engine
             
             new_tree->rigid_body->position = zge::Vector3(10.0f, 0.0f, 0.0f);
 
-            addObject(new_tree);
+            // addObject(new_tree);
         }
 
         // main_light = std::make_shared<zge::LightSource>();
@@ -179,12 +186,11 @@ class TestingEngine : public zge::Engine
 
         if (isKeyPressed(Key(T))) // throw ball 
         {
-            auto new_ball = std::make_shared<Ball>();
-            new_ball->model = getAssetTyped("Sphere Model", zge::Model);
+            auto new_ball = std::make_shared<Ball>(*this);
 
             new_ball->rigid_body->position = camera.position + 10.0f * camera.view_direction;
             new_ball->rigid_body->mass = 100.0f;
-            new_ball->rigid_body->applyForce(camera.view_direction * 50000.0f);
+            new_ball->rigid_body->applyForce(camera.view_direction * 5000.0f);
             
             addObject(new_ball);
 

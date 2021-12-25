@@ -1,6 +1,9 @@
 #include "Collider.hpp"
 #include "Common.hpp"
 
+#define max(a, b) a > b ? a : b
+#define min(a, b) a < b ? a : b
+
 namespace zge 
 {
 
@@ -30,7 +33,52 @@ namespace zge
    
     bool CubeCollider::isColliding(CubeCollider& other, Vector3& collision_direction)
     {
+        collision_direction = glm::normalize(position - other.position);
+        collision_direction = zge::Vector3(0, 1, 0);
+        // if (has_collided) return false;
+        // has_collided = true;
 
+        return 
+            
+            ( position.x + min_x <= other.position.x + other.max_x && 
+                position.x + max_x >= other.position.x + other.min_x ) 
+
+            && 
+
+            (position.y + min_y <= other.position.y + other.max_y &&
+             position.y + max_y >= other.position.y + other.min_y) 
+
+            && 
+
+            (position.z + min_z <= other.position.z + other.max_z &&
+             position.z + max_z >= other.position.z + other.min_z); 
+    }
+
+    void CubeCollider::setCorners(Model &model)
+    {
+        max_x = min_x = model.vertices[0].x;
+        max_y = min_y = model.vertices[0].y;
+        max_z = min_z = model.vertices[0].z;
+
+        for (auto& v : model.vertices)
+        {
+            max_x = max(max_x, v.x);
+            max_y = max(max_y, v.y);
+            max_z = max(max_z, v.z);
+
+            min_x = min(min_x, v.x);
+            min_y = min(min_y, v.y);
+            min_z = min(min_z, v.z);
+        }
+
+        max_x = max_x - position.x;
+        min_x = min_x - position.x;
+
+        max_y = max_y - position.y;
+        min_y = min_y - position.y;
+
+        max_z = max_z - position.z;
+        min_z = min_z - position.z;
     }
 
 }

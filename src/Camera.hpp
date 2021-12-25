@@ -31,12 +31,12 @@ namespace zge
         Matrix4x4 look_at; // view Matrix.
         Matrix4x4 projection;
 
-        float fov = 45.0f;
+        float fov = 45.0f * 2.0f;
 
         float horizontal_view_angle;
         float vertical_view_angle;
 
-        const float speed = 10.0f;
+        const float speed = 20.0f;
 
 
     };

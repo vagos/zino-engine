@@ -10,6 +10,8 @@
 namespace zge
 {
 
+class LightSource;
+
 class Shader : public Asset
 {
     public:
@@ -21,6 +23,7 @@ class Shader : public Asset
         void sendUniform(const std::string u_n, const Vector3& vec);
         void sendUniform(const std::string u_n, float f);
         void sendUniform(const std::string u_n, int n);
+        void sendUniform(const std::string u_n, LightSource& l_s);
 
     private:
         std::unordered_map<std::string, GLuint> uniform_locations;

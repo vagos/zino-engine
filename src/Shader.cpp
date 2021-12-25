@@ -1,5 +1,6 @@
 #include "Shader.hpp"
 #include "Common.hpp"
+#include "Lighting.hpp"
 
 #include <fstream>
 #include <vector>
@@ -111,6 +112,14 @@ namespace zge
     void Shader::sendUniform(const std::string u_n, float f)
     {
         glUniform1f(glGetUniformLocation(program_id, u_n.c_str()), f);
+    }
+
+    void Shader::sendUniform(const std::string u_n, LightSource& l_s)
+    {
+        sendUniform(u_n + ".position", l_s.position);
+        sendUniform(u_n + ".ambient", l_s.ambient);
+        sendUniform(u_n + ".diffuse", l_s.diffuse);
+        sendUniform(u_n + ".specular", l_s.specular);
     }
 
 }
