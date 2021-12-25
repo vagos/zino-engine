@@ -4,6 +4,7 @@
 #include "Model.hpp"
 #include "Object.hpp"
 #include "Texture.hpp"
+#include "Material.hpp"
 #include "Skybox.hpp"
 #include "Lighting.hpp"
 #include "Shader.hpp"
@@ -16,8 +17,7 @@
 
 std::shared_ptr<zge::LightSource> main_light = nullptr;
 
-/*
-struct Suzanne : public zge::ModeledObject
+struct Suzanne : public zge::Object
 {
     zge::Texture texture;
 
@@ -28,8 +28,9 @@ struct Suzanne : public zge::ModeledObject
 
     void doRender(zge::Engine &eng) override
     {
+        auto shader_file = eng_getAssetTyped("Texture Shader", zge::Shader);
         shader_file->doUse();
-        model_file->doUse();
+        model->doUse();
         texture.doUse();
 
         zge::Matrix4x4 mvp = eng.camera.getProjection() * eng.camera.getView() * model_matrix;
@@ -60,19 +61,20 @@ struct Suzanne : public zge::ModeledObject
         shader_file->sendUniform("light.Kl", 0.09f);
         shader_file->sendUniform("light.Kq", 0.032f);
         
-        glDrawArrays(GL_TRIANGLES, 0, model_file->vertices.size());
+        model->doRender(eng);
     }
 
 };
-*/
 
 struct Tree : public zge::Object
 {
 
     std::shared_ptr<zge::Shader> texture_shader = nullptr;
     std::shared_ptr<zge::Model> debug_model = nullptr;
+    zge::Material material;
 
-    Tree(zge::Engine& eng) 
+    Tree(zge::Engine& eng): material(zge::Vector3(1.0f, 0.5, 0.31f), 
+            zge::Vector3(1.0f, 0.5f, 0.31f), zge::Vector3(0.5f, 0.5f, 0.5f), 32.0f)
     {
         setModelMatrix(glm::scale(getModelMatrix(), zge::Vector3(0.2f)));
 
@@ -94,9 +96,9 @@ struct Tree : public zge::Object
 
         texture_shader->sendUniform("mvp", mvp);
         texture_shader->sendUniform("texture_sampler", model->texture->getTextureUnit());
+        texture_shader->sendUniform("material", material);
 
-        glDrawArrays(GL_TRIANGLES, 0, model->vertices.size());
-
+        model->doRender(eng);
 
         debug_model->doUse();
 
@@ -119,7 +121,7 @@ class TestingEngine : public zge::Engine
 
     void onCreate() override
     {
-        // auto suzanne_model = std::make_shared<zge::Model>("./assets/objs/suzanne.obj");
+        auto suzanne_model = std::make_shared<zge::Model>("./assets/objs/suzanne.obj");
         // auto heart_model = std::make_shared<zge::Model>("./assets/objs/heart.obj");
         auto cube_model = std::make_shared<zge::Model>("./assets/objs/cube.obj");
         auto tree_model = std::make_shared<zge::Model>("./assets/objs/tree.obj");
@@ -162,18 +164,16 @@ class TestingEngine : public zge::Engine
             
             new_tree->rigid_body->position = zge::Vector3(10.0f, 0.0f, 0.0f);
 
-            // addObject(new_tree);
+            addObject(new_tree);
         }
 
-        // main_light = std::make_shared<zge::LightSource>();
-        // main_light->setShaderFile(lighting_shader);
-        // main_light->setModelFile(cube_model);
-        // addObject(main_light);
+        main_light = std::make_shared<zge::LightSource>();
+        main_light->model = cube_model;
+        addObject(main_light);
 
-        // auto monkey = std::make_shared<Suzanne>();
-        // monkey->setShaderFile(texture_shader);
-        // monkey->setModelFile(suzanne_model);
-        // addObject(monkey);
+        auto monkey = std::make_shared<Suzanne>();
+        monkey->model = suzanne_model;
+        addObject(monkey);
     }
 
 
@@ -181,7 +181,8 @@ class TestingEngine : public zge::Engine
     {
         if (isKeyPressed(Key(J)))
         {
-            // main_light->setModelMatrix(glm::translate(zge::Matrix4x4(1), camera.position));
+            main_light->setModelMatrix(glm::translate(zge::Matrix4x4(1), camera.position));
+            main_light->position = camera.position;
         }
 
         if (isKeyPressed(Key(T))) // throw ball 

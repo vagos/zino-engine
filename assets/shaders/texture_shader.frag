@@ -28,14 +28,33 @@ in vec2 uv;
 out vec4 color;
 
 uniform sampler2D texture_sampler;
-uniform vec3 light_position;
 uniform vec3 view_position;
 uniform s_material material;
 uniform s_light light;
 
-void main()
+vec3 calculate_light_directional(s_light light, s_material material)
 {
+    vec3 norm = normalize(normal);
+    vec3 light_direction = normalize(-light.position);
 
+    // ambient
+    vec3 ambient = light.ambient * material.ambient;
+
+    // diffuse
+    float diff = max(dot(norm, light_direction), 0.0);
+    vec3 diffuse = light.diffuse * (diff * material.diffuse);
+
+    // specular
+    vec3 view_direction = normalize(view_position - vertex_position_worldspace.xyz);
+    vec3 reflect_direction = reflect(-light_direction, norm);
+    float spec = pow(max(dot(view_direction, reflect_direction), 0.0), material.shininess);
+    vec3 specular = light.specular * (spec * material.specular);
+    
+    return ambient + diffuse + specular;
+}
+
+vec3 calculate_light(s_light light, s_material material)
+{
     vec3 norm = normalize(normal);
     vec3 light_direction = normalize(light.position - vertex_position_worldspace.xyz);
 
@@ -59,6 +78,12 @@ void main()
     diffuse  *= attenuation;
     specular *= attenuation;   
 
-    // color = vec4( (ambient + diffuse + specular) * texture(texture_sampler, uv).rgb, 1.0);
-    color = vec4( texture(texture_sampler, uv).rgb, 1.0);
+    return ambient + diffuse + specular;
+}
+
+
+void main()
+{
+    vec3 light_calced = calculate_light_directional(light, material);
+    color = vec4(light_calced * texture(texture_sampler, uv).rgb, 1.0);
 }

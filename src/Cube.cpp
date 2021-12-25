@@ -21,7 +21,7 @@ Cube::Cube(zge::Engine& eng)
 
 void Cube::doRender(zge::Engine& eng)
 {
-    std::shared_ptr<zge::Shader> basic_shader = eng_getAssetTyped("Basic Shader", zge::Shader);
+    std::shared_ptr<zge::Shader> basic_shader = eng_getAssetTyped("Texture Shader", zge::Shader);
 
     basic_shader->doUse();
     

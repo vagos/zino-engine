@@ -43,6 +43,9 @@ void zge::Camera::doUpdate(Engine& eng)
     if (eng.isKeyHeld(Key(D))) position += glm::normalize(right_to_view)  * eng.getElapsedTime() * speed;
     if (eng.isKeyHeld(Key(A))) position -= glm::normalize(right_to_view)  * eng.getElapsedTime() * speed;
 
+    if (eng.isKeyHeld(Key(Q))) position += Vector3(0, 1, 0) * eng.getElapsedTime() * speed;
+    if (eng.isKeyHeld(Key(E))) position -= Vector3(0, 1, 0) * eng.getElapsedTime() * speed;
+
     // position.y = 0; // player can't fly
 
     projection = glm::perspective(glm::radians(fov), window_size.x / window_size.y, 0.1f, 100.0f);

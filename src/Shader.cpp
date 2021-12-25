@@ -1,6 +1,7 @@
 #include "Shader.hpp"
 #include "Common.hpp"
 #include "Lighting.hpp"
+#include "Material.hpp"
 
 #include <fstream>
 #include <vector>
@@ -89,10 +90,12 @@ namespace zge
         program_id = programID;
     }
 
-    // void Shader::createUniform(std::string u_n)
-    // {
-    //     uniform_locations[u_n] = glGetUniformLocation(program_id, u_n.c_str());
-    // }
+    /* 
+       void Shader::createUniform(std::string u_n)
+       {
+           uniform_locations[u_n] = glGetUniformLocation(program_id, u_n.c_str());
+       } 
+    */
 
     void Shader::sendUniform(std::string u_n, const Matrix4x4 &matrix)
     {
@@ -120,6 +123,18 @@ namespace zge
         sendUniform(u_n + ".ambient", l_s.ambient);
         sendUniform(u_n + ".diffuse", l_s.diffuse);
         sendUniform(u_n + ".specular", l_s.specular);
+
+        sendUniform(u_n + ".Kc", 1.0f);
+        sendUniform(u_n + ".Kl", 0.09f);
+        sendUniform(u_n + ".Kq", 0.032f);
+    }
+
+    void Shader::sendUniform(const std::string u_n, Material& m)
+    {
+        sendUniform(u_n + ".ambient", m.ambient);
+        sendUniform(u_n + ".diffuse", m.diffuse);
+        sendUniform(u_n + ".specular", m.specular);
+        sendUniform(u_n + ".shininess", m.shininess);
     }
 
 }
