@@ -6,6 +6,7 @@
 Cube::Cube(zge::Engine& eng)
 {
     model = eng_getAssetTyped("Cube Model", zge::Model);
+    model->texture = eng_getAssetTyped("Grass Texture", zge::Texture);
     rigid_body = std::make_shared<zge::RigidBody>();
     
     model_matrix = glm::scale(model_matrix, zge::Vector3(100.0f, 1.0f, 100.0f));
@@ -29,6 +30,7 @@ void Cube::doRender(zge::Engine& eng)
     
     zge::Matrix4x4 mvp = eng.camera.getProjection() * eng.camera.getView() * model_matrix;
     basic_shader->sendUniform("mvp", mvp);
+    basic_shader->sendUniform("texture_sampler", model->texture->getTextureUnit());
 
     model->doRender(eng);
 }

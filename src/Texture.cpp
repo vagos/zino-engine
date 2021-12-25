@@ -39,7 +39,7 @@ namespace zge
 
     void Texture::doUse()
     {
-        switch (texture_id)
+        switch (texture_unit)
         {
             case 0:
                 glActiveTexture(GL_TEXTURE0); break;

@@ -127,6 +127,7 @@ class TestingEngine : public zge::Engine
         auto tree_model = std::make_shared<zge::Model>("./assets/objs/tree.obj");
         auto sphere_model = std::make_shared<zge::Model>("./assets/objs/sphere.obj"); 
         std::shared_ptr<zge::Texture> moss_texture = std::make_shared<zge::Texture>("./assets/textures/trees/Mossy_Tr.bmp");
+        auto grass_texture = std::make_shared<zge::Texture>("./assets/textures/grass/grass_o.bmp");
 
         addAsset(tree_model, "Tree Model");
         addAsset(sphere_model, "Sphere Model");
@@ -134,10 +135,13 @@ class TestingEngine : public zge::Engine
 
         auto basic_shader = std::make_shared<zge::Shader>("./assets/shaders/basic.vert", "./assets/shaders/basic.frag"); 
         auto lighting_shader = std::make_shared<zge::Shader>("./assets/shaders/basic.vert", "./assets/shaders/lighting.frag"); // testing ligthing
-        auto texture_shader = std::make_shared<zge::Shader>("./assets/shaders/texture_shader.vert", "./assets/shaders/texture_shader.frag");
+        auto texture_shader = std::make_shared<zge::Shader>("./assets/shaders/texture.vert", "./assets/shaders/texture.frag");
 
         addAsset(basic_shader, "Basic Shader");
         addAsset(texture_shader, "Texture Shader");
+
+        addAsset(moss_texture, "Moss Texture");
+        addAsset(grass_texture, "Grass Texture");
 
         // cubemap stuff (skybox)
         auto skybox = std::make_shared<zge::Skybox>();
@@ -162,7 +166,7 @@ class TestingEngine : public zge::Engine
             //                 getRandomInt(-100, 100)                            
             //                 )));
             
-            new_tree->rigid_body->position = zge::Vector3(10.0f, 0.0f, 0.0f);
+            new_tree->rigid_body->position = zge::Vector3(0.0f, 0.0f, 0.0f);
 
             addObject(new_tree);
         }
