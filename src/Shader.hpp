@@ -12,6 +12,7 @@ namespace zge
 
 class LightSource;
 class Material;
+class Texture;
 
 class Shader : public Asset
 {
@@ -26,6 +27,7 @@ class Shader : public Asset
         void sendUniform(const std::string u_n, int n);
         void sendUniform(const std::string u_n, LightSource& l_s);
         void sendUniform(const std::string u_n, Material& m);
+        void sendUniform(const std::string u_n, Texture& m);
 
     private:
         std::unordered_map<std::string, GLuint> uniform_locations;

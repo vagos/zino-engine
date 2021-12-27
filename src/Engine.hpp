@@ -56,6 +56,8 @@ namespace zge
 
         int getRandomInt(int a, int b);
 
+        static int width, height;
+
     public:
 
         void _doRender();

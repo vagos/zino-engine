@@ -5,7 +5,8 @@
 - [X] Fix model/mesh abstractions
 - [X] Basic Physics
 - [X] Look at simple collisions
-- [ ] Fix Plane rendering
+- [X] Fix Plane rendering
+- [ ] Add shadows
 - [ ] Look at simple animations
 - [ ] Generate terrain
 

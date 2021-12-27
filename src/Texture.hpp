@@ -32,17 +32,19 @@ class Texture : public Asset
 {
     public:
         Texture(const std::string t_path); 
-        Texture() {}
+        Texture();
         
         void doLoad(const std::string t_path); // TODO: only loads BMP files for now.
         virtual void doUse();
+        virtual void doUse(int t_position);
 
         // void createContext();
 
         int getTextureUnit() {return texture_unit;}
+        GLuint texture_id;
+        int position;
 
     protected:
-        GLuint texture_id;
         static int texture_unit;
     
 };

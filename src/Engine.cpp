@@ -56,6 +56,8 @@ void zge::Engine::_doUpdate()
     {
         o->doUpdate(*this);
     }
+
+    Object::removeNullObjects();
 }
 
 bool zge::Engine::doConsturct(int w, int h, std::string &app_name)
@@ -110,6 +112,8 @@ bool zge::Engine::doConsturct(int w, int h, std::string &app_name)
     // logGLParameters();
 
     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+
+    Engine::width = w; Engine::height = h;
 
     return true;
 }
@@ -170,5 +174,8 @@ std::shared_ptr<Asset> Engine::getAsset(std::string asset_name)
 
     return assets[asset_name];
 }
+
+int Engine::width = 0;
+int Engine::height = 0;
 
 }

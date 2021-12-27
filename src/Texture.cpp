@@ -4,6 +4,12 @@
 
 namespace zge
 {
+
+    Texture::Texture()
+    {
+        glGenTextures(1, &texture_id);
+    }
+
     Texture::Texture(const std::string t_path)
     {
         doLoad(t_path);
@@ -52,6 +58,14 @@ namespace zge
         glBindTexture(GL_TEXTURE_2D, texture_id);
 
         // should do texture_unit++;
+    }
+
+    void Texture::doUse(int t_position)
+    {
+        glActiveTexture(GL_TEXTURE0 + t_position);
+        glBindTexture(GL_TEXTURE_2D, texture_id);
+
+        position = t_position;
     }
 
     int Texture::texture_unit = 0;

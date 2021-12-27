@@ -21,13 +21,11 @@ namespace zge
         
         Object();
 
-        static std::vector<std::shared_ptr<Object>> objects;
-
         virtual void doUpdate(Engine& eng) {}
         virtual void doRender(Engine& eng) {}
 
-        std::shared_ptr<Model> model             = nullptr;
-        std::shared_ptr<RigidBody> rigid_body    = nullptr;
+        std::shared_ptr<Model> model           = nullptr;
+        std::shared_ptr<RigidBody> rigid_body  = nullptr;
         std::shared_ptr<CubeCollider> collider = nullptr;
         
         void setModelMatrix(Matrix4x4 mat) {model_matrix = mat;}
@@ -35,10 +33,11 @@ namespace zge
 
         std::string name;
         
+        static std::vector<std::shared_ptr<Object>> objects;
+        static void removeNullObjects();
+        
     protected: 
         Matrix4x4 model_matrix;
-
-    private:
         bool exists;
     };
 

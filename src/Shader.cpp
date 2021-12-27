@@ -137,4 +137,9 @@ namespace zge
         sendUniform(u_n + ".shininess", m.shininess);
     }
 
+    void Shader::sendUniform(const std::string u_n, Texture& t)
+    {
+        sendUniform(u_n, t.position);
+    }
+
 }

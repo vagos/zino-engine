@@ -10,6 +10,8 @@ public:
     
     void doUpdate(zge::Engine &eng) override;
     void doRender(zge::Engine &eng) override;
+
+    int n_bounces = 0;
     
 
 };

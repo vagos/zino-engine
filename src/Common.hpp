@@ -10,7 +10,7 @@
 
 #include <iostream>
 
-#define Gl_Call()
+#define GLCall(c) c
 
 namespace zge 
 {

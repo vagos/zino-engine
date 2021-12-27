@@ -10,6 +10,7 @@
 #include "Shader.hpp"
 #include "Ball.hpp"
 #include "Cube.hpp"
+#include "ShadowMapper.hpp"
 
 #include <glm/ext/matrix_transform.hpp>
 #include <glm/gtx/string_cast.hpp>
@@ -36,7 +37,7 @@ struct Suzanne : public zge::Object
         zge::Matrix4x4 mvp = eng.camera.getProjection() * eng.camera.getView() * model_matrix;
 
         shader_file->sendUniform("mvp", mvp);
-        shader_file->sendUniform("texture_sampler", texture.getTextureUnit());
+        shader_file->sendUniform("texture_sampler", texture);
         shader_file->sendUniform("view_position", eng.camera.position);
 
         shader_file->sendUniform("material.ambient", zge::Vector3(1.0f, 0.5f, 0.31f));
@@ -95,7 +96,7 @@ struct Tree : public zge::Object
         zge::Matrix4x4 mvp = eng.camera.getProjection() * eng.camera.getView() * model_matrix;
 
         texture_shader->sendUniform("mvp", mvp);
-        texture_shader->sendUniform("texture_sampler", model->texture->getTextureUnit());
+        texture_shader->sendUniform("texture_sampler", *model->texture);
         texture_shader->sendUniform("material", material);
 
         model->doRender(eng);
@@ -108,7 +109,7 @@ struct Tree : public zge::Object
         zge::Matrix4x4 d_mvp = eng.camera.getProjection() * eng.camera.getView() * model_matrix;
         
         texture_shader->sendUniform("mvp", d_mvp);
-        texture_shader->sendUniform("texture_sampler", model->texture->getTextureUnit());
+        texture_shader->sendUniform("texture_sampler", *model->texture);
 
         debug_model->doRender(eng);
     }
@@ -136,9 +137,11 @@ class TestingEngine : public zge::Engine
         auto basic_shader = std::make_shared<zge::Shader>("./assets/shaders/basic.vert", "./assets/shaders/basic.frag"); 
         auto lighting_shader = std::make_shared<zge::Shader>("./assets/shaders/basic.vert", "./assets/shaders/lighting.frag"); // testing ligthing
         auto texture_shader = std::make_shared<zge::Shader>("./assets/shaders/texture.vert", "./assets/shaders/texture.frag");
+        auto depth_shader = std::make_shared<zge::Shader>("./assets/shaders/depth.vert", "./assets/shaders/depth.frag");
 
         addAsset(basic_shader, "Basic Shader");
         addAsset(texture_shader, "Texture Shader");
+        addAsset(depth_shader, "Depth Shader");
 
         addAsset(moss_texture, "Moss Texture");
         addAsset(grass_texture, "Grass Texture");
@@ -152,7 +155,7 @@ class TestingEngine : public zge::Engine
         auto cube = std::make_shared<Cube>(*this);
         addObject(cube);
 
-        for (int i = 0; i < 1; i++) // create trees
+        for (int i = 0; i < 0; i++) // create trees
         {
             auto new_tree = std::make_shared<Tree>(*this);
 
@@ -178,6 +181,8 @@ class TestingEngine : public zge::Engine
         auto monkey = std::make_shared<Suzanne>();
         monkey->model = suzanne_model;
         addObject(monkey);
+
+        s_m = std::make_shared<zge::Shadowmapper>();
     }
 
 
@@ -198,15 +203,25 @@ class TestingEngine : public zge::Engine
             new_ball->rigid_body->applyForce(camera.view_direction * 5000.0f);
             
             addObject(new_ball);
-
-            // std::clog << "new ball\n";
         }
     }
 
     void doRender() override
     {
+        // send texture to shadow mapper
+
+        auto texture_shader = getAssetTyped("Texture Shader", zge::Shader);
+        
+        // s_m->doRender(*this);
+
+        texture_shader->sendUniform("shadowmap_sampler", s_m->d_t);
+        texture_shader->sendUniform("light_vp", camera.getProjection() * camera.getView());
+
+        glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
     }
+
+    std::shared_ptr<zge::Shadowmapper> s_m;
 };
 
 

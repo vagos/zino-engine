@@ -6,6 +6,7 @@
 #include <stdexcept>
 #include <vector>
 #include <cassert>
+#include <algorithm>
 
 #include "Object.hpp"
 #include "Common.hpp"
@@ -21,25 +22,11 @@ Object::Object(): exists(true), model_matrix(Matrix4x4(1))
 {
 }
 
-
-/* Plane::Plane(float w, float h)
+void Object::removeNullObjects()
 {
-   auto plane_model = std::make_shared<Model>();
-
-   float size = w*h;
-
-   plane_model->setVertices(std::vector<Vector3>{
-       Vector3(-size, 0, -size),
-       Vector3(-size, 0, size),
-       Vector3(size, 0, size),
-
-       Vector3(-size, 0, -size),
-       Vector3(size, 0, -size),
-       Vector3(size, 0, size),
-   });
-
-   model_file = std::move(plane_model);
+    objects.erase( std::remove_if(objects.begin(), objects.end(), 
+            [](auto& o) {return !o->exists;}), objects.end() );
 }
-*/
+
 
 }

@@ -42,8 +42,11 @@ void Ball::doUpdate(zge::Engine &eng)
        if ( obj->collider && obj->rigid_body && collider->isColliding(*obj->collider, n) ) 
        {
             rigid_body->doCollision(n, *obj->rigid_body);
-            std::clog << "collision!\n\n";
-            std::clog << "n: " << glm::to_string(n) << '\n';
+            // std::clog << "collision!\n\n";
+            // std::clog << "n: " << glm::to_string(n) << '\n';
+            n_bounces++;
+
+            // if (n_bounces == 3) exists = false;
        }
     }
 

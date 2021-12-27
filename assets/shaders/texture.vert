@@ -7,8 +7,11 @@ layout(location = 2) in vec2 vertex_uv;
 out vec2 uv;
 out vec3 normal;
 out vec4 vertex_position_worldspace;
+out vec4 vertex_position_lightspace;
+
 
 uniform mat4 mvp;
+uniform mat4 light_vp;
 
 void main()
 {
@@ -17,4 +20,6 @@ void main()
 
     uv = vertex_uv;
     normal = vertex_normal;
+
+    vertex_position_lightspace = vertex_position_worldspace;
 }
