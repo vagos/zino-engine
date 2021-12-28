@@ -19,6 +19,7 @@ class Window_c // Wrapper for a Window backend. (Not implemented)
 
 #define getAssetTyped(asset_n, asset_t) std::static_pointer_cast<asset_t>(getAsset(asset_n))
 #define eng_getAssetTyped(asset_n, asset_t) std::static_pointer_cast<asset_t>(eng.getAsset(asset_n))
+#define eng_getObjectTyped(obj_n, obj_t) std::static_pointer_cast<obj_t>(eng.getObject(obj_n))
 
 namespace zge 
 {
@@ -39,6 +40,8 @@ namespace zge
         bool doConsturct(int w, int h, std::string& app_name);
 
         void addObject(std::shared_ptr<Object> obj);
+        void addObject(std::shared_ptr<Object> obj, std::string obj_name);
+        std::shared_ptr<Object> getObject(std::string object_name);
 
         void addAsset(std::shared_ptr<Asset> asset, std::string asset_name);
         std::shared_ptr<Asset> getAsset(std::string asset_name);
@@ -75,10 +78,8 @@ namespace zge
 
         Window* window;
 
-        // GLuint basic_shader_program_id; 
-        GLuint mvp_uniform_location;
-
         std::unordered_map<std::string, std::shared_ptr<Asset>> assets;
+        std::unordered_map<std::string, std::shared_ptr<Object>> objects;
 
         friend Object;
 

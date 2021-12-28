@@ -80,7 +80,7 @@ float calculate_shadow(vec4 position_lightspace, sampler2D sm_sampler)
     return shadow;
 }
 
-vec3 calculate_light_directional(s_light light, s_material material)
+vec3 calculate_light_directional(s_light light, s_material material, float visibility)
 {
     vec3 norm = normalize(normal);
     vec3 light_direction = normalize(light.position);
@@ -98,7 +98,7 @@ vec3 calculate_light_directional(s_light light, s_material material)
     float spec = pow(max(dot(view_direction, reflect_direction), 0.0), material.shininess);
     vec3 specular = light.specular * (spec * material.specular);
 
-    return ambient + diffuse + specular;
+    return ambient + (diffuse + specular) * visibility;
 }
 
 vec3 calculate_light(s_light light, s_material material)
@@ -122,16 +122,17 @@ vec3 calculate_light(s_light light, s_material material)
     // slowly fade off light
     float d = distance(light.position, vertex_position_worldspace.xyz);
     float attenuation = 1.0 / (light.Kc + light.Kl * d + light.Kq * d * d);
-    ambient  *= attenuation; 
+    // ambient  *= attenuation; 
     diffuse  *= attenuation;
     specular *= attenuation;   
 
     return ambient + diffuse + specular;
 }
 
-
 void main()
 {
-    vec3 light_calced = calculate_light_directional(light, material);
+    float shadow = calculate_shadow(vertex_position_lightspace, shadowmap_sampler);
+    vec3 light_calced = calculate_light_directional(light, material, 1 - shadow);
+
     color = vec4(light_calced * texture(texture_sampler, uv).rgb, 1.0);
 }

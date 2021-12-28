@@ -40,6 +40,8 @@ public:
 
     void doCollision(Vector3& collision_direction, RigidBody& o_rb);
 
+    void setPosition(Vector3 p) {position = p;}
+
 private:
 
     void updateStateVector();

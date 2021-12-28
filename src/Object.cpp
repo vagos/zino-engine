@@ -18,8 +18,19 @@ namespace zge
 
 std::vector<std::shared_ptr<Object>>  Object::objects;
 
-Object::Object(): exists(true), model_matrix(Matrix4x4(1))
+Object::Object(): exists(true), model_matrix(Matrix4x4(1)), base_model_matrix(Matrix4x4(1))
 {
+}
+
+void Object::setModelMatrix(Matrix4x4 m)
+{
+    model_matrix = m;
+}
+
+void Object::applyTransofrmation(Matrix4x4 &&m)
+{
+    base_model_matrix = m * base_model_matrix;
+    if (collider) collider->updatePoints(getModelMatrix());
 }
 
 void Object::removeNullObjects()
@@ -28,5 +39,9 @@ void Object::removeNullObjects()
             [](auto& o) {return !o->exists;}), objects.end() );
 }
 
+Matrix4x4 Object::getModelMatrix()
+{
+    return model_matrix * base_model_matrix;
+}
 
 }

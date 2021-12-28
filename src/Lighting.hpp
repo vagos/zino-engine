@@ -3,6 +3,7 @@
 
 #include "Common.hpp"
 #include "Object.hpp"
+#include <glm/ext/matrix_transform.hpp>
 
 namespace zge
 {
@@ -21,10 +22,19 @@ public:
         specular = zge::Vector3(1.0f, 1.0f, 1.0f); 
 
         n_lights++;
+
+        projection = glm::ortho(-10.0f, 10.0f, -10.0f, 10.0f, 
+                1.0f, 7.5f);
+
+        look_at = glm::lookAt(
+              glm::vec3(-2.0f, 10.0f, -1.0f), 
+              glm::vec3( 0.0f, 0.0f,  0.0f), 
+              glm::vec3( 0.0f, 1.0f,  0.0f));
     }
 
     void doUpdate(Engine &eng) override;
     void doRender(Engine &eng) override;
+
 
     zge::Vector3 position;
          
@@ -33,6 +43,13 @@ public:
     zge::Vector3 ambient;
     zge::Vector3 diffuse;
     zge::Vector3 specular;
+    
+    Matrix4x4 look_at;
+    Matrix4x4 projection;
+
+    Matrix4x4& getProjection() {return projection;}
+    Matrix4x4& getView() {return look_at;}
+
 };
 
 };

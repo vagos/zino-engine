@@ -28,16 +28,23 @@ namespace zge
         std::shared_ptr<RigidBody> rigid_body  = nullptr;
         std::shared_ptr<CubeCollider> collider = nullptr;
         
-        void setModelMatrix(Matrix4x4 mat) {model_matrix = mat;}
-        Matrix4x4& getModelMatrix() {return model_matrix;}
+        Matrix4x4 getModelMatrix();
+        void setModelMatrix(Matrix4x4 m); 
+
+        void resetModelMatrix() { model_matrix = Matrix4x4(1); }
+
+        void applyTransofrmation(Matrix4x4&& m);
 
         std::string name;
         
         static std::vector<std::shared_ptr<Object>> objects;
         static void removeNullObjects();
         
-    protected: 
+    private: 
         Matrix4x4 model_matrix;
+        Matrix4x4 base_model_matrix;
+
+    protected:
         bool exists;
     };
 

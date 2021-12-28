@@ -1,4 +1,5 @@
 #include "Cube.hpp"
+#include "Common.hpp"
 #include "Engine.hpp"
 #include "Model.hpp"
 #include "RigidBody.hpp"
@@ -9,15 +10,15 @@ Cube::Cube(zge::Engine& eng)
     model->texture = eng_getAssetTyped("Grass Texture", zge::Texture);
     rigid_body = std::make_shared<zge::RigidBody>();
     
-    model_matrix = glm::scale(model_matrix, zge::Vector3(100.0f, 1.0f, 100.0f));
 
-    for (int i = 0; i < model->vertices.size(); i++)
-    {
-        auto& v = model->vertices[i];
-        v = zge::Vector3(model_matrix * zge::Vector4(v, 1.0f));
-    }
+    // for (int i = 0; i < model->vertices.size(); i++)
+    // {
+    //     auto& v = model->vertices[i];
+    //     v = zge::Vector3(model_matrix * zge::Vector4(v, 1.0f));
+    // }
 
     collider = std::make_shared<zge::CubeCollider>(*model, rigid_body->position);
+    applyTransofrmation(glm::scale(zge::Matrix4x4(1), zge::Vector3(100.0f, 1.0f, 100.0f)));
 }
 
 void Cube::doRender(zge::Engine& eng)
@@ -28,9 +29,10 @@ void Cube::doRender(zge::Engine& eng)
     
     model->doUse();
     
-    zge::Matrix4x4 mvp = eng.camera.getProjection() * eng.camera.getView() * model_matrix;
+    zge::Matrix4x4 mvp = eng.camera.getProjection() * eng.camera.getView() * getModelMatrix();
     basic_shader->sendUniform("mvp", mvp);
-    basic_shader->sendUniform("texture_sampler", model->texture->getTextureUnit());
+    basic_shader->sendUniform("m", getModelMatrix());
+    basic_shader->sendUniform("texture_sampler", *model->texture);
 
     model->doRender(eng);
 }

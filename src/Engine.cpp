@@ -3,6 +3,7 @@
 #include <fstream>
 
 #include "Engine.hpp"
+#include "Model.hpp"
 #include "Object.hpp"
 #include "Common.hpp"
 
@@ -54,6 +55,7 @@ void zge::Engine::_doUpdate()
 
     for (auto& o : Object::objects)
     {
+        o->resetModelMatrix();
         o->doUpdate(*this);
     }
 
@@ -142,6 +144,12 @@ void zge::Engine::addObject(std::shared_ptr<Object> obj)
     Object::objects.push_back(obj);
 }
 
+void Engine::addObject(std::shared_ptr<Object> obj, std::string obj_name)
+{
+    addObject(obj);
+    objects[obj_name] = obj;
+}
+
 bool zge::Engine::isKeyPressed(int key)
 {
     if (key_cooldown < 0) return glfwGetKey(window, key) == GLFW_PRESS;
@@ -172,8 +180,16 @@ std::shared_ptr<Asset> Engine::getAsset(std::string asset_name)
 
     if (!asset) std::runtime_error("Asset not found!");
 
-    return assets[asset_name];
+    return asset;
 }
+
+std::shared_ptr<Object> Engine::getObject(std::string object_name)
+{
+    auto object = objects[object_name];
+    if (!object) std::runtime_error("Object not found!");
+    return object;
+}
+
 
 int Engine::width = 0;
 int Engine::height = 0;

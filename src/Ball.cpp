@@ -22,8 +22,9 @@ void Ball::doRender(zge::Engine &eng)
     
     model->doUse();
     
-    zge::Matrix4x4 mvp = eng.camera.getProjection() * eng.camera.getView() * model_matrix;
+    zge::Matrix4x4 mvp = eng.camera.getProjection() * eng.camera.getView() * getModelMatrix();
     basic_shader->sendUniform("mvp", mvp);
+    basic_shader->sendUniform("m", getModelMatrix());
 
     model->doRender(eng);
 }
@@ -50,5 +51,5 @@ void Ball::doUpdate(zge::Engine &eng)
        }
     }
 
-    setModelMatrix(glm::translate(zge::Matrix4x4(1), rigid_body->position));
+    setModelMatrix(glm::translate(getModelMatrix(), rigid_body->position));
 }

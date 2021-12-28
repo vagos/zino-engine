@@ -42,7 +42,7 @@ class Texture : public Asset
 
         int getTextureUnit() {return texture_unit;}
         GLuint texture_id;
-        int position;
+        int position = 0;
 
     protected:
         static int texture_unit;

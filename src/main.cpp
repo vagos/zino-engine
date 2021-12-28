@@ -34,7 +34,7 @@ struct Suzanne : public zge::Object
         model->doUse();
         texture.doUse();
 
-        zge::Matrix4x4 mvp = eng.camera.getProjection() * eng.camera.getView() * model_matrix;
+        zge::Matrix4x4 mvp = eng.camera.getProjection() * eng.camera.getView() * getModelMatrix();
 
         shader_file->sendUniform("mvp", mvp);
         shader_file->sendUniform("texture_sampler", texture);
@@ -77,15 +77,23 @@ struct Tree : public zge::Object
     Tree(zge::Engine& eng): material(zge::Vector3(1.0f, 0.5, 0.31f), 
             zge::Vector3(1.0f, 0.5f, 0.31f), zge::Vector3(0.5f, 0.5f, 0.5f), 32.0f)
     {
-        setModelMatrix(glm::scale(getModelMatrix(), zge::Vector3(0.2f)));
-
         model = std::static_pointer_cast<zge::Model>(eng.getAsset("Tree Model"));
         rigid_body = std::make_shared<zge::RigidBody>();
-        rigid_body->mass = 1000000.0f;
+
+        rigid_body->setPosition(zge::Vector3(10, 10, 10));
 
         collider = std::make_shared<zge::CubeCollider>(*model, rigid_body->position);
 
         debug_model = eng_getAssetTyped("Sphere Model", zge::Model);
+
+        // setModelMatrix(glm::scale(getModelMatrix(), zge::Vector3(0.2f)));
+
+        applyTransofrmation(glm::scale(zge::Matrix4x4(1), zge::Vector3(0.2)));
+    }
+
+    void doUpdate(zge::Engine& eng) override
+    {
+        setModelMatrix(glm::translate(zge::Matrix4x4(1), rigid_body->position));
     }
 
     void doRender(zge::Engine &eng) override
@@ -93,9 +101,10 @@ struct Tree : public zge::Object
         texture_shader->doUse();
         model->doUse();
 
-        zge::Matrix4x4 mvp = eng.camera.getProjection() * eng.camera.getView() * model_matrix;
+        zge::Matrix4x4 mvp = eng.camera.getProjection() * eng.camera.getView() * getModelMatrix();
 
         texture_shader->sendUniform("mvp", mvp);
+        texture_shader->sendUniform("m", getModelMatrix());
         texture_shader->sendUniform("texture_sampler", *model->texture);
         texture_shader->sendUniform("material", material);
 
@@ -106,7 +115,7 @@ struct Tree : public zge::Object
         // zge::Matrix4x4 d_mvp = eng.camera.getProjection() * eng.camera.getView() * glm::scale(zge::Matrix4x4(1), zge::Vector3(collider->radius))
         //     * model_matrix;
 
-        zge::Matrix4x4 d_mvp = eng.camera.getProjection() * eng.camera.getView() * model_matrix;
+        zge::Matrix4x4 d_mvp = eng.camera.getProjection() * eng.camera.getView() * getModelMatrix();
         
         texture_shader->sendUniform("mvp", d_mvp);
         texture_shader->sendUniform("texture_sampler", *model->texture);
@@ -155,7 +164,7 @@ class TestingEngine : public zge::Engine
         auto cube = std::make_shared<Cube>(*this);
         addObject(cube);
 
-        for (int i = 0; i < 0; i++) // create trees
+        for (int i = 0; i < 1; i++) // create trees
         {
             auto new_tree = std::make_shared<Tree>(*this);
 
@@ -169,14 +178,14 @@ class TestingEngine : public zge::Engine
             //                 getRandomInt(-100, 100)                            
             //                 )));
             
-            new_tree->rigid_body->position = zge::Vector3(0.0f, 0.0f, 0.0f);
+            // new_tree->rigid_body->position = zge::Vector3(0.0f, 0.0f, 0.0f);
 
             addObject(new_tree);
         }
 
         main_light = std::make_shared<zge::LightSource>();
         main_light->model = cube_model;
-        addObject(main_light);
+        addObject(main_light, "Main Light");
 
         auto monkey = std::make_shared<Suzanne>();
         monkey->model = suzanne_model;
@@ -190,7 +199,6 @@ class TestingEngine : public zge::Engine
     {
         if (isKeyPressed(Key(J)))
         {
-            main_light->setModelMatrix(glm::translate(zge::Matrix4x4(1), camera.position));
             main_light->position = camera.position;
         }
 
@@ -198,9 +206,9 @@ class TestingEngine : public zge::Engine
         {
             auto new_ball = std::make_shared<Ball>(*this);
 
-            new_ball->rigid_body->position = camera.position + 10.0f * camera.view_direction;
+            new_ball->rigid_body->position = camera.position;
             new_ball->rigid_body->mass = 100.0f;
-            new_ball->rigid_body->applyForce(camera.view_direction * 5000.0f);
+            new_ball->rigid_body->applyForce(camera.view_direction * 50000.0f);
             
             addObject(new_ball);
         }
@@ -212,12 +220,12 @@ class TestingEngine : public zge::Engine
 
         auto texture_shader = getAssetTyped("Texture Shader", zge::Shader);
         
-        // s_m->doRender(*this);
+        s_m->doRender(*this);
+
+        s_m->d_t.doUse(3);
 
         texture_shader->sendUniform("shadowmap_sampler", s_m->d_t);
-        texture_shader->sendUniform("light_vp", camera.getProjection() * camera.getView());
-
-        glBindFramebuffer(GL_FRAMEBUFFER, 0);
+        texture_shader->sendUniform("light_vp", main_light->getProjection() * main_light->getView());
 
     }
 

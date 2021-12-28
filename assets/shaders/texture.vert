@@ -12,6 +12,7 @@ out vec4 vertex_position_lightspace;
 
 uniform mat4 mvp;
 uniform mat4 light_vp;
+uniform mat4 m;
 
 void main()
 {
@@ -21,5 +22,5 @@ void main()
     uv = vertex_uv;
     normal = vertex_normal;
 
-    vertex_position_lightspace = vertex_position_worldspace;
+    vertex_position_lightspace = light_vp * m * vertex_position_worldspace;
 }

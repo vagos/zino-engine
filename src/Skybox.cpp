@@ -25,7 +25,7 @@ namespace zge
         s_shader.doUse();
         model->doUse();
 
-        zge::Matrix4x4 mvp = eng.camera.getProjection() * zge::Matrix4x4(zge::Matrix3x3(eng.camera.getView())) * model_matrix;
+        zge::Matrix4x4 mvp = eng.camera.getProjection() * zge::Matrix4x4(zge::Matrix3x3(eng.camera.getView())) * getModelMatrix();
         // zge::Matrix4x4 mvp = eng.camera.getProjection() * eng.camera.getView() * model_matrix;
 
         s_shader.sendUniform("mvp", mvp);

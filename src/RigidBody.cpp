@@ -189,4 +189,4 @@ std::vector<float> RigidBody::RungeKuta4(const std::vector<float>& state_0, floa
     return state_4;
 }
 
-} // nespace zge
+} // nameespace zge

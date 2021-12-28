@@ -16,7 +16,7 @@ namespace zge
         light_shader->sendUniform("view_position", eng.camera.position);
 
         auto basic_shader = eng_getAssetTyped("Basic Shader", zge::Shader);
-        zge::Matrix4x4 mvp = eng.camera.getProjection() * eng.camera.getView() * model_matrix;
+        zge::Matrix4x4 mvp = eng.camera.getProjection() * eng.camera.getView() * getModelMatrix();
         basic_shader->doUse();
         basic_shader->sendUniform("mvp", mvp);
 

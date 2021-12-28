@@ -18,6 +18,8 @@ public:
     {
     }
 
+    virtual void updatePoints(Matrix4x4&& m) {}
+
     Vector3& position;
     Vector3 position_offset;
 
@@ -39,6 +41,7 @@ public:
 
     bool isColliding(CubeCollider& other, Vector3& collision_direction);
     void setCorners(Model& model);
+    void updatePoints(Matrix4x4 &&m) override;
 
 private:
     bool has_collided = false; // TODO remove

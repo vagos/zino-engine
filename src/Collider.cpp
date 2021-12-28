@@ -1,5 +1,6 @@
 #include "Collider.hpp"
 #include "Common.hpp"
+#include <glm/gtx/string_cast.hpp>
 
 #define max(a, b) a > b ? a : b
 #define min(a, b) a < b ? a : b
@@ -79,6 +80,26 @@ namespace zge
 
         max_z = max_z - position.z;
         min_z = min_z - position.z;
+    }
+
+    void CubeCollider::updatePoints(Matrix4x4 &&m)
+    {
+        Vector3 max_v{max_x, max_y, max_z};
+        Vector3 min_v{min_x, min_y, min_z};
+
+        // max_v = Vector3(m * Vector4(max_v, 1.0f));
+        // min_v = Vector3(m * Vector4(min_v, 1.0f));
+
+        max_v = Vector3(Matrix3x3(m) * max_v);
+        min_v = Vector3(Matrix3x3(m) * min_v);
+
+        max_x = max_v.x;
+        max_y = max_v.y;
+        max_z = max_v.z;
+
+        min_x = min_v.x;
+        min_y = min_v.y;
+        min_z = min_v.z;
     }
 
 }

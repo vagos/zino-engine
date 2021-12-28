@@ -57,7 +57,7 @@ namespace zge
 
         glBindTexture(GL_TEXTURE_2D, texture_id);
 
-        // should do texture_unit++;
+        // texture_unit++;
     }
 
     void Texture::doUse(int t_position)
