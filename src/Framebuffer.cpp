@@ -6,6 +6,9 @@ namespace zge
     
     void Framebuffer::attachTexture(Texture &t)
     {
+    
+        GLCall(glBindFramebuffer(GL_FRAMEBUFFER, framebuffer_object));
+
         GLCall(glBindTexture(GL_TEXTURE_2D, t.texture_id));
         GLCall(glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT, Engine::width, Engine::height, 0,
 		GL_DEPTH_COMPONENT, GL_FLOAT, NULL));

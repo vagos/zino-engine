@@ -1,4 +1,5 @@
 #include "ShadowMapper.hpp"
+#include "Engine.hpp"
 #include "Lighting.hpp"
 
 namespace zge 
@@ -6,7 +7,6 @@ namespace zge
 
     Shadowmapper::Shadowmapper()
     {
-       f_b.doUse(); 
        f_b.attachTexture(d_t); 
     }
 
@@ -31,6 +31,14 @@ namespace zge
         }
 
         f_b.doUnuse();
+
+        auto debug_shader = eng_getAssetTyped("Debug Shader", Shader);
+
+        debug_shader->doUse();
+
+        debug_shader->sendUniform("depthmap_sampler", 0);
+        
+        quad.doRender(eng);
     }
 
 }

@@ -5,10 +5,9 @@
 
 #include <stdexcept>
 
+
 namespace zge
 {
-
-static std::vector<unsigned int> VEC_UINT_DEFAUTL_VALUE{}; // What the honk is this???
 
 Model::Model(std::string m_path)
 {
@@ -37,7 +36,7 @@ void Model::doLoad(std::string m_path)
     std::vector<tinyobj::material_t> materials;
     std::string error;
 
-    std::vector<unsigned int>& indices = VEC_UINT_DEFAUTL_VALUE; // TODO what is this???
+    std::vector<unsigned int>& indices = VEC_UINT_DEFAULT_VALUE; // TODO what is this???
 
     if (!tinyobj::LoadObj(&attrib, &shapes, &materials, nullptr, &error, m_path.c_str()))
     {
@@ -147,6 +146,12 @@ void Model::doRender(Engine &eng)
     glDrawArrays(GL_TRIANGLES, 0, vertices.size());
 }
 
+
+Model::Model(const std::vector<Vector3> &vertices, const std::vector<Vector2> &uvs, const std::vector<Vector3> &normals)
+    :vertices(vertices), uvs(uvs), normals(normals)
+{
+   createContext(); 
+}
 
 }
 

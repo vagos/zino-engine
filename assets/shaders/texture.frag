@@ -50,32 +50,10 @@ float calculate_shadow(vec4 position_lightspace, sampler2D sm_sampler)
 
     // Then we get the depth of the current vertex
     float current_depth = projected_coordinates.z ;
-    // If the currentDepth is larger than the closestDepth, the fragment is shadowed
-    // shadow = current_depth > closest_depth ? 1.0 : 0.0;
 
     // Correcting the quantization problem
     float bias = 0.005;
     shadow = current_depth - bias > closest_depth ? 1.0: 0.0 ;
-
-
-    // Make the shadow edges more realistic
-    /*
-    shadow = 0.0;
-    vec2 depthMap_dimensions = textureSize(shadowMapSampler, 0);
-    vec2 texelSize = 1.0 / depthMap_dimensions;
-    for(int x = -1; x <= 1; x++ ){
-        for(int y = -1; y <= 1; y++ ){
-            float pcfDepth = texture(shadowMapSampler, projCoords.xy + vec2(x, y) * texelSize).r;
-            shadow += currentDepth - bias > pcfDepth ? 1.0 : 0.0;
-        }
-    }
-    shadow /= 9.0;
-    */
-
-    /*/
-    if(projCoords.z > 1.0)
-        shadow = 0.0;
-    //*/
 
     return shadow;
 }

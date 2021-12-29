@@ -147,10 +147,12 @@ class TestingEngine : public zge::Engine
         auto lighting_shader = std::make_shared<zge::Shader>("./assets/shaders/basic.vert", "./assets/shaders/lighting.frag"); // testing ligthing
         auto texture_shader = std::make_shared<zge::Shader>("./assets/shaders/texture.vert", "./assets/shaders/texture.frag");
         auto depth_shader = std::make_shared<zge::Shader>("./assets/shaders/depth.vert", "./assets/shaders/depth.frag");
+        auto debug_shader = std::make_shared<zge::Shader>("./assets/shaders/debug.vert", "./assets/shaders/debug.frag");
 
         addAsset(basic_shader, "Basic Shader");
         addAsset(texture_shader, "Texture Shader");
         addAsset(depth_shader, "Depth Shader");
+        addAsset(debug_shader, "Debug Shader");
 
         addAsset(moss_texture, "Moss Texture");
         addAsset(grass_texture, "Grass Texture");

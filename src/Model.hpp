@@ -13,10 +13,17 @@ namespace zge
 
 class Engine;
 
+static std::vector<unsigned int> VEC_UINT_DEFAULT_VALUE{}; // Empty vectors as default values.
+static std::vector<Vector3>      VEC_VEC3_DEFAULT_VALUE{};
+static std::vector<Vector2>      VEC_VEC2_DEFAULT_VALUE{};
+
 struct Model : public Asset
 {
-       Model(std::string m_path);
        Model();
+       Model(std::string m_path);
+       Model(const std::vector<Vector3> &vertices, 
+             const std::vector<Vector2> &uvs = VEC_VEC2_DEFAULT_VALUE, 
+             const std::vector<Vector3> &normals = VEC_VEC3_DEFAULT_VALUE);
        ~Model();
 
        void doLoad(std::string m_path); // Change the internal model later.
@@ -42,7 +49,6 @@ struct Model : public Asset
               model_normals_vbo, 
               model_elements_vbo;
 };
-
 }
 
 #endif /* MODEL_HPP */
