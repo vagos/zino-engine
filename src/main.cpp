@@ -10,7 +10,9 @@
 #include "Shader.hpp"
 #include "Ball.hpp"
 #include "Cube.hpp"
+#include "Particles.hpp"
 #include "ShadowMapper.hpp"
+#include "Tree.hpp"
 
 #include <glm/ext/matrix_transform.hpp>
 #include <glm/gtx/string_cast.hpp>
@@ -67,64 +69,6 @@ struct Suzanne : public zge::Object
 
 };
 
-struct Tree : public zge::Object
-{
-
-    std::shared_ptr<zge::Shader> texture_shader = nullptr;
-    std::shared_ptr<zge::Model> debug_model = nullptr;
-    zge::Material material;
-
-    Tree(zge::Engine& eng): material(zge::Vector3(1.0f, 0.5, 0.31f), 
-            zge::Vector3(1.0f, 0.5f, 0.31f), zge::Vector3(0.5f, 0.5f, 0.5f), 32.0f)
-    {
-        model = std::static_pointer_cast<zge::Model>(eng.getAsset("Tree Model"));
-        rigid_body = std::make_shared<zge::RigidBody>();
-
-        rigid_body->setPosition(zge::Vector3(10, 10, 10));
-
-        collider = std::make_shared<zge::CubeCollider>(*model, rigid_body->position);
-
-        debug_model = eng_getAssetTyped("Sphere Model", zge::Model);
-
-        // setModelMatrix(glm::scale(getModelMatrix(), zge::Vector3(0.2f)));
-
-        applyTransofrmation(glm::scale(zge::Matrix4x4(1), zge::Vector3(0.2)));
-    }
-
-    void doUpdate(zge::Engine& eng) override
-    {
-        setModelMatrix(glm::translate(zge::Matrix4x4(1), rigid_body->position));
-    }
-
-    void doRender(zge::Engine &eng) override
-    {
-        texture_shader->doUse();
-        model->doUse();
-
-        zge::Matrix4x4 mvp = eng.camera.getProjection() * eng.camera.getView() * getModelMatrix();
-
-        texture_shader->sendUniform("mvp", mvp);
-        texture_shader->sendUniform("m", getModelMatrix());
-        texture_shader->sendUniform("texture_sampler", *model->texture);
-        texture_shader->sendUniform("material", material);
-
-        model->doRender(eng);
-
-        debug_model->doUse();
-
-        // zge::Matrix4x4 d_mvp = eng.camera.getProjection() * eng.camera.getView() * glm::scale(zge::Matrix4x4(1), zge::Vector3(collider->radius))
-        //     * model_matrix;
-
-        zge::Matrix4x4 d_mvp = eng.camera.getProjection() * eng.camera.getView() * getModelMatrix();
-        
-        texture_shader->sendUniform("mvp", d_mvp);
-        texture_shader->sendUniform("texture_sampler", *model->texture);
-
-        debug_model->doRender(eng);
-    }
-
-};
-
 class TestingEngine : public zge::Engine
 {
     std::shared_ptr<Ball> ball;
@@ -138,7 +82,9 @@ class TestingEngine : public zge::Engine
         auto sphere_model = std::make_shared<zge::Model>("./assets/objs/sphere.obj"); 
         std::shared_ptr<zge::Texture> moss_texture = std::make_shared<zge::Texture>("./assets/textures/trees/Mossy_Tr.bmp");
         auto grass_texture = std::make_shared<zge::Texture>("./assets/textures/grass/grass_o.bmp");
+        auto fiert_texture = std::make_shared<zge::Texture>("./assets/textures/fiery.bmp");
 
+        addAsset(fiert_texture, "Fiery Texture");
         addAsset(tree_model, "Tree Model");
         addAsset(sphere_model, "Sphere Model");
         addAsset(cube_model, "Cube Model");
@@ -170,9 +116,6 @@ class TestingEngine : public zge::Engine
         {
             auto new_tree = std::make_shared<Tree>(*this);
 
-            new_tree->model->texture = moss_texture;
-            new_tree->texture_shader = texture_shader;
-        
             // new_tree->setModelMatrix(glm::translate(new_tree->getModelMatrix(), 
             //             zge::Vector3(
             //                 getRandomInt(-100, 100),
@@ -191,9 +134,15 @@ class TestingEngine : public zge::Engine
 
         auto monkey = std::make_shared<Suzanne>();
         monkey->model = suzanne_model;
-        addObject(monkey);
+        // addObject(monkey);
 
         s_m = std::make_shared<zge::Shadowmapper>();
+
+        // particles 
+        auto particle_shader = std::make_shared<zge::Shader>("./assets/shaders/particle.vert", "./assets/shaders/particle.frag");
+        addAsset(particle_shader, "Particle Shader");
+        auto particle_emitter = std::make_shared<zge::ParticleEmitter>(*this);
+        // addObject(particle_emitter, "Particle Emitter");
     }
 
 

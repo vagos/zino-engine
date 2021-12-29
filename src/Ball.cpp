@@ -2,6 +2,8 @@
 #include "Collider.hpp"
 #include "Common.hpp"
 #include "Engine.hpp"
+#include "Tree.hpp"
+
 #include <glm/gtx/dual_quaternion.hpp>
 #include <glm/gtx/string_cast.hpp>
 #include <memory>
@@ -18,7 +20,11 @@ void Ball::doRender(zge::Engine &eng)
 {
     std::shared_ptr<zge::Shader> basic_shader = eng_getAssetTyped("Texture Shader", zge::Shader);
 
+    auto t = eng_getAssetTyped("Fiery Texture", zge::Texture);
+
     basic_shader->doUse();
+
+    t->doUse();
     
     model->doUse();
     
@@ -47,7 +53,14 @@ void Ball::doUpdate(zge::Engine &eng)
             // std::clog << "n: " << glm::to_string(n) << '\n';
             n_bounces++;
 
-            // if (n_bounces == 3) exists = false;
+            if (n_bounces == 3) 
+            {
+                exists = false;
+
+                auto monster = std::make_shared<Tree>(eng);
+                monster->rigid_body->setPosition(rigid_body->position);
+                eng.addObject(monster);
+            }
        }
     }
 

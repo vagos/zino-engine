@@ -25,7 +25,7 @@ namespace zge
         // Render the scene
         for (auto& o : Object::objects)
         {
-            o->model->doUse();
+            if (o->model) o->model->doUse();
             zge::Matrix4x4 mvp = main_light->getView() * main_light->getProjection() * o->getModelMatrix();
             depth_shader->sendUniform("mvp", mvp);
         }
