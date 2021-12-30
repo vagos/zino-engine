@@ -29,7 +29,10 @@ struct ParticleEmitter : public Object
     std::shared_ptr<Model> particle_model;
 
     std::vector<Particle> particles;
-    int n_particles = 100;
+    int n_particles = 50;
+
+    float total_time = 10;
+    float creation_time;
 
     std::size_t i_last_used_particle;
 

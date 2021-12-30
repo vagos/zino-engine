@@ -2,6 +2,8 @@
 #include "Engine.hpp"
 #include <cstddef>
 
+#define rnd eng.getRandomFloat() * 2 - 1
+
 namespace zge 
 {
     ParticleEmitter::ParticleEmitter(Engine& eng)
@@ -10,20 +12,14 @@ namespace zge
         particle_model = eng_getAssetTyped("Cube Model", Model);
         shader = eng_getAssetTyped("Particle Shader", Shader);
         texture = eng_getAssetTyped("Grass Texture", Texture);
+
+        creation_time = eng.getTime(); 
+
+        std::clog << "PE: " << creation_time << '\n';
     }
 
     void ParticleEmitter::doUpdate(Engine &eng)
     {
-       // const int n_new_particles = 0;    
-
-       // for (int i = 0; i < n_new_particles; i++)
-       // {
-       //     int i_unused_p = getUnusedParticle(); 
-
-       //     auto& new_p = particles[i_unused_p];
-
-       // }
-    
        float dt = eng.getElapsedTime();
 
        for (auto& p : particles)
@@ -36,14 +32,16 @@ namespace zge
             }
             else
             {
-
                p.life = 10.0f;
-               p.position = position;
-               p.velocity = Vector3(eng.getRandomInt(-10, 10), 1, 0);
-               p.color = Vector4(1.0, 0.0, 0.0, 1.0);
-
+               p.position = position + Vector3(rnd, rnd, rnd) * 2.0f; 
+               p.velocity = Vector3(0, 1, 0);
+               // p.color = Vector4(1.0, 0.0, 0.0, 1.0);
             }
        }
+
+       total_time -= dt;
+
+       if (total_time < 0) exists = false;
     }
 
     void ParticleEmitter::doRender(Engine &eng)
@@ -52,14 +50,18 @@ namespace zge
 
         shader->doUse();
 
+        shader->sendUniform("time", eng.getTime() - creation_time);
+
         for (auto& p : particles)
         {
             auto mvp = eng.camera.getProjection() * eng.camera.getView() * 
                 glm::translate(Matrix4x4(1), p.position);
+
+            particle_model->doUse(); // You need to USE the model before RENDERING
             
             shader->sendUniform("mvp", mvp);
-            texture->doUse();
-            shader->sendUniform("texture_sampler", *texture);
+            // texture->doUse();
+            // shader->sendUniform("texture_sampler", *texture);
 
             particle_model->doRender(eng);
         }
@@ -88,7 +90,8 @@ namespace zge
         i_last_used_particle = 0;
 
         return i_last_used_particle;
-
     }
 
 } // namespace zge
+
+#undef rnd

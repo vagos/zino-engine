@@ -58,6 +58,7 @@ namespace zge
         bool isKeyHeld(int key);
 
         int getRandomInt(int a, int b);
+        float getRandomFloat();
 
         static int width, height;
 
@@ -80,6 +81,8 @@ namespace zge
 
         std::unordered_map<std::string, std::shared_ptr<Asset>> assets;
         std::unordered_map<std::string, std::shared_ptr<Object>> objects;
+
+        std::vector<std::shared_ptr<Object>> objs_to_spawn;
 
         friend Object;
 

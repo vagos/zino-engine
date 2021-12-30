@@ -88,6 +88,7 @@ class TestingEngine : public zge::Engine
         addAsset(tree_model, "Tree Model");
         addAsset(sphere_model, "Sphere Model");
         addAsset(cube_model, "Cube Model");
+        addAsset(suzanne_model, "Suzanne Model");
 
         auto basic_shader = std::make_shared<zge::Shader>("./assets/shaders/basic.vert", "./assets/shaders/basic.frag"); 
         auto lighting_shader = std::make_shared<zge::Shader>("./assets/shaders/basic.vert", "./assets/shaders/lighting.frag"); // testing ligthing
@@ -129,7 +130,7 @@ class TestingEngine : public zge::Engine
         }
 
         main_light = std::make_shared<zge::LightSource>();
-        main_light->model = cube_model;
+        //main_light->model = cube_model;
         addObject(main_light, "Main Light");
 
         auto monkey = std::make_shared<Suzanne>();
@@ -141,7 +142,8 @@ class TestingEngine : public zge::Engine
         // particles 
         auto particle_shader = std::make_shared<zge::Shader>("./assets/shaders/particle.vert", "./assets/shaders/particle.frag");
         addAsset(particle_shader, "Particle Shader");
-        auto particle_emitter = std::make_shared<zge::ParticleEmitter>(*this);
+
+        // auto particle_emitter = std::make_shared<zge::ParticleEmitter>(*this);
         // addObject(particle_emitter, "Particle Emitter");
     }
 
@@ -158,7 +160,7 @@ class TestingEngine : public zge::Engine
             auto new_ball = std::make_shared<Ball>(*this);
 
             new_ball->rigid_body->position = camera.position;
-            new_ball->rigid_body->mass = 100.0f;
+            new_ball->rigid_body->mass = 1000.0f;
             new_ball->rigid_body->applyForce(camera.view_direction * 50000.0f);
             
             addObject(new_ball);

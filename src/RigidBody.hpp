@@ -41,6 +41,7 @@ public:
     void doCollision(Vector3& collision_direction, RigidBody& o_rb);
 
     void setPosition(Vector3 p) {position = p;}
+    void setVelocity(Vector3 v) { velocity = v; momentum = velocity * mass; }
 
 private:
 

@@ -40,7 +40,7 @@ float calculate_shadow(vec4 position_lightspace, sampler2D sm_sampler)
    float shadow; 
 
     // Perspective devide to bring coordinates in range[-1, 1]
-    vec3 projected_coordinates = vertex_position_lightspace.xyz/ vertex_position_lightspace.w;
+    vec3 projected_coordinates = vertex_position_lightspace.xyz/vertex_position_lightspace.w;
     // Since the depth map values are in range[0, 1]
     projected_coordinates = projected_coordinates * 0.5 + 0.5;
 
@@ -113,4 +113,6 @@ void main()
     vec3 light_calced = calculate_light_directional(light, material, 1 - shadow);
 
     color = vec4(light_calced * texture(texture_sampler, uv).rgb, 1.0);
+
+    if (shadow == 0) color = vec4(1.0, 0.0, 0.0, 1.0);
 }

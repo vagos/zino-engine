@@ -3,6 +3,8 @@
 #include "Common.hpp"
 #include "Engine.hpp"
 #include "Tree.hpp"
+#include "Monster.hpp"
+#include "Particles.hpp"
 
 #include <glm/gtx/dual_quaternion.hpp>
 #include <glm/gtx/string_cast.hpp>
@@ -13,6 +15,9 @@ Ball::Ball(zge::Engine& eng)
     model = eng_getAssetTyped("Sphere Model", zge::Model);
     rigid_body = std::make_shared<zge::RigidBody>();
     collider = std::make_shared<zge::CubeCollider>(*model, rigid_body->position);
+
+//    applyTransofrmation(glm::scale(zge::Matrix4x4(1), zge::Vector3(0.8)));
+//    applyTransofrmation(glm::translate(zge::Matrix4x4(1), zge::Vector3(2.0f, 0.0f, 0.0f)));
 }
 
 
@@ -46,19 +51,21 @@ void Ball::doUpdate(zge::Engine &eng)
 
        zge::Vector3 n;
 
-       if ( obj->collider && obj->rigid_body && collider->isColliding(*obj->collider, n) ) 
+       if ( obj && obj->collider && obj->rigid_body && collider->isColliding(*obj->collider, n) ) 
        {
             rigid_body->doCollision(n, *obj->rigid_body);
-            // std::clog << "collision!\n\n";
-            // std::clog << "n: " << glm::to_string(n) << '\n';
+
             n_bounces++;
 
             if (n_bounces == 3) 
             {
                 exists = false;
 
-                auto monster = std::make_shared<Tree>(eng);
+                auto monster = std::make_shared<Monster>(eng);
                 monster->rigid_body->setPosition(rigid_body->position);
+                auto particle_emitter = std::make_shared<zge::ParticleEmitter>(eng);
+                particle_emitter->position = rigid_body->position;
+                eng.addObject(particle_emitter);
                 eng.addObject(monster);
             }
        }

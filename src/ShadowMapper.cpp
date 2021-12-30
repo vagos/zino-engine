@@ -25,9 +25,14 @@ namespace zge
         // Render the scene
         for (auto& o : Object::objects)
         {
-            if (o->model) o->model->doUse();
+            if (!o->model) continue; 
+
             zge::Matrix4x4 mvp = main_light->getView() * main_light->getProjection() * o->getModelMatrix();
             depth_shader->sendUniform("mvp", mvp);
+
+            o->model->doUse();
+            // o->model->doRender(eng);
+            o->doRender(eng);
         }
 
         f_b.doUnuse();
@@ -35,8 +40,7 @@ namespace zge
         auto debug_shader = eng_getAssetTyped("Debug Shader", Shader);
 
         debug_shader->doUse();
-
-        debug_shader->sendUniform("depthmap_sampler", 0);
+        debug_shader->sendUniform("depthmap_sampler", d_t);
         
         quad.doRender(eng);
     }

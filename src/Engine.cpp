@@ -1,3 +1,4 @@
+#include <cstdlib>
 #include <memory>
 #include <stdexcept>
 #include <fstream>
@@ -52,9 +53,16 @@ void zge::Engine::_doUpdate()
     doUpdate();
 
     camera.doUpdate(*this);
+    
+    // add objects that should be spawned
+    Object::objects.reserve(Object::objects.size() + std::distance(objs_to_spawn.begin(), objs_to_spawn.end()));
+    Object::objects.insert(Object::objects.end(), objs_to_spawn.begin(), objs_to_spawn.end());
+    objs_to_spawn.clear();
+
 
     for (auto& o : Object::objects)
     {
+        if (!o) continue;
         o->resetModelMatrix();
         o->doUpdate(*this);
     }
@@ -141,7 +149,7 @@ void zge::Engine::setCursorPosition(Vector2&& pos)
 
 void zge::Engine::addObject(std::shared_ptr<Object> obj)
 {
-    Object::objects.push_back(obj);
+    objs_to_spawn.push_back(obj);
 }
 
 void Engine::addObject(std::shared_ptr<Object> obj, std::string obj_name)
@@ -167,6 +175,11 @@ bool zge::Engine::isKeyHeld(int key)
 int zge::Engine::getRandomInt(int a, int b)
 {
     return a + ( random() % (b - a) );
+}
+
+float Engine::getRandomFloat()
+{
+    return float(random()) / float(RAND_MAX);
 }
 
 void Engine::addAsset(std::shared_ptr<Asset> asset, std::string asset_name)

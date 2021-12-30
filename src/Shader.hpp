@@ -29,7 +29,7 @@ class Shader : public Asset
         void sendUniform(const std::string u_n, Material& m);
         void sendUniform(const std::string u_n, Texture& m);
 
-    private:
+    // private:
         std::unordered_map<std::string, GLuint> uniform_locations;
         GLuint program_id;
 
