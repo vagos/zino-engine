@@ -83,8 +83,10 @@ class TestingEngine : public zge::Engine
         std::shared_ptr<zge::Texture> moss_texture = std::make_shared<zge::Texture>("./assets/textures/trees/Mossy_Tr.bmp");
         auto grass_texture = std::make_shared<zge::Texture>("./assets/textures/grass/grass_o.bmp");
         auto fiert_texture = std::make_shared<zge::Texture>("./assets/textures/fiery.bmp");
+        auto water_texture = std::make_shared<zge::Texture>("./assets/textures/water.bmp");
 
         addAsset(fiert_texture, "Fiery Texture");
+        addAsset(water_texture, "Water Texture");
         addAsset(tree_model, "Tree Model");
         addAsset(sphere_model, "Sphere Model");
         addAsset(cube_model, "Cube Model");
@@ -93,6 +95,7 @@ class TestingEngine : public zge::Engine
         auto basic_shader = std::make_shared<zge::Shader>("./assets/shaders/basic.vert", "./assets/shaders/basic.frag"); 
         auto lighting_shader = std::make_shared<zge::Shader>("./assets/shaders/basic.vert", "./assets/shaders/lighting.frag"); // testing ligthing
         auto texture_shader = std::make_shared<zge::Shader>("./assets/shaders/texture.vert", "./assets/shaders/texture.frag");
+        auto water_texture_shader = std::make_shared<zge::Shader>("./assets/shaders/water_texture.vert", "./assets/shaders/water_texture.frag");
         auto depth_shader = std::make_shared<zge::Shader>("./assets/shaders/depth.vert", "./assets/shaders/depth.frag");
         auto debug_shader = std::make_shared<zge::Shader>("./assets/shaders/debug.vert", "./assets/shaders/debug.frag");
 
@@ -100,6 +103,7 @@ class TestingEngine : public zge::Engine
         addAsset(texture_shader, "Texture Shader");
         addAsset(depth_shader, "Depth Shader");
         addAsset(debug_shader, "Debug Shader");
+        addAsset(water_texture_shader, "Water-Texture Shader");
 
         addAsset(moss_texture, "Moss Texture");
         addAsset(grass_texture, "Grass Texture");
@@ -160,7 +164,7 @@ class TestingEngine : public zge::Engine
             auto new_ball = std::make_shared<Ball>(*this);
 
             new_ball->rigid_body->position = camera.position;
-            new_ball->rigid_body->mass = 1000.0f;
+            new_ball->rigid_body->mass = 100.0f;
             new_ball->rigid_body->applyForce(camera.view_direction * 50000.0f);
             
             addObject(new_ball);
@@ -178,8 +182,8 @@ class TestingEngine : public zge::Engine
         s_m->d_t.doUse(3);
 
         texture_shader->sendUniform("shadowmap_sampler", s_m->d_t);
-        texture_shader->sendUniform("light_vp", main_light->getProjection() * main_light->getView());
-
+        texture_shader->sendUniform("light_vp", main_light->getProjection() *
+                                                    main_light->getView());
     }
 
     std::shared_ptr<zge::Shadowmapper> s_m;

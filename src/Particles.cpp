@@ -9,7 +9,7 @@ namespace zge
     ParticleEmitter::ParticleEmitter(Engine& eng)
     {
         particles.resize(n_particles, Particle());
-        particle_model = eng_getAssetTyped("Cube Model", Model);
+        particle_model = eng_getAssetTyped("Sphere Model", Model);
         shader = eng_getAssetTyped("Particle Shader", Shader);
         texture = eng_getAssetTyped("Grass Texture", Texture);
 

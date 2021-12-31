@@ -113,6 +113,4 @@ void main()
     vec3 light_calced = calculate_light_directional(light, material, 1 - shadow);
 
     color = vec4(light_calced * texture(texture_sampler, uv).rgb, 1.0);
-
-    if (shadow == 0) color = vec4(1.0, 0.0, 0.0, 1.0);
 }

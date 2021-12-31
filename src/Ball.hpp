@@ -12,7 +12,6 @@ public:
     void doRender(zge::Engine &eng) override;
 
     int n_bounces = 0;
-    
 
 };
 

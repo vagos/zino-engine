@@ -10,11 +10,13 @@
 #include <glm/gtx/string_cast.hpp>
 #include <memory>
 
-Ball::Ball(zge::Engine& eng)
+Ball::Ball(zge::Engine& eng) 
 {
     model = eng_getAssetTyped("Sphere Model", zge::Model);
     rigid_body = std::make_shared<zge::RigidBody>();
     collider = std::make_shared<zge::CubeCollider>(*model, rigid_body->position);
+    
+    type = Object::Type::BALL;
 
 //    applyTransofrmation(glm::scale(zge::Matrix4x4(1), zge::Vector3(0.8)));
 //    applyTransofrmation(glm::translate(zge::Matrix4x4(1), zge::Vector3(2.0f, 0.0f, 0.0f)));
@@ -61,7 +63,7 @@ void Ball::doUpdate(zge::Engine &eng)
             {
                 exists = false;
 
-                auto monster = std::make_shared<Monster>(eng);
+                auto monster = std::make_shared<WaterMonster>(eng);
                 monster->rigid_body->setPosition(rigid_body->position);
                 auto particle_emitter = std::make_shared<zge::ParticleEmitter>(eng);
                 particle_emitter->position = rigid_body->position;

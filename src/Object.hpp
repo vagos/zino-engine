@@ -18,6 +18,14 @@ namespace zge
     {
 
     public:
+        enum class Type 
+        {
+            WORLD,
+            BALL,
+            MONSTER
+        };
+
+    public:
         
         Object();
 
@@ -39,6 +47,8 @@ namespace zge
         
         static std::vector<std::shared_ptr<Object>> objects;
         static void removeNullObjects();
+
+        Type type = Type::WORLD;
         
     private: 
         Matrix4x4 model_matrix;

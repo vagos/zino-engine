@@ -22,5 +22,5 @@ void main()
 
     float alpha = 0.7 * (1 - t);
 
-    color = vec4(c.xyz, alpha);
+    color = vec4(c, alpha);
 }
