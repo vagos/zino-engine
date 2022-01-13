@@ -45,19 +45,10 @@ namespace zge
 
     void Texture::doUse()
     {
-        switch (texture_unit)
-        {
-            case 0:
-                glActiveTexture(GL_TEXTURE0); break;
-            case 1:
-                glActiveTexture(GL_TEXTURE1); break;
-            default:
-                glActiveTexture(GL_TEXTURE0); break;
-        }
-
+        glActiveTexture(GL_TEXTURE0); 
         glBindTexture(GL_TEXTURE_2D, texture_id);
 
-        // texture_unit++;
+        position = 0;
     }
 
     void Texture::doUse(int t_position)

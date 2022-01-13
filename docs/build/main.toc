@@ -1,0 +1,8 @@
+\babel@toc {greek}{}
+\contentsline {section}{\numberline {7}\foreignlanguage {english}{Physics}}{2}{}%
+\contentsline {subsection}{\numberline {7.1}\foreignlanguage {english}{Explain briefly in your own words tasks 1-3.}}{2}{}%
+\contentsline {subsubsection}{\numberline {7.1.1}\foreignlanguage {english}{Cube simulation.}}{2}{}%
+\contentsline {subsubsection}{\numberline {7.1.2}\foreignlanguage {english}{Simulation of a sphere.}}{2}{}%
+\contentsline {subsubsection}{\numberline {7.1.3}\foreignlanguage {english}{Model a mass-spring damper system.}}{3}{}%
+\contentsline {subsection}{\numberline {7.2}\foreignlanguage {english}{Generate three or more balls with different masses and radii and have them all interact with the box and with each other.}}{4}{}%
+\providecommand \tocbasic@end@toc@file {}\tocbasic@end@toc@file 

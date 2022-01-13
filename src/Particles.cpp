@@ -1,17 +1,20 @@
 #include "Particles.hpp"
 #include "Engine.hpp"
+#include "Shader.hpp"
 #include <cstddef>
 
 #define rnd eng.getRandomFloat() * 2 - 1
 
 namespace zge 
 {
-    ParticleEmitter::ParticleEmitter(Engine& eng)
+    ParticleEmitter:: ParticleEmitter(Engine& eng, int n_particles, std::string particle_shader_n, std::string particle_model_n, std::string particle_texture_n)
+        :n_particles(n_particles)
     {
         particles.resize(n_particles, Particle());
-        particle_model = eng_getAssetTyped("Sphere Model", Model);
-        shader = eng_getAssetTyped("Particle Shader", Shader);
-        texture = eng_getAssetTyped("Grass Texture", Texture);
+
+        shader = eng_getAssetTyped(particle_shader_n, Shader);
+        particle_model = eng_getAssetTyped(particle_model_n, Model);
+        if (particle_texture_n.size()) texture = eng_getAssetTyped(particle_texture_n, Texture);
 
         creation_time = eng.getTime(); 
 
@@ -32,10 +35,9 @@ namespace zge
             }
             else
             {
-               p.life = 10.0f;
-               p.position = position + Vector3(rnd, rnd, rnd) * 2.0f; 
+               p.life = total_time;
+               p.position = position + Vector3(rnd, rnd, rnd) * 3.0f; 
                p.velocity = Vector3(0, 1, 0);
-               // p.color = Vector4(1.0, 0.0, 0.0, 1.0);
             }
        }
 
@@ -46,27 +48,27 @@ namespace zge
 
     void ParticleEmitter::doRender(Engine &eng)
     {
-        // GLCall(glBlendFunc(GL_SRC_ALPHA, GL_ONE));
-
         shader->doUse();
 
         shader->sendUniform("time", eng.getTime() - creation_time);
 
-        for (auto& p : particles)
+        for (int i = 0; i < particles.size(); i++)
         {
+            auto& p = particles[i];
+
             auto mvp = eng.camera.getProjection() * eng.camera.getView() * 
                 glm::translate(Matrix4x4(1), p.position);
 
-            particle_model->doUse(); // You need to USE the model before RENDERING
-            
-            shader->sendUniform("mvp", mvp);
+            shader->sendUniform(Uniform_I("mvp", i), mvp);
             // texture->doUse();
             // shader->sendUniform("texture_sampler", *texture);
 
-            particle_model->doRender(eng);
+            // particle_model->doUse();
+            // particle_model->doRender(eng);
         }
-        
-        // GLCall(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
+
+        particle_model->doUse(); // You need to USE the model before RENDERING
+        glDrawArraysInstanced(GL_TRIANGLES, 0, particle_model->vertices.size(), n_particles); 
     }
 
     std::size_t ParticleEmitter::getUnusedParticle()

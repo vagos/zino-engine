@@ -23,20 +23,21 @@ struct Particle
 
 struct ParticleEmitter : public Object
 {
+
+    ParticleEmitter(Engine& eng, int n_particles, std::string particle_shader, std::string particle_model, std::string particle_texture = "");
+
     std::shared_ptr<Shader> shader;
     std::shared_ptr<Texture> texture;
 
     std::shared_ptr<Model> particle_model;
 
     std::vector<Particle> particles;
-    int n_particles = 50;
+    int n_particles = 1;
 
     float total_time = 10;
     float creation_time;
 
     std::size_t i_last_used_particle;
-
-    ParticleEmitter(Engine& eng);
 
     void doRender(Engine &eng) override;
     void doUpdate(Engine &eng) override;

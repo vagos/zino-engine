@@ -1,7 +1,9 @@
+#include "Common.hpp"
 #define TINYOBJLOADER_IMPLEMENTATION
 #include <tiny_obj_loader.h>
 
 #include "Model.hpp"
+#include "Engine.hpp"
 
 #include <stdexcept>
 
@@ -12,6 +14,7 @@ namespace zge
 Model::Model(std::string m_path)
 {
     doLoad(m_path);
+    createContext();
     debug_name = m_path;
 }
 
@@ -79,7 +82,6 @@ void Model::doLoad(std::string m_path)
         }
     }
     
-    createContext();
     
     // glGenBuffers(1, &elementVBO);
     // glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elementVBO);
@@ -106,7 +108,7 @@ void Model::createContext()
     {
         glGenBuffers(1, &model_normals_vbo);
         glBindBuffer(GL_ARRAY_BUFFER, model_normals_vbo);
-        glBufferData(GL_ARRAY_BUFFER, normals.size() * sizeof(normals[0]),
+        glBufferData(GL_ARRAY_BUFFER, normals.size() * sizeof(Vector3),
                      &normals[0], GL_STATIC_DRAW);
         glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, NULL);
         glEnableVertexAttribArray(1);
@@ -153,5 +155,51 @@ Model::Model(const std::vector<Vector3> &vertices, const std::vector<Vector2> &u
    createContext(); 
 }
 
+TransformingModel::TransformingModel(std::string m_f_path, std::string m_s_path)
+{
+    model_first.doLoad(m_f_path);    
+    model_second.doLoad(m_s_path);
+
+    createContext();
 }
 
+void TransformingModel::createContext()
+{
+    glGenVertexArrays(1, &model_vao);
+    glBindVertexArray(model_vao);
+
+    glGenBuffers(1, &model_first.model_vertices_vbo);
+    glBindBuffer(GL_ARRAY_BUFFER, model_first.model_vertices_vbo);
+    glBufferData(GL_ARRAY_BUFFER, model_first.vertices.size() * sizeof(Vector3),
+            &model_first.vertices[0], GL_STATIC_DRAW);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, NULL);
+    glEnableVertexAttribArray(0);
+
+    glGenBuffers(1, &model_second.model_vertices_vbo);
+    glBindBuffer(GL_ARRAY_BUFFER, model_second.model_vertices_vbo);
+    glBufferData(GL_ARRAY_BUFFER, model_second.vertices.size() * sizeof(Vector3),
+            &model_second.vertices[0], GL_STATIC_DRAW);
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, NULL);
+    glEnableVertexAttribArray(1);
+}
+
+void TransformingModel::doRender(Engine &eng)
+{
+    glBindVertexArray(model_vao);
+
+    auto texture_shader = eng_getAssetTyped("Transform Shader", Shader);
+    texture_shader->doUse();
+
+    auto mvp = eng.camera.getProjection() * eng.camera.getView()
+        * glm::translate(Matrix4x4(1), Vector3(10.0f, 10.0f, 10.0f));
+
+    texture_shader->sendUniform("mvp", mvp);
+    texture_shader->sendUniform("morph_factor", morph_factor);
+
+    morph_factor += 0.01f;
+    if (morph_factor > 1.0f) morph_factor = 0.0f;
+
+    glDrawArrays(GL_TRIANGLES, 0, model_first.vertices.size());
+}
+
+}

@@ -48,7 +48,7 @@ void zge::Camera::doUpdate(Engine& eng)
 
     // position.y = 0; // player can't fly
 
-    projection = glm::perspective(glm::radians(fov), window_size.x / window_size.y, 0.1f, 100.0f);
+    projection = glm::perspective(glm::radians(fov), window_size.x / window_size.y, 0.1f, 10000.0f);
 
     look_at = glm::lookAt(
             position,

@@ -12,6 +12,7 @@
 
 #define GLCall(c) c
 
+
 namespace zge 
 {
     typedef GLFWwindow Window;

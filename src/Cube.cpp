@@ -9,16 +9,8 @@ Cube::Cube(zge::Engine& eng)
     model = eng_getAssetTyped("Cube Model", zge::Model);
     model->texture = eng_getAssetTyped("Grass Texture", zge::Texture);
     rigid_body = std::make_shared<zge::RigidBody>();
-    
-
-    // for (int i = 0; i < model->vertices.size(); i++)
-    // {
-    //     auto& v = model->vertices[i];
-    //     v = zge::Vector3(model_matrix * zge::Vector4(v, 1.0f));
-    // }
-
     collider = std::make_shared<zge::CubeCollider>(*model, rigid_body->position);
-    applyTransofrmation(glm::scale(zge::Matrix4x4(1), zge::Vector3(100.0f, 1.0f, 100.0f)));
+
 }
 
 void Cube::doRender(zge::Engine& eng)
@@ -39,5 +31,5 @@ void Cube::doRender(zge::Engine& eng)
 
 void Cube::doUpdate(zge::Engine& eng)
 {
-
+    setModelMatrix(glm::translate(zge::Matrix4x4(1), rigid_body->position));
 }

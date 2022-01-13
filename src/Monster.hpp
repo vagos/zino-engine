@@ -9,7 +9,7 @@ struct Monster : public zge::Object
 {
     Monster(zge::Engine& eng, std::string shader, std::string model, std::string texture);
 
-    void doRender(zge::Engine &eng) override; 
+    virtual void doRender(zge::Engine &eng) override; 
     void doUpdate(zge::Engine &eng) override;
 
     void doThink(zge::Engine& eng);
@@ -17,18 +17,23 @@ struct Monster : public zge::Object
 
     std::shared_ptr<zge::Shader>  shader;
     std::shared_ptr<zge::Texture> texture;
+
+    float attack_cooldown = 1.0f;
 };
 
 struct WaterMonster : public Monster 
 {
-    WaterMonster(zge::Engine& eng) : Monster(eng, "Water-Texture Shader", "Suzanne Model", "Water Texture")
-    {
-        std::clog << "water!";
-    }
+    WaterMonster(zge::Engine& eng); 
 
-    void doAttack(zge::Engine& eng) override {}
-
+    void doAttack(zge::Engine& eng) override;
 };
 
+struct FireMonster : public Monster 
+{
+    FireMonster(zge::Engine& eng); 
+
+    void doAttack(zge::Engine& eng) override;
+    void doRender(zge::Engine& eng) override;
+};
 
 #endif /* MONSTER_HPP */

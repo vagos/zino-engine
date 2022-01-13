@@ -16,3 +16,4 @@
 * Skybox: https://learnopengl.com/Advanced-OpenGL/Cubemaps (glDepthMask should be FALSE before rendering the skybox!)
 * https://learnopengl.com/Lighting/Light-casters
 * https://developer.mozilla.org/en-US/docs/Games/Techniques/3D_collision_detection AABB Collisions
+* https://forum.defold.com/t/morph-one-3d-model-to-another-using-vertex-shader-solved/1914

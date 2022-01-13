@@ -6,6 +6,7 @@
 #include <fstream>
 #include <vector>
 
+
 static void compileShader(GLuint& shaderID, std::string file) {
     // read shader code from the file
     std::string shaderCode;

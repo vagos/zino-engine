@@ -18,7 +18,8 @@ void main()
 
     float t = time/life_time;
 
-    vec3 c = vec3(0.662, 0.635, 0.635 + rand(vec2(t)));
+    // vec3 c = vec3(0.662, 0.635, 0.635 + rand(vec2(t)));
+    vec3 c = vec3(0.662, 0.635, 0.635);
 
     float alpha = 0.7 * (1 - t);
 

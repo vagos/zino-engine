@@ -21,7 +21,7 @@ struct Tree : public zge::Object
         model->texture = eng_getAssetTyped("Moss Texture", zge::Texture);
         texture_shader = eng_getAssetTyped("Texture Shader", zge::Shader);
 
-        rigid_body->setPosition(zge::Vector3(10, 10, 10));
+        // rigid_body->setPosition(zge::Vector3(10, 10, 10));
         collider = std::make_shared<zge::CubeCollider>(*model, rigid_body->position);
 
         // setModelMatrix(glm::scale(getModelMatrix(), zge::Vector3(0.2f)));

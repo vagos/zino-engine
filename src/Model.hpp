@@ -37,7 +37,7 @@ struct Model : public Asset
        std::shared_ptr<Texture> texture = nullptr;
 
 
-    private:
+    public:
 
        std::string debug_name; // TODO change this
 
@@ -49,7 +49,22 @@ struct Model : public Asset
               model_normals_vbo, 
               model_elements_vbo;
 };
-}
+
+struct TransformingModel
+{
+   Model model_first, model_second;
+
+   TransformingModel(std::string m_f_path, std::string m_o_path);
+
+   void doRender(Engine& eng);
+   void createContext();
+
+    GLuint model_vao;
+
+    float morph_factor = 0.0f;
+};
+
+} // namespace zge
 
 #endif /* MODEL_HPP */
 

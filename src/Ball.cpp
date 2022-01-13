@@ -2,6 +2,7 @@
 #include "Collider.hpp"
 #include "Common.hpp"
 #include "Engine.hpp"
+#include "Object.hpp"
 #include "Tree.hpp"
 #include "Monster.hpp"
 #include "Particles.hpp"
@@ -42,6 +43,16 @@ void Ball::doRender(zge::Engine &eng)
     model->doRender(eng);
 }
 
+void Ball::spawnMonster(zge::Engine& eng, std::shared_ptr<Monster> monster)
+{
+    monster->rigid_body->setPosition(rigid_body->position);
+    auto particle_emitter = std::make_shared<zge::ParticleEmitter>(eng, 1, "Water Particle Shader", "Sphere Model");
+    particle_emitter->total_time = 20.0f;
+    particle_emitter->position = rigid_body->position;
+    eng.addObject(monster);
+    eng.addObject(particle_emitter);
+}
+
 void Ball::doUpdate(zge::Engine &eng)
 {
     rigid_body->applyGravity();
@@ -59,19 +70,35 @@ void Ball::doUpdate(zge::Engine &eng)
 
             n_bounces++;
 
-            if (n_bounces == 3) 
+            if (type == zge::Object::Type::CATCH_BALL)
+            {
+                if (obj->type == zge::Object::Type::MONSTER)
+                {
+                    caught_monsters.push_back(std::static_pointer_cast<Monster>(obj)); 
+                }
+
+                else if (n_bounces == 2 && !caught_monsters.empty())
+                {
+                    auto monster = caught_monsters.back();
+                    spawnMonster(eng, monster);
+
+                    exists = false;
+                }
+
+                continue;
+            }
+
+            if (n_bounces == 2) 
             {
                 exists = false;
 
-                auto monster = std::make_shared<WaterMonster>(eng);
-                monster->rigid_body->setPosition(rigid_body->position);
-                auto particle_emitter = std::make_shared<zge::ParticleEmitter>(eng);
-                particle_emitter->position = rigid_body->position;
-                eng.addObject(particle_emitter);
-                eng.addObject(monster);
+                auto monster = std::make_shared<FireMonster>(eng);
+                spawnMonster(eng, monster);
             }
        }
     }
 
     setModelMatrix(glm::translate(getModelMatrix(), rigid_body->position));
 }
+
+std::vector<std::shared_ptr<Monster>> Ball::caught_monsters;

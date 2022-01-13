@@ -22,6 +22,7 @@ namespace zge
         {
             WORLD,
             BALL,
+            CATCH_BALL,
             MONSTER
         };
 

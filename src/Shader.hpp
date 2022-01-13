@@ -7,6 +7,8 @@
 #include "Common.hpp"
 #include "Asset.hpp"
 
+#define Uniform_I(u_n, i) std::string(u_n) + "[" + std::to_string(i) + "]"
+
 namespace zge
 {
 
