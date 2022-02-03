@@ -49,7 +49,7 @@ float calculate_shadow(vec4 position_lightspace, sampler2D sm_sampler)
     float closest_depth = texture(sm_sampler, projected_coordinates.xy).r;
 
     // Then we get the depth of the current vertex
-    float current_depth = projected_coordinates.z ;
+    float current_depth = projected_coordinates.z;
 
     // Correcting the quantization problem
     float bias = 0.005;

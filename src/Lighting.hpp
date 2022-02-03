@@ -24,7 +24,6 @@ public:
         n_lights++;
 
         projection = glm::ortho(-10.0f, 10.0f, -10.0f, 10.0f, 1.0f, 30.0f);
-
         target_position = glm::vec3(0.0, 0.0, -5.0);
     }
 

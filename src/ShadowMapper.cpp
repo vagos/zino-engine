@@ -2,6 +2,9 @@
 #include "Engine.hpp"
 #include "Lighting.hpp"
 
+#define S_W 1024
+#define S_H 1024
+
 namespace zge 
 {
 
@@ -12,7 +15,7 @@ namespace zge
 
     void Shadowmapper::doRender(Engine &eng)
     {
-        glViewport(0, 0, Engine::width, Engine::height);
+        glViewport(0, 0, S_W, S_H);
         f_b.doUse();
 
         glClear(GL_DEPTH_BUFFER_BIT);
@@ -27,7 +30,7 @@ namespace zge
         {
             if (!o->model) continue; 
 
-            zge::Matrix4x4 mvp = main_light->getView() * main_light->getProjection() * o->getModelMatrix();
+            zge::Matrix4x4 mvp = main_light->getProjection() * main_light->getView() * o->getModelMatrix();
             depth_shader->sendUniform("mvp", mvp);
 
             o->model->doUse();
