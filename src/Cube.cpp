@@ -3,6 +3,7 @@
 #include "Engine.hpp"
 #include "Model.hpp"
 #include "RigidBody.hpp"
+#include <glm/gtx/string_cast.hpp>
 
 Cube::Cube(zge::Engine& eng)
 {

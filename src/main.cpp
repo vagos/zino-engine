@@ -220,14 +220,15 @@ class TestingEngine : public zge::Engine
         // send texture to shadow mapper
 
         auto texture_shader = getAssetTyped("Texture Shader", zge::Shader);
+
         
         s_m->doRender(*this);
-
         s_m->d_t.doUse(10);
+        
+        texture_shader->doUse();
 
         texture_shader->sendUniform("shadowmap_sampler", s_m->d_t);
-        texture_shader->sendUniform("light_vp", main_light->getProjection() *
-                                                   main_light->getView());
+        texture_shader->sendUniform("light_vp", main_light->getProjection() * main_light->getView());
 
         // transforming_model->doRender(*this);
     }

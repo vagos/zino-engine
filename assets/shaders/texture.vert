@@ -17,10 +17,10 @@ uniform mat4 m;
 void main()
 {
     vertex_position_worldspace = mvp * vec4(vertex_position_modelspace, 1.0);
+    
+    vertex_position_lightspace = light_vp * m * vec4(vertex_position_modelspace, 1.0);
     gl_Position = vertex_position_worldspace;
 
     uv = vertex_uv;
     normal = vertex_normal;
-
-    vertex_position_lightspace = light_vp * m * vec4(vertex_position_modelspace, 1.0);
 }
