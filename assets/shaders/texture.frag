@@ -53,7 +53,7 @@ float calculate_shadow(vec4 position_lightspace, sampler2D sm_sampler)
 
     // Correcting the quantization problem
     float bias = 0.005;
-    shadow = current_depth - bias > closest_depth ? 1.0: 0.0 ;
+    shadow = current_depth - bias > closest_depth ? 1.0: 0.0;
 
     return shadow;
 }
@@ -92,7 +92,7 @@ vec3 calculate_light(s_light light, s_material material)
     vec3 diffuse = light.diffuse * (diff * material.diffuse);
 
     // specular
-    vec3 view_direction = normalize(view_position - vertex_position_worldspace.xyz);
+    vec3 view_direction = normalize(light.position - vertex_position_worldspace.xyz);
     vec3 reflect_direction = reflect(-light_direction, norm);
     float spec = pow(max(dot(view_direction, reflect_direction), 0.0), material.shininess);
     vec3 specular = light.specular * (spec * material.specular);
@@ -110,7 +110,7 @@ vec3 calculate_light(s_light light, s_material material)
 void main()
 {
     float shadow = calculate_shadow(vertex_position_lightspace, shadowmap_sampler);
-    vec3 light_calced = calculate_light_directional(light, material, 1 - shadow);
+    vec3 light_calced = calculate_light_directional(light, material, 1 - shadow); 
 
-    color = vec4(light_calced * texture(texture_sampler, uv).rgb, 1.0);
+    color = vec4( light_calced * texture(texture_sampler, uv).rgb, 1.0);
 }

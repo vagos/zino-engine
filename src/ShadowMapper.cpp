@@ -31,8 +31,8 @@ namespace zge
             depth_shader->sendUniform("mvp", mvp);
 
             o->model->doUse();
-            // o->model->doRender(eng);
-            o->doRender(eng);
+            o->model->doRender(eng);
+            // o->doRender(eng);
         }
 
         f_b.doUnuse();

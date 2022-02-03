@@ -126,12 +126,21 @@ class TestingEngine : public zge::Engine
         skybox->name = std::string("Skybox");
         addObject(skybox);
 
+        auto new_island = std::make_shared<Cube>(*this);
+        new_island->rigid_body->setPosition({0, 0, 0});
+        new_island->applyTransofrmation(glm::scale(zge::Matrix4x4(1), zge::Vector3(100, getRandomInt(1, 5), 100)));
+        addObject(new_island);
 
-        for (int i = 0; i < 10; i++)
+        auto new_tree = std::make_shared<Tree>(*this);
+        zge::Vector3 t_v{0, 0, 0};
+        new_tree->rigid_body->setPosition(t_v);
+        addObject(new_tree);
+
+        for (int i = 0; i < 0; i++)
         {
-            auto new_island = std::make_shared<Cube>(*this);
-
             int gap = 200;
+
+            auto new_island = std::make_shared<Cube>(*this);
             
             zge::Vector3 random_v{getRandomInt(-gap, gap), getRandomInt(-gap, gap), getRandomInt(-gap, gap)};
             new_island->applyTransofrmation(glm::scale(zge::Matrix4x4(1), zge::Vector3(100, getRandomInt(1, 5), 100)));
@@ -145,7 +154,6 @@ class TestingEngine : public zge::Engine
                 if (getRandomFloat() < 0.5) continue;
 
                 auto new_tree = std::make_shared<Tree>(*this);
-
                 zge::Vector3 t_v{getRandomInt(-50, 50), 0, getRandomInt(-50, 50)};
                 new_tree->rigid_body->setPosition(random_v + t_v);
 
@@ -154,7 +162,7 @@ class TestingEngine : public zge::Engine
         }
 
         main_light = std::make_shared<zge::LightSource>();
-        //main_light->model = cube_model;
+        // main_light->model = cube_model;
         addObject(main_light, "Main Light");
 
         // auto monkey = std::make_shared<Suzanne>();
@@ -178,7 +186,7 @@ class TestingEngine : public zge::Engine
 
     void doUpdate() override
     {
-        if (isKeyPressed(Key(J)))
+        if (isKeyPressed(Key(N)))
         {
             main_light->position = camera.position;
         }
@@ -219,9 +227,9 @@ class TestingEngine : public zge::Engine
 
         texture_shader->sendUniform("shadowmap_sampler", s_m->d_t);
         texture_shader->sendUniform("light_vp", main_light->getProjection() *
-                                                    main_light->getView());
+                                                   main_light->getView());
 
-        // transforming_model->doRender(*this);
+        transforming_model->doRender(*this);
     }
 
     std::shared_ptr<zge::Shadowmapper> s_m;

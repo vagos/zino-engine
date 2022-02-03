@@ -46,7 +46,8 @@ void Ball::doRender(zge::Engine &eng)
 void Ball::spawnMonster(zge::Engine& eng, std::shared_ptr<Monster> monster)
 {
     monster->rigid_body->setPosition(rigid_body->position);
-    auto particle_emitter = std::make_shared<zge::ParticleEmitter>(eng, 1, "Water Particle Shader", "Sphere Model");
+    // auto particle_emitter = std::make_shared<zge::ParticleEmitter>(eng, 1, "Water Particle Shader", "Sphere Model");
+    auto particle_emitter = std::make_shared<zge::ParticleEmitter>(eng, 50, "Particle Shader", "Cube Model");
     particle_emitter->total_time = 20.0f;
     particle_emitter->position = rigid_body->position;
     eng.addObject(monster);
