@@ -9,7 +9,6 @@ out vec3 normal;
 out vec4 vertex_position_worldspace;
 out vec4 vertex_position_lightspace;
 
-
 uniform mat4 mvp;
 uniform mat4 light_vp;
 uniform mat4 m;

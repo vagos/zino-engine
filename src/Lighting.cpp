@@ -6,6 +6,18 @@
 namespace zge 
 {
 
+    LightSource::LightSource()
+    {
+        ambient  = zge::Vector3(1.0f, 1.0f, 1.0f);
+        diffuse  = zge::Vector3(1.0f, 1.0f, 1.0f);
+        specular = zge::Vector3(1.0f, 1.0f, 1.0f);
+
+        n_lights++;
+
+        projection = glm::ortho(-100.0f, 100.0f, -100.0f, 100.0f, 0.1f, 100.0f);
+        target_position = glm::vec3(0.0, 0.0, 0.0);
+    }
+
     int LightSource::n_lights = 0;
 
     void LightSource::doRender(Engine &eng)
@@ -81,7 +93,7 @@ namespace zge
         look_at = lookAt(
             position,
             target_position,
-            up 
+            zge::Vector3(0.0f, 1.0f, 0.0f)
         );
 
     }

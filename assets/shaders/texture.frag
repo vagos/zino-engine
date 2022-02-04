@@ -104,7 +104,6 @@ vec3 calculate_light(s_light light, s_material material, float visibility)
     // slowly fade off light
     float d = distance(light.position, vertex_position_worldspace.xyz);
     float attenuation = 1.0 / (light.Kc + light.Kl * d + light.Kq * d * d);
-    // ambient  *= attenuation; 
     diffuse  *= attenuation;
     specular *= attenuation;   
 

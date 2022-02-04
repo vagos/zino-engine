@@ -14,18 +14,8 @@ class LightSource : public Object
 public:
 
     static int n_lights;
-
-    LightSource()
-    {
-        ambient  = zge::Vector3(1.0f, 1.0f, 1.0f);
-        diffuse  = zge::Vector3(1.0f, 1.0f, 1.0f);
-        specular = zge::Vector3(1.0f, 1.0f, 1.0f);
-
-        n_lights++;
-
-        projection = glm::ortho(-10.0f, 10.0f, -10.0f, 10.0f, 1.0f, 30.0f);
-        target_position = glm::vec3(0.0, 0.0, -5.0);
-    }
+    
+    LightSource();
 
     void doUpdate(Engine &eng) override;
     void doRender(Engine &eng) override;
