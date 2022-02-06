@@ -14,8 +14,9 @@ namespace zge
 
         n_lights++;
 
-        projection = glm::ortho(-100.0f, 100.0f, -100.0f, 100.0f, 0.1f, 100.0f);
-        target_position = glm::vec3(0.0, 0.0, 0.0);
+        projection = glm::ortho(-50.0f, 50.0f, -50.0f, 50.0f, 0.1f, 100.0f);
+        target_position = Vector3(0.0, 0.0, 0.0);
+        position = Vector3(-5.0, 70.0, 0.0);
     }
 
     int LightSource::n_lights = 0;

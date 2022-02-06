@@ -85,7 +85,8 @@ WaterMonster::WaterMonster(zge::Engine& eng) : Monster(eng, "Water Texture Shade
 
 void WaterMonster::doAttack(zge::Engine &eng)
 {
-    auto particle_emitter = std::make_shared<zge::ParticleEmitter>(eng, 1, "Particle Shader", "Sphere Model");
+    //auto particle_emitter = std::make_shared<zge::ParticleEmitter>(eng, 1, "Water Particle Shader", "Sphere Model");
+    auto particle_emitter = std::make_shared<zge::ParticleEmitter>(eng, 200, "Fire Particle Shader", "Cube Model", "Fire Particle Texture");
     particle_emitter->position = rigid_body->position;
     eng.addObject(particle_emitter);
 }

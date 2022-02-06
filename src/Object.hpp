@@ -50,13 +50,13 @@ namespace zge
         static void removeNullObjects();
 
         Type type = Type::WORLD;
+
+        bool exists;
         
     private: 
         Matrix4x4 model_matrix;
         Matrix4x4 base_model_matrix;
 
-    protected:
-        bool exists;
     };
 
 

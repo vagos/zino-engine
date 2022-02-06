@@ -5,7 +5,7 @@ out vec4 color;
 in vec2 uv;
 in vec4 vertex_position_worldspace;
 
-uniform sampler2D sprite;
+uniform sampler2D texture_sampler;
 uniform float time;
 
 float rand(vec2 co){
@@ -18,8 +18,10 @@ void main()
 
     float t = time/life_time;
 
-    // vec3 c = vec3(0.662, 0.635, 0.635 + rand(vec2(t)));
-    vec3 c = vec3(0.062, 0.635, 0.835 + abs(sin(time)));
+    vec3 c = vec3((0.5 + time), 0.4 + sin(time), 0) * (1 - t);
 
-    color = vec4(c, 1 - time/5);
+    float alpha = 0.7 * (1 - t/3);
+
+    color = vec4(c, 1.0);
 }
+

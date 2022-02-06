@@ -1,7 +1,9 @@
 #include "Collider.hpp"
+#include "Quad.hpp"
 #include "Engine.hpp"
 #include "Common.hpp"
 #include "Model.hpp"
+#include "Monster.hpp"
 #include "Object.hpp"
 #include "Texture.hpp"
 #include "Material.hpp"
@@ -75,36 +77,45 @@ class TestingEngine : public zge::Engine
 
     void onCreate() override
     {
-        auto suzanne_model = std::make_shared<zge::Model>("./assets/objs/suzanne.obj");
-        // auto heart_model = std::make_shared<zge::Model>("./assets/objs/heart.obj");
-        auto cube_model = std::make_shared<zge::Model>("./assets/objs/cube.obj");
-        auto tree_model = std::make_shared<zge::Model>("./assets/objs/tree.obj");
-        auto sphere_model = std::make_shared<zge::Model>("./assets/objs/sphere.obj"); 
-        auto moss_texture = std::make_shared<zge::Texture>("./assets/textures/trees/Mossy_Tr.bmp");
-        auto grass_texture = std::make_shared<zge::Texture>("./assets/textures/grass/grass_o.bmp");
-        auto fiert_texture = std::make_shared<zge::Texture>("./assets/textures/fiery.bmp");
-        auto water_texture = std::make_shared<zge::Texture>("./assets/textures/water.bmp");
+        auto suzanne_model         = std::make_shared<zge::Model>("./assets/objs/suzanne.obj");
+        // auto heart_model        = std::make_shared<zge::Model>("./assets/objs/heart.obj");
+        auto cube_model            = std::make_shared<zge::Model>("./assets/objs/cube.obj");
+        auto tree_model            = std::make_shared<zge::Model>("./assets/objs/tree.obj");
+        auto sphere_model          = std::make_shared<zge::Model>("./assets/objs/sphere.obj");
+        auto star_model            = std::make_shared<zge::Model>("./assets/objs/star.obj");
+        auto moss_texture          = std::make_shared<zge::Texture>("./assets/textures/trees/Mossy_Tr.bmp");
+        auto grass_texture         = std::make_shared<zge::Texture>("./assets/textures/grass/grass_o.bmp");
+        auto fiert_texture         = std::make_shared<zge::Texture>("./assets/textures/fiery.bmp");
+        auto water_texture         = std::make_shared<zge::Texture>("./assets/textures/water.bmp");
         auto spider_monkey_texture = std::make_shared<zge::Texture>("./assets/textures/spider_monkey.bmp");
+        auto fire_particle_texture = std::make_shared<zge::Texture>("./assets/textures/grass/grass_o.bmp");
+        auto pokeball_texture      = std::make_shared<zge::Texture>("./assets/textures/pokeball.bmp");
+
         auto pointy_ear_monster = std::make_shared<zge::Model>("./assets/objs/little-monster.obj");
         auto spider_monkey_model = std::make_shared<zge::Model>("./assets/objs/spider_monkey.obj");
+        auto pokeball_model = std::make_shared<zge::Model>("./assets/objs/pokeball.obj");
 
-        addAsset(fiert_texture, "Fiery Texture");
-        addAsset(water_texture, "Water Texture");
-        addAsset(spider_monkey_texture, "Spider Monkey Texture");
-        addAsset(tree_model, "Tree Model");
-        addAsset(sphere_model, "Sphere Model");
-        addAsset(cube_model, "Cube Model");
-        addAsset(suzanne_model, "Suzanne Model");
-        addAsset(pointy_ear_monster, "Pointy Monster Model");
-        addAsset(spider_monkey_model, "Spider Monkey Model");
+        addAsset(fiert_texture         , "Fiery Texture");
+        addAsset(water_texture         , "Water Texture");
+        addAsset(pokeball_texture      , "Pokeball Texture");
+        addAsset(spider_monkey_texture , "Spider Monkey Texture");
+        addAsset(tree_model            , "Tree Model");
+        addAsset(sphere_model          , "Sphere Model");
+        addAsset(cube_model            , "Cube Model");
+        addAsset(star_model            , "Star Model");
+        addAsset(suzanne_model         , "Suzanne Model");
+        addAsset(pointy_ear_monster    , "Pointy Monster Model");
+        addAsset(spider_monkey_model   , "Spider Monkey Model");
+        addAsset(pokeball_model        , "Pokeball Model");
+        addAsset(fire_particle_texture, "Fire Particle Texture");
 
-        auto basic_shader = std::make_shared<zge::Shader>("./assets/shaders/basic.vert", "./assets/shaders/basic.frag"); 
-        auto lighting_shader = std::make_shared<zge::Shader>("./assets/shaders/basic.vert", "./assets/shaders/lighting.frag"); // testing ligthing
+        auto basic_shader         = std::make_shared<zge::Shader>("./assets/shaders/basic.vert"    , "./assets/shaders/basic.frag");
+        auto lighting_shader      = std::make_shared<zge::Shader>("./assets/shaders/basic.vert" , "./assets/shaders/lighting.frag"); // testing ligthing
 
-        auto texture_shader = std::make_shared<zge::Shader>("./assets/shaders/texture.vert", "./assets/shaders/texture.frag");
-        auto transform_shader = std::make_shared<zge::Shader>("./assets/shaders/transform.vert", "./assets/shaders/transform.frag");
-        auto water_texture_shader = std::make_shared<zge::Shader>("./assets/shaders/water_texture.vert", "./assets/shaders/water_texture.frag");
-        auto fire_texture_shader = std::make_shared<zge::Shader>("./assets/shaders/fire_texture.vert", "./assets/shaders/fire_texture.frag");
+        auto texture_shader       = std::make_shared<zge::Shader>("./assets/shaders/texture.vert"       , "./assets/shaders/texture.frag");
+        auto transform_shader     = std::make_shared<zge::Shader>("./assets/shaders/transform.vert"     , "./assets/shaders/transform.frag");
+        auto water_texture_shader = std::make_shared<zge::Shader>("./assets/shaders/water_texture.vert" , "./assets/shaders/water_texture.frag");
+        auto fire_texture_shader  = std::make_shared<zge::Shader>("./assets/shaders/fire_texture.vert"  , "./assets/shaders/fire_texture.frag");
 
         auto depth_shader = std::make_shared<zge::Shader>("./assets/shaders/depth.vert", "./assets/shaders/depth.frag");
         auto debug_shader = std::make_shared<zge::Shader>("./assets/shaders/debug.vert", "./assets/shaders/debug.frag");
@@ -132,7 +143,7 @@ class TestingEngine : public zge::Engine
         addObject(new_island);
 
         auto new_tree = std::make_shared<Tree>(*this);
-        zge::Vector3 t_v{0, 0, 0};
+        zge::Vector3 t_v{0, 1, 0};
         new_tree->rigid_body->setPosition(t_v);
         addObject(new_tree);
 
@@ -142,7 +153,7 @@ class TestingEngine : public zge::Engine
 
             auto new_island = std::make_shared<Cube>(*this);
             
-            zge::Vector3 random_v{getRandomInt(-gap, gap), getRandomInt(-gap, gap), getRandomInt(-gap, gap)};
+            zge::Vector3 random_v{getRandomInt(-gap, gap), getRandomInt(-5, 5), getRandomInt(-gap, gap)};
             new_island->applyTransofrmation(glm::scale(zge::Matrix4x4(1), zge::Vector3(100, getRandomInt(1, 5), 100)));
 
             new_island->rigid_body->setPosition(random_v);
@@ -178,17 +189,30 @@ class TestingEngine : public zge::Engine
         auto water_particle_shader = std::make_shared<zge::Shader>("./assets/shaders/water.vert", "./assets/shaders/water.frag");
         addAsset(water_particle_shader, "Water Particle Shader");
 
-        // auto particle_emitter = std::make_shared<zge::ParticleEmitter>(*this);
+        auto fire_particle_shader = std::make_shared<zge::Shader>("./assets/shaders/fire_particle.vert", "./assets/shaders/fire_particle.frag");
+        addAsset(fire_particle_shader, "Fire Particle Shader");
+
+        // auto particle_emitter = std::make_shared<zge::ParticleEmitter>(*this, 50, "Fire Particle Shader", "Cube Model", "Fire Particle Texture");
         // addObject(particle_emitter, "Particle Emitter");
 
         transforming_model = std::make_shared<zge::TransformingModel>("./assets/objs/spider_monkey.obj", "./assets/objs/spider_monkey_other.obj");
+
+        Ball::caught_monsters.push_back( std::make_shared<FireMonster>(*this) );
+        Ball::caught_monsters.push_back( std::make_shared<WaterMonster>(*this) );
     }
 
     void doUpdate() override
     {
+
+        if (isKeyPressed(Key(ESCAPE)))
+        {
+           doExit(); 
+        }
+
         if (isKeyPressed(Key(N)))
         {
             main_light->position = camera.position;
+            std::clog << glm::to_string(main_light->position);
         }
 
         if (isKeyPressed(Key(C)))
@@ -207,7 +231,7 @@ class TestingEngine : public zge::Engine
                 new_ball->type = zge::Object::Type::CATCH_BALL;
             }
 
-            new_ball->rigid_body->position = camera.position;
+            new_ball->rigid_body->position = camera.position + glm::normalize(camera.view_direction) * 3.0f;
             new_ball->rigid_body->mass = 100.0f;
             new_ball->rigid_body->applyForce(camera.view_direction * 9000.0f);
             
@@ -220,7 +244,6 @@ class TestingEngine : public zge::Engine
         // send texture to shadow mapper
 
         auto texture_shader = getAssetTyped("Texture Shader", zge::Shader);
-
         
         s_m->doRender(*this);
         s_m->d_t.doUse(10);

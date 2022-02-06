@@ -13,14 +13,14 @@
 
 Ball::Ball(zge::Engine& eng) 
 {
-    model = eng_getAssetTyped("Sphere Model", zge::Model);
+    model = eng_getAssetTyped("Pokeball Model", zge::Model);
     rigid_body = std::make_shared<zge::RigidBody>();
     collider = std::make_shared<zge::CubeCollider>(*model, rigid_body->position);
     
     type = Object::Type::BALL;
 
-//    applyTransofrmation(glm::scale(zge::Matrix4x4(1), zge::Vector3(0.8)));
-//    applyTransofrmation(glm::translate(zge::Matrix4x4(1), zge::Vector3(2.0f, 0.0f, 0.0f)));
+    // applyTransofrmation(glm::scale(zge::Matrix4x4(1), zge::Vector3(0.9)));
+    // applyTransofrmation(glm::translate(zge::Matrix4x4(1), zge::Vector3(0.0f, 0.0f, 0.0f)));
 }
 
 
@@ -28,7 +28,7 @@ void Ball::doRender(zge::Engine &eng)
 {
     std::shared_ptr<zge::Shader> basic_shader = eng_getAssetTyped("Texture Shader", zge::Shader);
 
-    auto t = eng_getAssetTyped("Fiery Texture", zge::Texture);
+    auto t = eng_getAssetTyped("Pokeball Texture", zge::Texture);
 
     basic_shader->doUse();
 
@@ -46,12 +46,14 @@ void Ball::doRender(zge::Engine &eng)
 void Ball::spawnMonster(zge::Engine& eng, std::shared_ptr<Monster> monster)
 {
     monster->rigid_body->setPosition(rigid_body->position);
+    monster->exists = true;
     // auto particle_emitter = std::make_shared<zge::ParticleEmitter>(eng, 1, "Water Particle Shader", "Sphere Model");
+    
     auto particle_emitter = std::make_shared<zge::ParticleEmitter>(eng, 50, "Particle Shader", "Cube Model");
-    particle_emitter->total_time = 20.0f;
+    particle_emitter->total_time = 5.0f;
     particle_emitter->position = rigid_body->position;
+//    eng.addObject(particle_emitter);
     eng.addObject(monster);
-    eng.addObject(particle_emitter);
 }
 
 void Ball::doUpdate(zge::Engine &eng)
@@ -73,27 +75,27 @@ void Ball::doUpdate(zge::Engine &eng)
 
             if (type == zge::Object::Type::CATCH_BALL)
             {
-                if (obj->type == zge::Object::Type::MONSTER)
+                if (obj->type == zge::Object::Type::MONSTER) // catch a monster
                 {
                     caught_monsters.push_back(std::static_pointer_cast<Monster>(obj)); 
-                }
 
-                else if (n_bounces == 2 && !caught_monsters.empty())
-                {
-                    auto monster = caught_monsters.back();
-                    spawnMonster(eng, monster);
+                    auto particle_emitter = std::make_shared<zge::ParticleEmitter>(eng, 5, "Particle Shader", "Star Model");
+                    particle_emitter->total_time = 5.0f;
+                    particle_emitter->position = rigid_body->position;
 
+                    eng.addObject(particle_emitter);
+
+                    obj->exists = false; // remove the ball and  the monster from the game world.
                     exists = false;
                 }
-
-                continue;
             }
 
-            if (n_bounces == 2) 
+            if (type == zge::Object::Type::BALL && n_bounces == 2 && !caught_monsters.empty()) // spawn a monster
             {
                 exists = false;
 
-                auto monster = std::make_shared<FireMonster>(eng);
+                auto monster = caught_monsters.back();
+                caught_monsters.pop_back();
                 spawnMonster(eng, monster);
             }
        }

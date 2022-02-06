@@ -7,14 +7,16 @@
 
 namespace zge 
 {
-    ParticleEmitter:: ParticleEmitter(Engine& eng, int n_particles, std::string particle_shader_n, std::string particle_model_n, std::string particle_texture_n)
+
+    ParticleEmitter::ParticleEmitter(Engine& eng, int n_particles, std::string particle_shader_n, std::string particle_model_n, std::string particle_texture_n)
         :n_particles(n_particles)
     {
         particles.resize(n_particles, Particle());
 
         shader = eng_getAssetTyped(particle_shader_n, Shader);
         particle_model = eng_getAssetTyped(particle_model_n, Model);
-        if (particle_texture_n.size()) texture = eng_getAssetTyped(particle_texture_n, Texture);
+        if (particle_texture_n.size()) 
+            texture = eng_getAssetTyped(particle_texture_n, Texture);
 
         creation_time = eng.getTime(); 
 
@@ -31,7 +33,7 @@ namespace zge
 
             if (p.life > 0.0f) // particle is alive
             {
-               p.position += p.velocity * dt; 
+               doParticleUpdate(p, dt);
             }
             else
             {
@@ -60,14 +62,16 @@ namespace zge
                 glm::translate(Matrix4x4(1), p.position);
 
             shader->sendUniform(Uniform_I("mvp", i), mvp);
-            // texture->doUse();
-            // shader->sendUniform("texture_sampler", *texture);
-
-            // particle_model->doUse();
-            // particle_model->doRender(eng);
         }
 
         particle_model->doUse(); // You need to USE the model before RENDERING
+
+        if (texture) 
+        {
+            texture->doUse();
+            shader->sendUniform("texture_sampler", *texture);
+        }
+
         glDrawArraysInstanced(GL_TRIANGLES, 0, particle_model->vertices.size(), n_particles); 
     }
 
@@ -92,6 +96,12 @@ namespace zge
         i_last_used_particle = 0;
 
         return i_last_used_particle;
+    }
+
+    void ParticleEmitter::doParticleUpdate(Particle &p, float dt)
+    {
+        p.velocity += Vector3(0.0f, -2.0f, 0.0f) * dt;
+        p.position += p.velocity * dt;
     }
 
 } // namespace zge

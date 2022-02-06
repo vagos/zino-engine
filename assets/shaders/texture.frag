@@ -39,7 +39,7 @@ uniform mat4 m;
 
 float calculate_shadow(vec4 position_lightspace, sampler2D sm_sampler)
 {
-   float shadow; 
+   float shadow = 0.0; 
 
     // Perspective devide to bring coordinates in range[-1, 1]
     vec3 projected_coordinates = position_lightspace.xyz/position_lightspace.w;
@@ -57,7 +57,20 @@ float calculate_shadow(vec4 position_lightspace, sampler2D sm_sampler)
 
     // Correcting the quantization problem
     float bias = 0.005;
-    shadow = current_depth - bias > closest_depth ? 1.0: 0.0;
+    
+    vec2 texel_size = 1.0 / textureSize(sm_sampler, 0);
+
+    for (int x = -1; x <= 1; ++x)
+    {
+        for (int y = -1; y <= 1; ++y)
+        {
+            float depth = texture(sm_sampler, projected_coordinates.xy + vec2(x,y) * texel_size).r;
+            shadow += (depth + bias) < current_depth ? 1.0 : 0.0;
+        }
+    }
+    
+    shadow /= 9.0;
+
 
     return shadow;
 }

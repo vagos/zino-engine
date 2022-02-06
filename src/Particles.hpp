@@ -5,7 +5,9 @@
 #include "Quad.hpp"
 #include "Shader.hpp"
 #include "Texture.hpp"
+
 #include <cstddef>
+#include <functional>
 
 namespace zge 
 {
@@ -21,21 +23,23 @@ struct Particle
     }
 };
 
+
 struct ParticleEmitter : public Object
 {
 
     ParticleEmitter(Engine& eng, int n_particles, std::string particle_shader, std::string particle_model, std::string particle_texture = "");
 
-    std::shared_ptr<Shader> shader;
-    std::shared_ptr<Texture> texture;
-
-    std::shared_ptr<Model> particle_model;
+    std::shared_ptr<Shader> shader        = nullptr;
+    std::shared_ptr<Texture> texture      = nullptr;
+    std::shared_ptr<Model> particle_model = nullptr;
 
     std::vector<Particle> particles;
     int n_particles = 1;
 
     float total_time = 10;
     float creation_time;
+
+    virtual void doParticleUpdate(Particle& p, float dt);
 
     std::size_t i_last_used_particle;
 
@@ -45,7 +49,6 @@ struct ParticleEmitter : public Object
     std::size_t getUnusedParticle();
 
     Vector3 position;
-
 };
 
 }
