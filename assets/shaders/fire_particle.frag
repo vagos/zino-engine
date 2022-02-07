@@ -18,7 +18,7 @@ void main()
 
     float t = time/life_time;
 
-    vec3 c = vec3((0.5 + time), 0.4 + sin(time), 0) * (1 - t);
+    vec3 c = vec3(0.8, 1 - (vertex_position_worldspace.y + 10)/10, 0) * (1 - t);
 
     float alpha = 0.7 * (1 - t/3);
 
