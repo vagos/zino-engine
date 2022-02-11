@@ -39,6 +39,10 @@ namespace zge
 
     void LightSource::doUpdate(Engine &eng)
     {
+        float period = 5.0f;
+        float t = eng.getTime() / period;
+
+        position = Cylindrical2Cartesian( Vector3( 15.0f, 70.0f, t ) );
 
         // Move across z-axis
         if (eng.isKeyHeld(Key(Y))) {

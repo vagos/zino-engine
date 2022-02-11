@@ -1,5 +1,6 @@
 #include "Monster.hpp"
 #include "Collider.hpp"
+#include "Common.hpp"
 #include "Engine.hpp"
 #include "Object.hpp"
 #include "RigidBody.hpp"
@@ -73,7 +74,7 @@ void Monster::doThink(zge::Engine& eng)
     if (attack_cooldown < 0.0f)
     {
         doAttack(eng);
-        attack_cooldown = 5.0f;
+        attack_cooldown = 0.5f;
     }
 }
 
@@ -85,8 +86,7 @@ WaterMonster::WaterMonster(zge::Engine& eng) : Monster(eng, "Water Texture Shade
 
 void WaterMonster::doAttack(zge::Engine &eng)
 {
-    //auto particle_emitter = std::make_shared<zge::ParticleEmitter>(eng, 1, "Water Particle Shader", "Sphere Model");
-    auto particle_emitter = std::make_shared<zge::ParticleEmitter>(eng, 200, "Fire Particle Shader", "Cube Model", "Fire Particle Texture");
+    auto particle_emitter = std::make_shared<zge::ParticleEmitter>(eng, 1, "Water Particle Shader", "Sphere Model");
     particle_emitter->position = rigid_body->position;
     eng.addObject(particle_emitter);
 }
@@ -94,7 +94,8 @@ void WaterMonster::doAttack(zge::Engine &eng)
 FireMonster::FireMonster(zge::Engine &eng) : Monster(eng, "Fire Texture Shader", "Spider Monkey Model", 
         "Spider Monkey Texture")
 {
-    applyTransofrmation(glm::scale(zge::Matrix4x4(1), zge::Vector3(3.0f)));
+    applyTransofrmation(glm::scale(zge::Matrix4x4(1), zge::Vector3(0.05f)));
+    applyTransofrmation(glm::rotate(zge::Matrix4x4(1), 3*glm::pi<float>()/2.0f, zge::Vector3(1.0f, 0.0f, 0.0f)));
 }
 
 void FireMonster::doRender(zge::Engine &eng)
@@ -119,4 +120,23 @@ void FireMonster::doRender(zge::Engine &eng)
 
 void FireMonster::doAttack(zge::Engine &eng)
 {
+    auto particle_emitter = std::make_shared<zge::ParticleEmitter>(eng, 100, "Fire Particle Shader", "Cube Model", "Fire Particle Texture");
+    particle_emitter->position = rigid_body->position;
+    eng.addObject(particle_emitter);
+}
+
+ElectricityMonster::ElectricityMonster(zge::Engine& eng) : Monster(eng, "Texture Shader", "Cat Model", "Water Texture")
+{
+    applyTransofrmation(glm::scale(zge::Matrix4x4(1), zge::Vector3(0.05f)));
+    applyTransofrmation(glm::rotate(zge::Matrix4x4(1), 3*glm::pi<float>()/2.0f, zge::Vector3(1.0f, 0.0f, 0.0f)));
+}
+
+void ElectricityMonster::doAttack(zge::Engine &eng)
+{
+
+}
+void ElectricityMonster::doRender(zge::Engine &eng)
+{
+    Monster::doRender(eng);
+
 }

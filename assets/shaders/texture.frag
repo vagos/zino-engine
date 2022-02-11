@@ -71,6 +71,7 @@ float calculate_shadow(vec4 position_lightspace, sampler2D sm_sampler)
     
     shadow /= 9.0;
 
+    shadow = (closest_depth + bias) < current_depth ? 1.0 : 0.0; // non-smooth shadows
 
     return shadow;
 }

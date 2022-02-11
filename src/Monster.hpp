@@ -36,4 +36,12 @@ struct FireMonster : public Monster
     void doRender(zge::Engine& eng) override;
 };
 
+struct ElectricityMonster : public Monster 
+{
+    ElectricityMonster(zge::Engine& eng); 
+
+    void doAttack(zge::Engine& eng) override;
+    void doRender(zge::Engine& eng) override;
+};
+
 #endif /* MONSTER_HPP */

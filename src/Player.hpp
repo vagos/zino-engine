@@ -7,11 +7,16 @@ namespace zge
 {
 
 
-class Player : public Object 
+struct Player : public Object 
 {
    
-    Player();
+    Player(Engine &eng);
 
+
+    void doRender(Engine &eng) override;
+    void doUpdate(Engine &eng) override;
+
+    float speed = 10.0f;
 
 };
 

@@ -1,6 +1,7 @@
 #ifndef PARTICLES_HPP
 #define PARTICLES_HPP
 
+#include "Engine.hpp"
 #include "Object.hpp"
 #include "Quad.hpp"
 #include "Shader.hpp"
@@ -40,11 +41,14 @@ struct ParticleEmitter : public Object
     float creation_time;
 
     virtual void doParticleUpdate(Particle& p, float dt);
+    virtual void doParticleInit(Particle& p) {}
 
     std::size_t i_last_used_particle;
 
     void doRender(Engine &eng) override;
     void doUpdate(Engine &eng) override;
+
+    void doBasicRender(Engine& eng, Shader& shader) override;
 
     std::size_t getUnusedParticle();
 

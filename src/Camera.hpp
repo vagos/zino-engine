@@ -23,8 +23,7 @@ namespace zge
         Matrix4x4& getProjection() {return projection;}
         Matrix4x4& getView() {return look_at;}
 
-        Vector3 position;
-        Vector3 view_direction;
+        Vector3 position, view_direction, right_to_view;
     
     private:
 

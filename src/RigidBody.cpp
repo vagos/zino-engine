@@ -14,9 +14,9 @@ RigidBody::RigidBody(): rotation(1.0f), mass(1.0f), position(0.0f), velocity(0.0
 
 void RigidBody::doCollision(Vector3 &collision_direction, RigidBody &o_rb)
 {
-    setVelocity(velocity - 2.0f * glm::dot(velocity, collision_direction) * collision_direction);
-    // setVelocity(-velocity);
-    // position += glm::normalize(velocity) * 3.0f; // TODO check if this works
+    // setVelocity(velocity - 2.0f * glm::dot(velocity, collision_direction) * collision_direction);
+    auto v = velocity - 2.0f * glm::dot(velocity, collision_direction) * collision_direction;
+    setVelocity((-velocity + v * 0.0f) / 1.0f);
 }
 
 void RigidBody::applyGravity()
@@ -154,8 +154,6 @@ void RigidBody::updateProperties(std::vector<float> new_state_vector)
 
 std::vector<float> RigidBody::RungeKuta4(const std::vector<float>& state_0, float t, float dt)
 {
-
-    // dydt0 = dydt(x0)
     std::vector<float> derivative_0 = getStateVectorDerivative(state_0, t);
     
     std::vector<float> state_1(n_states);

@@ -33,6 +33,8 @@ namespace zge
         virtual void doUpdate(Engine& eng) {}
         virtual void doRender(Engine& eng) {}
 
+        virtual void doBasicRender(Engine& eng, Shader& shader);
+
         std::shared_ptr<Model> model           = nullptr;
         std::shared_ptr<RigidBody> rigid_body  = nullptr;
         std::shared_ptr<CubeCollider> collider = nullptr;

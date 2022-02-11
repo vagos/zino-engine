@@ -10,7 +10,6 @@
 
 zge::Camera::Camera() 
 {
-    position = Vector3(0, 0, -5);
     look_at = glm::lookAt(position, Vector3(0, 0, 0), V_UP);
 }
 
@@ -31,12 +30,13 @@ void zge::Camera::doUpdate(Engine& eng)
     };
     view_direction = glm::normalize(view_direction);
 
-    Vector3 right_to_view = glm::cross(view_direction, V_UP);
+    right_to_view = glm::cross(view_direction, V_UP);
     right_to_view = glm::normalize(right_to_view);
 
     Vector3 up_to_view{glm::cross(right_to_view, view_direction)};
     up_to_view = glm::normalize(up_to_view);
 
+    /*
 
     if (eng.isKeyHeld(Key(W))) position += glm::normalize(view_direction) * eng.getElapsedTime() * speed;
     if (eng.isKeyHeld(Key(S))) position -= glm::normalize(view_direction) * eng.getElapsedTime() * speed;
@@ -47,6 +47,8 @@ void zge::Camera::doUpdate(Engine& eng)
     if (eng.isKeyHeld(Key(E))) position -= Vector3(0, 1, 0) * eng.getElapsedTime() * speed;
 
     // position.y = 0; // player can't fly
+    
+    */
 
     projection = glm::perspective(glm::radians(fov), window_size.x / window_size.y, 0.1f, 10000.0f);
 

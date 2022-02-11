@@ -23,4 +23,6 @@ namespace zge
     typedef glm::mat3 Matrix3x3;
 }
 
+zge::Vector3 Cylindrical2Cartesian(zge::Vector3 v); // x = r y = theta, z = z
+
 #endif /* COMMON_ZE_HPP */

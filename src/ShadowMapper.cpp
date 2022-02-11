@@ -21,18 +21,14 @@ namespace zge
         depth_shader->doUse();
 
         auto main_light = eng_getObjectTyped("Main Light", LightSource);
+            
+        zge::Matrix4x4 vp = main_light->getProjection() * main_light->getView();
+        depth_shader->sendUniform("vp", vp);
 
         // Render the scene
         for (auto& o : Object::objects)
         {
-            if (!o->model) continue; 
-
-            zge::Matrix4x4 mvp = main_light->getProjection() * main_light->getView() * o->getModelMatrix();
-            depth_shader->sendUniform("mvp", mvp);
-
-            o->model->doUse();
-            o->model->doRender(eng);
-            // o->doRender(eng);
+            o->doBasicRender(eng, *depth_shader);
         }
 
         f_b.doUnuse();

@@ -79,7 +79,7 @@ void Ball::doUpdate(zge::Engine &eng)
                 {
                     caught_monsters.push_back(std::static_pointer_cast<Monster>(obj)); 
 
-                    auto particle_emitter = std::make_shared<zge::ParticleEmitter>(eng, 5, "Particle Shader", "Star Model");
+                    auto particle_emitter = std::make_shared<zge::ParticleEmitter>(eng, 20, "Particle Shader", "Star Model");
                     particle_emitter->total_time = 5.0f;
                     particle_emitter->position = rigid_body->position;
 

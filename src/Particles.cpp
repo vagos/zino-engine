@@ -3,7 +3,7 @@
 #include "Shader.hpp"
 #include <cstddef>
 
-#define rnd eng.getRandomFloat() * 2 - 1
+#define rnd eng.getRandomFloat() * 1 - 1
 
 namespace zge 
 {
@@ -20,7 +20,7 @@ namespace zge
 
         creation_time = eng.getTime(); 
 
-        std::clog << "PE: " << creation_time << '\n';
+        // std::clog << "PE: " << creation_time << '\n';
     }
 
     void ParticleEmitter::doUpdate(Engine &eng)
@@ -37,9 +37,11 @@ namespace zge
             }
             else
             {
+               doParticleInit(p);
+
                p.life = total_time;
-               p.position = position + Vector3(rnd, rnd, rnd) * 3.0f; 
-               p.velocity = Vector3(0, 1, 0);
+               p.velocity = -glm::normalize(eng.camera.view_direction) * 10.0f; // Vector3(0, 1, 0);
+               p.position = position + p.velocity * (rnd); 
             }
        }
 
@@ -102,6 +104,26 @@ namespace zge
     {
         p.velocity += Vector3(0.0f, -2.0f, 0.0f) * dt;
         p.position += p.velocity * dt;
+    }
+
+    void ParticleEmitter::doBasicRender(Engine &eng, Shader& shader)
+    {
+        shader.sendUniform("instancing", (int)true);
+
+        for (int i = 0; i < particles.size(); i++)
+        {
+            auto& p = particles[i];
+
+            auto p_m = glm::translate(Matrix4x4(1), p.position);
+
+            shader.sendUniform(Uniform_I("p_m", i), p_m);
+        }
+
+        particle_model->doUse();
+
+        glDrawArraysInstanced(GL_TRIANGLES, 0, particle_model->vertices.size(), n_particles);
+
+        shader.sendUniform("instancing", (int)false);
     }
 
 } // namespace zge

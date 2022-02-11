@@ -44,4 +44,15 @@ Matrix4x4 Object::getModelMatrix()
     return model_matrix * base_model_matrix;
 }
 
+void Object::doBasicRender(Engine &eng, Shader& shader)
+{
+    if (!model) return;
+    
+    shader.sendUniform("m", getModelMatrix());
+
+    model->doUse();
+    model->doRender(eng);
+
+}
+
 }
