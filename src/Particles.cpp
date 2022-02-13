@@ -113,7 +113,6 @@ namespace zge
         for (int i = 0; i < particles.size(); i++)
         {
             auto& p = particles[i];
-
             auto p_m = glm::translate(Matrix4x4(1), p.position);
 
             shader.sendUniform(Uniform_I("p_m", i), p_m);

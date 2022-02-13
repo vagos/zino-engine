@@ -15,13 +15,12 @@ float triangle_func(in float x, in float A, in float T)
 float get_time_of_day()
 {
    float max_time = 5; 
-   float current_time = triangle_func(time, 1.0, max_time);
+   float current_time = (sin(time / max_time) + 1) / 2.0;
    return current_time;
 }
 
 void main()
 {
     vec4 texture_color = texture(skybox, vec3(uv.x, -uv.y, uv.z));
-    color = mix(texture_color.bgra, texture_color.rgba, 
-            clamp(get_time_of_day(), 0.0, 1.0));
+    color = mix(texture_color.bgra, texture_color.rgba, get_time_of_day());
 }

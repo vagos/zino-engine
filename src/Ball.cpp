@@ -70,7 +70,6 @@ void Ball::doUpdate(zge::Engine &eng)
        if ( obj && obj->collider && obj->rigid_body && collider->isColliding(*obj->collider, n) ) 
        {
             rigid_body->doCollision(n, *obj->rigid_body);
-
             n_bounces++;
 
             if (type == zge::Object::Type::CATCH_BALL)

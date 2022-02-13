@@ -255,9 +255,9 @@ class TestingEngine : public zge::Engine
                 new_ball->type = zge::Object::Type::CATCH_BALL;
             }
 
-            new_ball->rigid_body->position = camera.position + glm::normalize(camera.view_direction) * 3.0f;
+            new_ball->rigid_body->position = camera.position + glm::normalize(camera.view_direction) * 6.0f;
             new_ball->rigid_body->mass = 100.0f;
-            new_ball->rigid_body->applyForce(camera.view_direction * 20000.0f);
+            new_ball->rigid_body->applyForce(camera.view_direction * 30000.0f);
             
             addObject(new_ball);
         }
@@ -294,6 +294,6 @@ int main()
 
     std::string name{"Testing"};
 
-    if (engine.doConsturct(1024, 576, name))
+    if (engine.doConsturct(1920, 1080, name))
         engine.doStart();
 }
