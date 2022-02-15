@@ -28,21 +28,25 @@ namespace zge
         light_shader->doUse();
         light_shader->sendUniform("light", *this);
 
-        // auto basic_shader = eng_getAssetTyped("Basic Shader", zge::Shader);
-        // zge::Matrix4x4 mvp = eng.camera.getProjection() * eng.camera.getView() * getModelMatrix();
-        // basic_shader->doUse();
-        // basic_shader->sendUniform("mvp", mvp);
+#ifdef DEBUG
 
-        // model->doUse();
-        // model->doRender(eng);
+        auto basic_shader = eng_getAssetTyped("Basic Shader", zge::Shader);
+        zge::Matrix4x4 mvp = eng.camera.getProjection() * eng.camera.getView() * glm::translate(Matrix4x4(1.0), position);
+        basic_shader->doUse();
+        basic_shader->sendUniform("mvp", mvp);
+
+        model->doUse();
+        model->doRender(eng);
+
+#endif
     }
 
     void LightSource::doUpdate(Engine &eng)
     {
-        float period = 5.0f;
-        float t = eng.getTime() / period;
+        float period = 5.0f; float t = eng.getTime() / period;
+        float h = glm::clamp(glm::cos(t) / 2.0f + 0.5f, 0.1f, 1.0f);
 
-        position = Cylindrical2Cartesian( Vector3( 15.0f, 70.0f, t ) );
+        position = Cylindrical2Cartesian( Vector3( 50.0f, h * 70.0f, t ) );
 
         // Move across z-axis
         if (eng.isKeyHeld(Key(Y))) {

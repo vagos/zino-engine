@@ -125,6 +125,9 @@ bool zge::Engine::doConsturct(int w, int h, std::string &app_name)
 
     Engine::width = w; Engine::height = h;
 
+    // random number generator
+    srand(time(NULL));
+
     return true;
 }
 
@@ -180,6 +183,11 @@ int zge::Engine::getRandomInt(int a, int b)
 float Engine::getRandomFloat()
 {
     return float(random()) / float(RAND_MAX);
+}
+
+float Engine::getRandomFloat(float a, float b)
+{
+    return getRandomFloat() * (b - a) + a;
 }
 
 void Engine::addAsset(std::shared_ptr<Asset> asset, std::string asset_name)

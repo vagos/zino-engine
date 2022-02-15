@@ -19,6 +19,9 @@ struct Monster : public zge::Object
     std::shared_ptr<zge::Texture> texture;
 
     float attack_cooldown = 1.0f;
+
+    zge::Vector3 view_direction;
+    float rotation_angle = 0.0f;
 };
 
 struct WaterMonster : public Monster 

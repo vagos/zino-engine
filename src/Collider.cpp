@@ -35,11 +35,10 @@ namespace zge
     bool CubeCollider::isColliding(CubeCollider& other, Vector3& collision_direction)
     {
         collision_direction = glm::normalize(position - other.position);
-        collision_direction = zge::Vector3(0, 1, 0);
-        // if (has_collided) return false;
-        // has_collided = true;
 
-        return 
+        
+
+        bool is_collision = 
             
             ( position.x + min_x <= other.position.x + other.max_x && 
                 position.x + max_x >= other.position.x + other.min_x ) 
@@ -53,6 +52,11 @@ namespace zge
 
             (position.z + min_z <= other.position.z + other.max_z &&
              position.z + max_z >= other.position.z + other.min_z); 
+
+        if (is_collision) {}
+            //std::clog << glm::to_string(collision_direction) << '\n';
+
+        return is_collision;
     }
 
     void CubeCollider::setCorners(Model &model)

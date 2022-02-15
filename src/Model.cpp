@@ -191,15 +191,32 @@ void TransformingModel::doRender(Engine &eng)
     texture_shader->doUse();
 
     auto mvp = eng.camera.getProjection() * eng.camera.getView()
-        * glm::translate(Matrix4x4(1), Vector3(10.0f, 10.0f, 10.0f));
+        * glm::translate(Matrix4x4(1), Vector3(10.0f, 3.0f, 10.0f));
 
     texture_shader->sendUniform("mvp", mvp);
     texture_shader->sendUniform("morph_factor", morph_factor);
 
-    morph_factor += 0.01f;
-    if (morph_factor > 1.0f) morph_factor = 0.0f;
+    if (eng.isKeyHeld(Key(X)))
+    {
+        morph_factor += eng.getElapsedTime();
+    }
 
-    glDrawArrays(GL_TRIANGLES, 0, model_first.vertices.size());
+    if (eng.isKeyHeld(Key(Z)))
+    {
+        morph_factor -= eng.getElapsedTime();
+    }
+
+    morph_factor = glm::clamp(morph_factor, 0.0f, 1.0f);
+
+    if (morph_factor < 0.5f)
+    {
+        glDrawArrays(GL_TRIANGLES, 0, model_first.vertices.size());
+    }
+    else 
+    {
+        glDrawArrays(GL_TRIANGLES, 0, model_second.vertices.size());
+    }
+
 }
 
 }

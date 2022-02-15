@@ -38,5 +38,7 @@ uniform float time;
 
 void main()
 {
-    color = vec4(texture(texture_sampler, uv * time / 20.0f).rgb, 1.0);
+    vec3 extra_color = vec3(0.294, 0, ( clamp(sin(time), 0.509, 1.0) ) );
+
+    color = vec4( extra_color * texture(texture_sampler, uv * time / 20.0f).rgb, 1.0);
 }

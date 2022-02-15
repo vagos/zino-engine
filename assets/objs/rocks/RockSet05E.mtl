@@ -1,0 +1,11 @@
+# Created with Anim8or 1.00
+# Object "RockSet05E":
+
+newmtl Rock_05
+Ka 0.106 0.106 0.106
+Kd 0.878 0.878 0.878
+Ks 1 1 1
+Ns 738.6
+map_Kd RockSet05Forest-Diffuse.png
+map_Ks RockSet05Forest-Specular.png
+

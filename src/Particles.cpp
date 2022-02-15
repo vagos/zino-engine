@@ -15,12 +15,10 @@ namespace zge
 
         shader = eng_getAssetTyped(particle_shader_n, Shader);
         particle_model = eng_getAssetTyped(particle_model_n, Model);
-        if (particle_texture_n.size()) 
+        if (! particle_texture_n.empty() ) 
             texture = eng_getAssetTyped(particle_texture_n, Texture);
 
         creation_time = eng.getTime(); 
-
-        // std::clog << "PE: " << creation_time << '\n';
     }
 
     void ParticleEmitter::doUpdate(Engine &eng)
@@ -33,15 +31,12 @@ namespace zge
 
             if (p.life > 0.0f) // particle is alive
             {
-               doParticleUpdate(p, dt);
+               doParticleUpdate(eng, p, dt);
             }
             else
             {
-               doParticleInit(p);
+               doParticleInit(eng, p);
 
-               p.life = total_time;
-               p.velocity = -glm::normalize(eng.camera.view_direction) * 10.0f; // Vector3(0, 1, 0);
-               p.position = position + p.velocity * (rnd); 
             }
        }
 
@@ -100,10 +95,17 @@ namespace zge
         return i_last_used_particle;
     }
 
-    void ParticleEmitter::doParticleUpdate(Particle &p, float dt)
+    void ParticleEmitter::doParticleUpdate(Engine& eng, Particle &p, float dt)
     {
         p.velocity += Vector3(0.0f, -2.0f, 0.0f) * dt;
         p.position += p.velocity * dt;
+    }
+
+    void ParticleEmitter::doParticleInit(Engine& eng, Particle& p)
+    {
+       p.life = total_time;
+       // p.velocity = -glm::normalize(eng.camera.view_direction) * 10.0f; // Vector3(0, 1, 0);
+       // p.position = position + p.velocity * (rnd); 
     }
 
     void ParticleEmitter::doBasicRender(Engine &eng, Shader& shader)

@@ -121,6 +121,7 @@ namespace zge
     void Shader::sendUniform(const std::string u_n, LightSource& l_s)
     {
         sendUniform(u_n + ".position", l_s.position);
+
         sendUniform(u_n + ".ambient", l_s.ambient);
         sendUniform(u_n + ".diffuse", l_s.diffuse);
         sendUniform(u_n + ".specular", l_s.specular);

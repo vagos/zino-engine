@@ -19,7 +19,8 @@ void main()
     float t = time/life_time;
 
     // vec3 c = vec3(0.662, 0.635, 0.635 + rand(vec2(t)));
-    vec3 c = vec3(0.062, 0.635, 0.835 + abs(sin(time)));
+    vec3 extra_color = vec3(0.294, 0, ( clamp(sin(time), 0.509, 1.0) ) );
+    vec3 c = vec3(0.062, 0.635, 0.835 + abs(sin(time))) * extra_color;
 
-    color = vec4(c, 1 - time/5);
+    color = vec4(c, 1 - t);
 }

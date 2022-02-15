@@ -3,6 +3,7 @@
 #include "Common.hpp"
 #include "Model.hpp"
 #include "Object.hpp"
+#include "Particles.hpp"
 #include "RigidBody.hpp"
 #include "Shader.hpp"
 #include "Engine.hpp"
@@ -11,7 +12,7 @@ namespace zge
 {
     Player::Player(Engine &eng)
     {
-        model = eng_getAssetTyped("Tree Model", zge::Model);
+        model = eng_getAssetTyped("Gorilla Model", zge::Model);
         rigid_body = std::make_shared<RigidBody>();
 
         collider = std::make_shared<zge::CubeCollider>(*model, rigid_body->position);
@@ -52,7 +53,17 @@ namespace zge
         if (eng.isKeyHeld(Key(SPACE)))
         {
             rigid_body->setVelocity(Vector3(0.0f, 1.0f, 0.0f) * 10.0f);
-            // rigid_body->applyForce(Vector3(0.0f, 1.0f, 0.0f) * 50000.0f);
+
+            if (eng.isKeyHeld(Key(J)))
+            {
+                auto particle_emitter = std::make_shared<zge::FireParticleEmitter>(eng, 5, "Fire Particle Shader", "Sphere Model");
+                particle_emitter->total_time = 5.0f;
+                particle_emitter->aim_direction = - zge::V_UP;
+                particle_emitter->position = rigid_body->position - V_UP * 2.0f;
+
+                eng.addObject(particle_emitter);
+            }
+
         }
 
         eng.camera.position = position + Vector3(0.0f, 2.0f, 0.0f);

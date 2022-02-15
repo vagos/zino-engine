@@ -19,7 +19,6 @@ void main()
     mat4 mvp_i = mvp[gl_InstanceID];
 
     vec4 pos = vec4(vertex_position * (time + 2) , 1.0);
-    // vec4 pos = vec4(vertex_position + rand(vertex_uv*time) * vertex_normal, 1.0);
 
     /*
     float K = 1.0;

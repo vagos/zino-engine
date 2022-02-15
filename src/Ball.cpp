@@ -28,7 +28,7 @@ void Ball::doRender(zge::Engine &eng)
 {
     std::shared_ptr<zge::Shader> basic_shader = eng_getAssetTyped("Texture Shader", zge::Shader);
 
-    auto t = eng_getAssetTyped("Pokeball Texture", zge::Texture);
+    auto t = eng_getAssetTyped(type == Object::Type::BALL ? "Pokeball Texture A" : "Pokeball Texture B", zge::Texture);
 
     basic_shader->doUse();
 
@@ -47,12 +47,11 @@ void Ball::spawnMonster(zge::Engine& eng, std::shared_ptr<Monster> monster)
 {
     monster->rigid_body->setPosition(rigid_body->position);
     monster->exists = true;
-    // auto particle_emitter = std::make_shared<zge::ParticleEmitter>(eng, 1, "Water Particle Shader", "Sphere Model");
     
-    auto particle_emitter = std::make_shared<zge::ParticleEmitter>(eng, 50, "Particle Shader", "Cube Model");
+    auto particle_emitter = std::make_shared<zge::SmokeParticleEmitter>(eng, 50, "Particle Shader", "Cube Model");
     particle_emitter->total_time = 5.0f;
     particle_emitter->position = rigid_body->position;
-//    eng.addObject(particle_emitter);
+    eng.addObject(particle_emitter);
     eng.addObject(monster);
 }
 
@@ -78,7 +77,7 @@ void Ball::doUpdate(zge::Engine &eng)
                 {
                     caught_monsters.push_back(std::static_pointer_cast<Monster>(obj)); 
 
-                    auto particle_emitter = std::make_shared<zge::ParticleEmitter>(eng, 20, "Particle Shader", "Star Model");
+                    auto particle_emitter = std::make_shared<zge::StarParticleEmitter>(eng, 20, "Star Particle Shader", "Star Model");
                     particle_emitter->total_time = 5.0f;
                     particle_emitter->position = rigid_body->position;
 
@@ -93,8 +92,9 @@ void Ball::doUpdate(zge::Engine &eng)
             {
                 exists = false;
 
-                auto monster = caught_monsters.back();
-                caught_monsters.pop_back();
+                std::clog << "MONSTER SELECTED: " << monster_selected << '\n';
+
+                auto monster = caught_monsters[monster_selected % caught_monsters.size()];
                 spawnMonster(eng, monster);
             }
        }
@@ -104,3 +104,4 @@ void Ball::doUpdate(zge::Engine &eng)
 }
 
 std::vector<std::shared_ptr<Monster>> Ball::caught_monsters;
+int Ball::monster_selected = 0;

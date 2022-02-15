@@ -2,7 +2,9 @@
 
 out vec4 color;
 
+uniform float morph_factor;
+
 void main()
 {
-    color = vec4(1, 0, 0, 1);
+    color = vec4(1 * (1 - morph_factor), 0, morph_factor, 1);
 }

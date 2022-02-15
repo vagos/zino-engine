@@ -16,7 +16,7 @@ void RigidBody::doCollision(Vector3 &collision_direction, RigidBody &o_rb)
 {
     // setVelocity(velocity - 2.0f * glm::dot(velocity, collision_direction) * collision_direction);
     auto v = velocity - 2.0f * glm::dot(velocity, collision_direction) * collision_direction;
-    setVelocity((-velocity + v * 0.0f) / 1.0f);
+    setVelocity(-v);
 }
 
 void RigidBody::applyGravity()

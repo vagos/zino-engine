@@ -25,9 +25,20 @@
 
 \usepackage{subcaption}
 \usepackage{amsmath}
-
+\usepackage{listings}
 \usepackage{pgfplots}
+
 \pgfplotsset{compat = newest}
+\lstset{language=C++}
+\lstset{% general command to set parameter(s)
+basicstyle=\small\ttfamily, % print whole listing small
+keywordstyle=\color{black}\bfseries\underbar,
+% underlined bold black keywords
+identifierstyle=, % nothing happens
+stringstyle=\ttfamily, % typewriter type for strings
+showstringspaces=false} % no special string spaces
+\lstset{numbers=left, numberstyle=\ttfamily}
+% \lstset{backgroundcolor=\color{Blue}}
 
 %----------------------------------------------------------------------------------------
 %	TITLE SECTION
@@ -125,18 +136,147 @@
 Για την περιήγηση του χρήστη στη σκηνή, δημιοργήσαμε μία οντότητα κάμερας η οποία είναι υπεύθυνση 
 για τον υπολογισμό των \en{view} και \en{projection} πινάκων με βάση μία δεδομένη θέση και κατεύθυνση όρασης.
 
+Για να προσθέσουμε φυσικές ιδιότητες στα αντικείμενα της σκηνής, τους προσθέσαμε ιδιότητες στερεού σώματος (\en{rigid body}).
+Συγκεκριμένα, σε κάθε καρέ της εφαρμογής υπολογίζουμε τη νέα θέση και ταχύτητα του κάθε αντικειμένου με βάση το διάνυσμα κατάστασής 
+του. Αυτό το διάνυσμα περιέχει πληροφορίες όσων αφορά την τωρινή του θέση, ορμή, γωνιακή ταχύτητα, στροφορμή και περιστροφή.
+
+Για να υπολογίσουμε την κάθε επόμενη κατάσταση χρησιμοποιούμε την μέθοδο αριθμητικής ολοκλήρωσης \en{Runge-Kuta} 4ης τάξης.
+
+
+\begin{figure}[H]
+\begin{gather}
+    s(t)
+     =
+  \begin{bmatrix}
+      x(t) \\
+      R(t) \\ 
+      P(t) \\
+      L(t) \\
+   \end{bmatrix}
+\end{gather}
+    \caption{Το διάνυσμα κατάστασης.}
+\end{figure}
+
+Έτσι, έχουμε αντικείμενα τα οποία μπορούν να υπακούν στο νόμο της βαρύτητας και στα οποία μπορούμε να 
+εφαρμόζουμε αυθαίρετες δυνάμεις.
+
+Για να υπάρχει, ωστόσο, αλληλεπίδραση μεταξύ των αντικειμένων ορίσαμε ένα σύστημα ανίχνευσης συγκρούσεων (\en{collision detection}). 
+Σε κάθε αντικείμενο της σκηνής προσθέσαμε ένα \en{AABB (axis-aligned bounding box)}. Δηλαδή, έναν κύβο του οποίου 
+οι οκτώ (8) κορυφές βρίσκονται στα ακραία \en{vertices} του αντικειμένου. 
+Σε περίπτωση όπου στο αντικείμενο εφαρμοστούν \en{transformations}, αυτές επηρεάζουν και το αντίστοιχό του \en{AABB}.
+Τελικά, ο έλεγχος συγκρούσεων γίνεται απλά μία υπόθεση σύγκρισης των συντεταγμένων των κορυφών μεταξύ δύο \en{AABBs}.
+
+\begin{figure}[H]
+    \begin{center}
+\begin{tikzpicture}
+    % https://tex.stackexchange.com/questions/285578/how-to-draw-parallelepiped-and-cube-with-latex/288101#288101
+    \pgfmathsetmacro{\cubex}{2}
+    \pgfmathsetmacro{\cubey}{1}
+    \pgfmathsetmacro{\cubez}{1}
+    \draw[red,fill=white] (0,0,0) -- ++(-\cubex,0,0) -- ++(0,-\cubey,0) -- ++(\cubex,0,0) -- cycle;
+    \draw[red,fill=white] (0,0,0) -- ++(0,0,-\cubez) -- ++(0,-\cubey,0) -- ++(0,0,\cubez) -- cycle;
+    \draw[red,fill=white] (0,0,0) -- ++(-\cubex,0,0) -- ++(0,0,-\cubez) -- ++(\cubex,0,0) -- cycle;
+
+    \pgfmathsetmacro{\cubex}{2}
+    \pgfmathsetmacro{\cubey}{1}
+    \pgfmathsetmacro{\cubez}{1}
+    \draw[red] (1,0.5,0) -- ++(-\cubex,0,0) -- ++(0,-\cubey,0) -- ++(\cubex,0,0) -- cycle;
+    \draw[red] (1,0.5,0) -- ++(0,0,-\cubez) -- ++(0,-\cubey,0) -- ++(0,0,\cubez) -- cycle;
+    \draw[red] (1,0.5,0) -- ++(-\cubex,0,0) -- ++(0,0,-\cubez) -- ++(\cubex,0,0) -- cycle;
+\end{tikzpicture}
+    \end{center}
+    \caption{Παράδειγμα ελέγχου σύγκρουσης με δύο \en{AABBs}.}
+\end{figure}
+
+Με το πάτημα του πλήκτρου \en{T} ο χαρακτήρας μας εκτοξεύει μία σφαίρα προς την κατεύθυνση που κοιτάει. Αυτή η σφαίρα
+αλληλεπιδρά με τις οντότητες του κόσμου της σκηνής αλλά και με άλλες σφαίρες. Ο μαθηματικός τύπος
+ο οποίος θα μας δίνει τη νέα ταχύτητα της σφαίρας μετά από μία σύγκρουση πέρασε από διάφορες αλλαγές. 
+
+Μία επιλογή είναι ο προσεγγιστικός τύπος της ελαστικής κρούσης:
+
+\begin{equation}
+    % auto v = velocity - 2.0f * glm::dot(velocity, collision_direction) * collision_direction;
+    \vec{v}^\prime = \vec{v} - 2 \cdot ( \vec{v} \cdot \vec{n} ) \cdot \vec{n}
+\end{equation}
+
+Ο οποίος δίνει ρεαλιστικά αποτελέσματα αλλά απαιτεί διορθώσεις λόγω του τρόπου με τον οποίο υπολογίζουμε το διάνυσμα 
+σύγκρουσης $\vec{n}$. 
+
+Μία άλλη επιλογή ήταν ο απλοϊκός τύπος 
+
+\begin{equation}
+    \vec{v}^\prime = -\vec{v}
+\end{equation}
+
+Ο οποίος κάνει της συγκρούσεις των σφαιρών με το περιβάλλον να μοιάζουν με σκηνή \say{καρτούν}. Αυτό, φυσικά 
+δεν είναι κάτι ανεπιθύμητο, αλλά έγινε προσπάθεια για πιο ρεαλιστικές συγκρούσεις.
+
+Τέλος, δώσαμε και στον παίκτη φυσικές ιδιότητες, δίνοντάς του ιδιότητες ενός \en{rigid body}. 
+Ο χρήστης μπορεί να ανεβαίνει πάνω στα αντικείμενα της σκηνής, να πηδάει και να πετάει.
+
+% Picture of balls bouncing realistically 
+% Picture of balls bouncing comically
 
 \subsection{Μέρος Β}
 
 \subsubsection{Εμφάνιση τέρατος}
 
+Εφόσων μία σφαίρα αναπηδήσει τρεις φορές στο έδαφος, εμφανίζεται στη σκηνή ένα τέρας στη θέση της. Το εφέ που 
+χρησιμοποιήσαμε είναι ένα εφέ καπνού. Ζωγραφίζουμε με το σύστημα σωματιδίων (\en{particle system}) 
+έναν μεγάλο αριθμό από γκρίζους κύβους οι οποίοι κινούνται προς τα πάνω. 
+Με το πέρασμα του χρόνου, μέσα από τον \en{shader} ο οποίος χειρίζεται αυτά τα \say{σωματίδια} τα μεγενθύνουμε
+και μειώνουμε την τιμή του \en{alpha}, κάνοντάς τα μετά από πέντε (5) δευτερόλεπτα διάφανα. 
+
+Υπάρχει ένας εύκολος τρόπος να μεγνθύνουμε ομογενώς ένα αντικείμενο μέσα από τον \en{vertex shader} όπως φαίνεται 
+στον κώδικα (\ref{ezbigger_vert}).
+
+\begin{minipage}{\textwidth}
+\selectlanguage{english}
+\begin{lstlisting}[caption=\textgreek{Μεγέθυνση αντικειμένου από τον} vertex shader, label=ezbigger_vert]
+// scale the object by a factor of c
+vec4 pos = vec4(vertex_position * c, 1.0);
+gl_Position = mvp * pos;
+\end{lstlisting}
+\end{minipage}
+\selectlanguage{greek}
+Ακόμα, για λόγους απόδοσης περιοριστήκαμε σε απλά μοντέλα για το κάθε σωματίδιο (κύβοι και σφαίρες) 
+ώστε να έχουμε χαμηλό αριθμό από \en{vertices}. Εφαρμόσαμε επίσης την τεχνική του \en{instancing}
+κατά το οποίο ζωγραφίζουμε στην οθόνη πολλά αντικείμενα τα οποία μοιράζονται το ίδιο \en{VAO}
+σε ένα (1) μόνο  \en{draw call} στην κάρτα γραφικών.
+
+% pictures of the smoke
+ 
+Για τα μοντέλα των τεράτων χρησιμοποιήσαμε αρχεία \en{objs} από διάφορους ιστιότοπους. 
+
+% pictures of the monsters
+
 \subsubsection{Παγίδευση τέρατος}
+
+Πατώντας το πλήκτρο \en{C}, ο χρήστης μπορεί να επιλέξει μεταξύ των δύο ειδών 
+σφαίρας οι οποίες είναι:
+\begin{enumerate}
+    \item Μπάλες που θα εμφανίσουν ένα τέρας όταν συγκρουστούν με το έδαφος.
+    \item Μπάλες που θα παγιδεύσουν ένα τέρας όταν συγκρουστούν με αυτό.
+\end{enumerate}
+
+Αν ο χρήστης επιλέξει το δεύτερο είδος σφαίρας μπορεί να σημαδεύσει σε ένα τέρας και 
+έτσι να το παγιδεύσει. Όταν το παγιδεύει έχουμε ένα απλό εφέ αστεριών. 
+
+% picture of stars when capturing monster
 
 \subsubsection{Επίθεση τέρατος}
 
-\subsection{Bonus}
+Συνολικά έχουμε τρία (3) διαφορετικά τέρατα. Ένα τέρας φωτιάς, ένα τέρας τοξικής ομίχλης και ένα τέρος ηλκετρισμού.
+
+% Pictures of all three monsters
+
+Το καθένα έχει μία διαφορετική επίθεση.
+
+\subsection{\en{Bonus}}
 
 \subsubsection{Εξέλιξη τέρατος}
+
+Η υλοποίηση μιας εξέλιξης τέρατος έγινε δημιουργώντας αρχικά 
 
 \begin{figure}[H]
 	\begin{center}

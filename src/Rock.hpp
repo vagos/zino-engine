@@ -37,17 +37,27 @@ struct Rock : public zge::Object
 
     void doRender(zge::Engine &eng) override
     {
+        auto rock_normal_texture = eng_getAssetTyped("Rock Normal Texture", zge::Texture);
+
         texture_shader->doUse();
         model->doUse();
+
+        rock_normal_texture->doUse(7);
 
         zge::Matrix4x4 mvp = eng.camera.getProjection() * eng.camera.getView() * getModelMatrix();
 
         texture_shader->sendUniform("mvp", mvp);
         texture_shader->sendUniform("m", getModelMatrix());
         texture_shader->sendUniform("texture_sampler", *model->texture);
+
+        texture_shader->sendUniform("use_extras", (int)true);
+
+        texture_shader->sendUniform("normal_sampler", *rock_normal_texture);
         // texture_shader->sendUniform("material", material);
 
         model->doRender(eng);
+        
+        texture_shader->sendUniform("use_extras", (int)false);
     }
 
 };

@@ -59,6 +59,7 @@ namespace zge
 
         int getRandomInt(int a, int b);
         float getRandomFloat();
+        float getRandomFloat(float a, float b);
 
         static int width, height;
 

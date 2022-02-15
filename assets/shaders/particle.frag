@@ -14,14 +14,14 @@ float rand(vec2 co){
 
 void main()
 {
-    float life_time = 5;
+    float life_time = 5.0;
 
     float t = time/life_time;
 
     // vec3 c = vec3(0.662, 0.635, 0.635 + rand(vec2(t)));
     vec3 c = vec3(0.662, 0.635, 0.635);
 
-    float alpha = 0.7 * (1 - t);
+    float alpha = (1.0 - t);
 
     color = vec4(c, alpha);
 }
