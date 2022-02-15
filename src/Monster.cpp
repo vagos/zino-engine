@@ -105,7 +105,7 @@ WaterMonster::WaterMonster(zge::Engine& eng) : Monster(eng, "Water Texture Shade
 {
     applyTransofrmation(glm::scale(zge::Matrix4x4(1), zge::Vector3(0.005f)));
     applyTransofrmation(glm::rotate(zge::Matrix4x4(1), zge::PI, zge::V_UP));
-    rigid_body->setPosition(rigid_body->position + zge::Vector3(0, 10, 0));
+    // rigid_body->setPosition(rigid_body->position + zge::Vector3(0, 10, 0));
 }
 
 void WaterMonster::doAttack(zge::Engine &eng)

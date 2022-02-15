@@ -1,0 +1,22 @@
+\babel@toc {greek}{}\relax 
+\contentsline {section}{\numberline {1}Εισαγωγή}{2}{section.1}%
+\contentsline {section}{\numberline {2}Ερωτήματα Εργασίας}{2}{section.2}%
+\contentsline {subsection}{\numberline {2.1}Μέρος Α}{2}{subsection.2.1}%
+\contentsline {subsubsection}{\numberline {2.1.1}Δημιουργία σκηνής κόσμου.}{2}{subsubsection.2.1.1}%
+\contentsline {subsubsection}{\numberline {2.1.2}Μέθοδος σκίασης}{4}{subsubsection.2.1.2}%
+\contentsline {subsubsection}{\numberline {2.1.3}Περιήγηση στη σκηνή και φυσική αλληλεπίδραση}{4}{subsubsection.2.1.3}%
+\contentsline {subsection}{\numberline {2.2}Μέρος Β}{6}{subsection.2.2}%
+\contentsline {subsubsection}{\numberline {2.2.1}Εμφάνιση τέρατος}{6}{subsubsection.2.2.1}%
+\babel@toc {english}{}\relax 
+\babel@toc {greek}{}\relax 
+\babel@toc {greek}{}\relax 
+\contentsline {subsubsection}{\numberline {2.2.2}Παγίδευση τέρατος}{7}{subsubsection.2.2.2}%
+\contentsline {subsubsection}{\numberline {2.2.3}Επίθεση τέρατος}{8}{subsubsection.2.2.3}%
+\contentsline {subsection}{\numberline {2.3}\foreignlanguage {english}{Bonus}}{9}{subsection.2.3}%
+\contentsline {subsubsection}{\numberline {2.3.1}Εξέλιξη τέρατος}{9}{subsubsection.2.3.1}%
+\babel@toc {english}{}\relax 
+\babel@toc {greek}{}\relax 
+\babel@toc {greek}{}\relax 
+\contentsline {section}{\numberline {3}Επίλογος}{11}{section.3}%
+\contentsline {section}{\numberline {4}Βιβλιογραφία}{11}{section.4}%
+\providecommand \tocbasic@end@toc@file {}\tocbasic@end@toc@file 

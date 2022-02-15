@@ -36,8 +36,6 @@ namespace zge
     {
         collision_direction = glm::normalize(position - other.position);
 
-        
-
         bool is_collision = 
             
             ( position.x + min_x <= other.position.x + other.max_x && 
@@ -52,9 +50,6 @@ namespace zge
 
             (position.z + min_z <= other.position.z + other.max_z &&
              position.z + max_z >= other.position.z + other.min_z); 
-
-        if (is_collision) {}
-            //std::clog << glm::to_string(collision_direction) << '\n';
 
         return is_collision;
     }
@@ -91,8 +86,17 @@ namespace zge
         Vector3 max_v{max_x, max_y, max_z};
         Vector3 min_v{min_x, min_y, min_z};
 
-        // max_v = Vector3(m * Vector4(max_v, 1.0f));
-        // min_v = Vector3(m * Vector4(min_v, 1.0f));
+        max_v = Vector3(Matrix3x3(m) * max_v);
+        min_v = Vector3(Matrix3x3(m) * min_v);
+/*
+        max_x = max(max_v.x, min_v.x);
+        max_y = max(max_v.y, min_v.y);
+        max_z = max(max_v.z, min_v.z);
+
+        min_x = min(max_v.x, min_v.x);
+        min_y = min(max_v.y, min_v.y);
+        min_z = min(max_v.z, min_v.z);
+*/
 
         max_v = Vector3(Matrix3x3(m) * max_v);
         min_v = Vector3(Matrix3x3(m) * min_v);
@@ -104,6 +108,7 @@ namespace zge
         min_x = min_v.x;
         min_y = min_v.y;
         min_z = min_v.z;
+
     }
 
 }

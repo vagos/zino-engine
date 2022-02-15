@@ -22,7 +22,7 @@
 #include <glm/gtx/string_cast.hpp>
 #include <memory>
 
-#define DEBUG
+// #define DEBUG
 
 class TestingEngine : public zge::Engine
 {
@@ -267,6 +267,6 @@ int main()
 
     std::string name{"Testing"};
 
-    if (engine.doConsturct(1920, 1080, name))
+    if (engine.doConsturct(1280, 720, name))
         engine.doStart();
 }

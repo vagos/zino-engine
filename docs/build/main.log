@@ -1,8 +1,8 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.23 (TeX Live 2021/Arch Linux) (preloaded format=pdflatex 2022.1.22)  14 FEB 2022 05:12
+This is pdfTeX, Version 3.141592653-2.6-1.40.23 (TeX Live 2021/Arch Linux) (preloaded format=pdflatex 2021.12.31)  15 FEB 2022 22:11
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
-**main.tex structure.tex
+**main.tex
 (./main.tex
 LaTeX2e <2021-11-15> patch level 1
 L3 programming layer <2021-11-22>
@@ -1175,44 +1175,197 @@ File: tikzlibraryplotmarks.code.tex 2021/05/15 v3.1.9a (3.1.9a)
 
 (/usr/share/texmf-dist/tex/generic/pgf/libraries/pgflibraryplotmarks.code.tex
 File: pgflibraryplotmarks.code.tex 2021/05/15 v3.1.9a (3.1.9a)
-))) (build/main.aux
-LaTeX Font Info:    Trying to load font information for LGR+cmr on input line 5
-.
- (/usr/share/texmf-dist/tex/latex/cbfonts-fd/lgrcmr.fd
+))) (/usr/share/texmf-dist/tex/latex/hyperref/hyperref.sty
+Package: hyperref 2021-06-07 v7.00m Hypertext links for LaTeX
+
+(/usr/share/texmf-dist/tex/generic/pdftexcmds/pdftexcmds.sty
+Package: pdftexcmds 2020-06-27 v0.33 Utility functions of pdfTeX for LuaTeX (HO
+)
+
+(/usr/share/texmf-dist/tex/generic/infwarerr/infwarerr.sty
+Package: infwarerr 2019/12/03 v1.5 Providing info/warning/error messages (HO)
+)
+Package pdftexcmds Info: \pdf@primitive is available.
+Package pdftexcmds Info: \pdf@ifprimitive is available.
+Package pdftexcmds Info: \pdfdraftmode found.
+)
+(/usr/share/texmf-dist/tex/generic/kvdefinekeys/kvdefinekeys.sty
+Package: kvdefinekeys 2019-12-19 v1.6 Define keys (HO)
+)
+(/usr/share/texmf-dist/tex/generic/pdfescape/pdfescape.sty
+Package: pdfescape 2019/12/09 v1.15 Implements pdfTeX's escape features (HO)
+)
+(/usr/share/texmf-dist/tex/latex/hycolor/hycolor.sty
+Package: hycolor 2020-01-27 v1.10 Color options for hyperref/bookmark (HO)
+)
+(/usr/share/texmf-dist/tex/latex/letltxmacro/letltxmacro.sty
+Package: letltxmacro 2019/12/03 v1.6 Let assignment for LaTeX macros (HO)
+)
+(/usr/share/texmf-dist/tex/latex/auxhook/auxhook.sty
+Package: auxhook 2019-12-17 v1.6 Hooks for auxiliary files (HO)
+)
+\@linkdim=\dimen304
+\Hy@linkcounter=\count328
+\Hy@pagecounter=\count329
+
+(/usr/share/texmf-dist/tex/latex/hyperref/pd1enc.def
+File: pd1enc.def 2021-06-07 v7.00m Hyperref: PDFDocEncoding definition (HO)
+Now handling font encoding PD1 ...
+... no UTF-8 mapping file for font encoding PD1
+)
+(/usr/share/texmf-dist/tex/latex/hyperref/hyperref-langpatches.def
+File: hyperref-langpatches.def 2021-06-07 v7.00m Hyperref: patches for babel la
+nguages
+)
+(/usr/share/texmf-dist/tex/generic/intcalc/intcalc.sty
+Package: intcalc 2019/12/15 v1.3 Expandable calculations with integers (HO)
+)
+(/usr/share/texmf-dist/tex/generic/etexcmds/etexcmds.sty
+Package: etexcmds 2019/12/15 v1.7 Avoid name clashes with e-TeX commands (HO)
+)
+\Hy@SavedSpaceFactor=\count330
+
+(/usr/share/texmf-dist/tex/latex/hyperref/puenc.def
+File: puenc.def 2021-06-07 v7.00m Hyperref: PDF Unicode definition (HO)
+Now handling font encoding PU ...
+... no UTF-8 mapping file for font encoding PU
+
+(/usr/share/texmf-dist/tex/latex/hyperref/puenc-greekbasic.def
+File: puenc-greekbasic.def 2021-06-07 v7.00m Hyperref: PDF Unicode definition (
+greek block) (HO)
+))
+Package hyperref Info: Hyper figures OFF on input line 4192.
+Package hyperref Info: Link nesting OFF on input line 4197.
+Package hyperref Info: Hyper index ON on input line 4200.
+Package hyperref Info: Plain pages OFF on input line 4207.
+Package hyperref Info: Backreferencing OFF on input line 4212.
+Package hyperref Info: Implicit mode ON; LaTeX internals redefined.
+Package hyperref Info: Bookmarks ON on input line 4445.
+\c@Hy@tempcnt=\count331
+
+(/usr/share/texmf-dist/tex/latex/url/url.sty
+\Urlmuskip=\muskip17
+Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
+)
+LaTeX Info: Redefining \url on input line 4804.
+\XeTeXLinkMargin=\dimen305
+
+(/usr/share/texmf-dist/tex/generic/bitset/bitset.sty
+Package: bitset 2019/12/09 v1.3 Handle bit-vector datatype (HO)
+
+(/usr/share/texmf-dist/tex/generic/bigintcalc/bigintcalc.sty
+Package: bigintcalc 2019/12/15 v1.5 Expandable calculations on big integers (HO
+)
+))
+\Fld@menulength=\count332
+\Field@Width=\dimen306
+\Fld@charsize=\dimen307
+Package hyperref Info: Hyper figures OFF on input line 6076.
+Package hyperref Info: Link nesting OFF on input line 6081.
+Package hyperref Info: Hyper index ON on input line 6084.
+Package hyperref Info: backreferencing OFF on input line 6091.
+Package hyperref Info: Link coloring OFF on input line 6096.
+Package hyperref Info: Link coloring with OCG OFF on input line 6101.
+Package hyperref Info: PDF/A mode OFF on input line 6106.
+LaTeX Info: Redefining \ref on input line 6146.
+LaTeX Info: Redefining \pageref on input line 6150.
+
+(/usr/share/texmf-dist/tex/latex/base/atbegshi-ltx.sty
+Package: atbegshi-ltx 2021/01/10 v1.0c Emulation of the original atbegshi
+package with kernel methods
+)
+\Hy@abspage=\count333
+\c@Item=\count334
+\c@Hfootnote=\count335
+)
+Package hyperref Info: Driver (autodetected): hpdftex.
+
+(/usr/share/texmf-dist/tex/latex/hyperref/hpdftex.def
+File: hpdftex.def 2021-06-07 v7.00m Hyperref driver for pdfTeX
+
+(/usr/share/texmf-dist/tex/latex/base/atveryend-ltx.sty
+Package: atveryend-ltx 2020/08/19 v1.0a Emulation of the original atveryend pac
+kage
+with kernel methods
+)
+\Fld@listcount=\count336
+\c@bookmark@seq@number=\count337
+
+(/usr/share/texmf-dist/tex/latex/rerunfilecheck/rerunfilecheck.sty
+Package: rerunfilecheck 2019/12/05 v1.9 Rerun checks for auxiliary files (HO)
+
+(/usr/share/texmf-dist/tex/generic/uniquecounter/uniquecounter.sty
+Package: uniquecounter 2019/12/15 v1.4 Provide unlimited unique counter (HO)
+)
+Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
+86.
+)
+\Hy@SectionHShift=\skip70
+)
+(/usr/share/texmf-dist/tex/latex/listings/lstlang1.sty
+File: lstlang1.sty 2020/03/24 1.8d listings language file
+)
+(/usr/share/texmf-dist/tex/latex/listings/lstlang1.sty
+File: lstlang1.sty 2020/03/24 1.8d listings language file
+)
+(/usr/share/texmf-dist/tex/latex/listings/lstmisc.sty
+File: lstmisc.sty 2020/03/24 1.8d (Carsten Heinz)
+) (build/main.aux
+LaTeX Font Info:    Trying to load font information for LGR+cmr on input line 2
+3.
+
+(/usr/share/texmf-dist/tex/latex/cbfonts-fd/lgrcmr.fd
 File: lgrcmr.fd 2017/07/29 v1.2 Greek European Computer Regular
 ))
+Runaway argument?
+{\contentsline {figure}{\numberline {2.13}{ 
+! File ended while scanning use of \@writefile.
+<inserted text> 
+                \par 
+l.75 \begin{document}
+                     
+? 
 \openout1 = `main.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 63.
-LaTeX Font Info:    ... okay on input line 63.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 63.
-LaTeX Font Info:    ... okay on input line 63.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 63.
-LaTeX Font Info:    ... okay on input line 63.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 63.
-LaTeX Font Info:    ... okay on input line 63.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 63.
-LaTeX Font Info:    ... okay on input line 63.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 63.
-LaTeX Font Info:    ... okay on input line 63.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 63.
-LaTeX Font Info:    ... okay on input line 63.
-LaTeX Font Info:    Checking defaults for LGR/cmr/m/n on input line 63.
-LaTeX Font Info:    ... okay on input line 63.
-\c@lstlisting=\count328
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 75.
+LaTeX Font Info:    ... okay on input line 75.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 75.
+LaTeX Font Info:    ... okay on input line 75.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 75.
+LaTeX Font Info:    ... okay on input line 75.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 75.
+LaTeX Font Info:    ... okay on input line 75.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 75.
+LaTeX Font Info:    ... okay on input line 75.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 75.
+LaTeX Font Info:    ... okay on input line 75.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 75.
+LaTeX Font Info:    ... okay on input line 75.
+LaTeX Font Info:    Checking defaults for LGR/cmr/m/n on input line 75.
+LaTeX Font Info:    ... okay on input line 75.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 75.
+LaTeX Font Info:    ... okay on input line 75.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 75.
+LaTeX Font Info:    ... okay on input line 75.
+\c@lstlisting=\count338
+(/usr/share/texmf-dist/tex/latex/greek-fontenc/puenc-greek.def
+File: puenc-greek.def 2020/10/18 2.0 Greek LICRs for PDF strings
 
+(/usr/share/texmf-dist/tex/latex/greek-fontenc/greek-fontenc.def
+File: greek-fontenc.def 2020/10/30 2.0 Common Greek font encoding definitions
+))
 (/usr/share/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count329
-\scratchdimen=\dimen304
+\scratchcounter=\count339
+\scratchdimen=\dimen308
 \scratchbox=\box72
-\nofMPsegments=\count330
-\nofMParguments=\count331
+\nofMPsegments=\count340
+\nofMParguments=\count341
 \everyMPshowfont=\toks51
-\MPscratchCnt=\count332
-\MPscratchDim=\dimen305
-\MPnumerator=\count333
-\makeMPintoPDFobject=\count334
+\MPscratchCnt=\count342
+\MPscratchDim=\dimen309
+\MPnumerator=\count343
+\makeMPintoPDFobject=\count344
 \everyMPtoPDFconversion=\toks52
 ) (/usr/share/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.sty
 Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
@@ -1258,22 +1411,60 @@ e
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
 Package caption Info: Begin \AtBeginDocument code.
+Package caption Info: hyperref package is loaded.
 Package caption Info: End \AtBeginDocument code.
 Package pgfplots notification 'compat/show suggested version=true': document ha
 s been generated with the most recent feature set (\pgfplotsset{compat=1.18}).
 
+Package hyperref Info: Link coloring OFF on input line 75.
+(/usr/share/texmf-dist/tex/latex/hyperref/nameref.sty
+Package: nameref 2021-04-02 v2.47 Cross-referencing by name of section
+
+(/usr/share/texmf-dist/tex/latex/refcount/refcount.sty
+Package: refcount 2019/12/15 v3.6 Data extraction from label references (HO)
+)
+(/usr/share/texmf-dist/tex/generic/gettitlestring/gettitlestring.sty
+Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
+)
+\c@section@level=\count345
+)
+LaTeX Info: Redefining \ref on input line 75.
+LaTeX Info: Redefining \pageref on input line 75.
+LaTeX Info: Redefining \nameref on input line 75.
+
+(build/main.out) (build/main.out)
+\@outlinefile=\write4
+\openout4 = `main.out'.
+
+Class scrartcl Info: loading recommended package `bookmark'.
+(scrartcl)           Using `bookmark' together with `hyperref' is recommended,
+(scrartcl)           because of handling of possible bookmark level gaps.
+(scrartcl)           You can avoid loading `bookmark' with KOMA-Script option
+(scrartcl)           `bookmarkpackage=false' before \begin{document} and
+(scrartcl)           you can avoid this message adding:
+(scrartcl)             \usepackage{bookmark}
+(scrartcl)           before \begin{document} on input line 75.
+
+(/usr/share/texmf-dist/tex/latex/bookmark/bookmark.sty
+Package: bookmark 2020-11-06 v1.29 PDF bookmarks (HO)
+
+(/usr/share/texmf-dist/tex/latex/bookmark/bkm-pdftex.def
+File: bkm-pdftex.def 2020-11-06 v1.29 bookmark driver for pdfTeX (HO)
+\BKM@id=\count346
+))
 LaTeX Font Info:    Trying to load font information for LGR+cmss on input line 
-66.
+78.
+
 (/usr/share/texmf-dist/tex/latex/cbfonts-fd/lgrcmss.fd
 File: lgrcmss.fd 2017/07/29 v1.2 Greek European Computer Sans Serif
 )
-LaTeX Font Info:    Trying to load font information for U+msa on input line 66.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 78.
 
 
 (/usr/share/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 66.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 78.
 
 
 (/usr/share/texmf-dist/tex/latex/amsfonts/umsb.fd
@@ -1285,42 +1476,188 @@ Class scrartcl Warning: Incompatible usage of \@ssect detected.
 (scrartcl)              from within a non compatible caller, that does not
 (scrartcl)              \scr@s@ct@@nn@m@ locally.
 (scrartcl)              This could result in several error messages on input li
-ne 67.
+ne 79.
 
 (build/main.toc)
-\tf@toc=\write4
-\openout4 = `main.toc'.
+\tf@toc=\write5
+\openout5 = `main.toc'.
 
  [1
 
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
-[2]
+<./assets/scene.png, id=19, 1284.8pt x 722.7pt>
+File: ./assets/scene.png Graphic file (type png)
+<use ./assets/scene.png>
+Package pdftex.def Info: ./assets/scene.png  used on input line 95.
+(pdftex.def)             Requested size: 298.75264pt x 168.04807pt.
+<./assets/skybox_day.png, id=21, 1284.8pt x 722.7pt>
+File: ./assets/skybox_day.png Graphic file (type png)
+<use ./assets/skybox_day.png>
+Package pdftex.def Info: ./assets/skybox_day.png  used on input line 113.
+(pdftex.def)             Requested size: 213.39568pt x 120.03433pt.
+<./assets/skybox_night.png, id=22, 1284.8pt x 722.7pt>
+File: ./assets/skybox_night.png Graphic file (type png)
+<use ./assets/skybox_night.png>
+Package pdftex.def Info: ./assets/skybox_night.png  used on input line 116.
+(pdftex.def)             Requested size: 213.39568pt x 120.03433pt.
 
-! Package pgfkeys Error: I do not know the key '/tikz/3d/polyhedron/edges have 
-complete dashes' and I am going to ignore it. Perhaps you misspelled it.
+[2 <./assets/scene.png>]
+<./assets/lighting.png, id=36, 1284.8pt x 722.7pt>
 
-See the pgfkeys package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.185 ...orners={{(AAB)},{(BAB)},{(BBB)},{(ABB)}}}
+! Illegal unit of measure (pt inserted).
+<to be read again> 
+                   /
+l.146 ...idth=.7/textwidth]{./assets/lighting.png}
                                                   
 ? 
-! Emergency stop.
- ...                                              
+! Illegal unit of measure (pt inserted).
+<to be read again> 
+                   /
+l.146 ...idth=.7/textwidth]{./assets/lighting.png}
                                                   
-l.185 ...orners={{(AAB)},{(BAB)},{(BBB)},{(ABB)}}}
-                                                  
-End of file on the terminal!
+? 
+File: ./assets/lighting.png Graphic file (type png)
+<use ./assets/lighting.png>
+Package pdftex.def Info: ./assets/lighting.png  used on input line 146.
+(pdftex.def)             Requested size: 0.7pt x 0.38596pt.
+[3 <./assets/skybox_day.png> <./assets/skybox_night.png>]
+<./assets/shadows.png, id=50, 1284.8pt x 722.7pt>
+File: ./assets/shadows.png Graphic file (type png)
+<use ./assets/shadows.png>
+Package pdftex.def Info: ./assets/shadows.png  used on input line 167.
+(pdftex.def)             Requested size: 298.75264pt x 168.04807pt.
+ [4 <./assets/lighting.png> <./assets/shadows.png>] [5]
+<./assets/balls_1.png, id=73, 1284.8pt x 722.7pt>
+File: ./assets/balls_1.png Graphic file (type png)
+<use ./assets/balls_1.png>
+Package pdftex.def Info: ./assets/balls_1.png  used on input line 261.
+(pdftex.def)             Requested size: 213.39568pt x 120.03433pt.
+<./assets/balls_2.png, id=74, 1284.8pt x 722.7pt>
+File: ./assets/balls_2.png Graphic file (type png)
+<use ./assets/balls_2.png>
+Package pdftex.def Info: ./assets/balls_2.png  used on input line 264.
+(pdftex.def)             Requested size: 213.39568pt x 120.03433pt.
+LaTeX Font Info:    Trying to load font information for T1+cmtt on input line 2
+83.
 
- 
+(/usr/share/texmf-dist/tex/latex/base/t1cmtt.fd
+File: t1cmtt.fd 2019/12/16 v2.5j Standard LaTeX font definitions
+) [6 <./assets/balls_1.png> <./assets/balls_2.png>]
+<./assets/smoke.png, id=91, 1284.8pt x 722.7pt>
+File: ./assets/smoke.png Graphic file (type png)
+<use ./assets/smoke.png>
+Package pdftex.def Info: ./assets/smoke.png  used on input line 298.
+(pdftex.def)             Requested size: 298.75264pt x 168.04807pt.
+<./assets/monsters.png, id=92, 1284.8pt x 722.7pt>
+File: ./assets/monsters.png Graphic file (type png)
+<use ./assets/monsters.png>
+Package pdftex.def Info: ./assets/monsters.png  used on input line 307.
+(pdftex.def)             Requested size: 298.75264pt x 168.04807pt.
+ [7 <./assets/smoke.png> <./assets/monsters.png>]
+<./assets/stars.png, id=105, 1284.8pt x 722.7pt>
+File: ./assets/stars.png Graphic file (type png)
+<use ./assets/stars.png>
+Package pdftex.def Info: ./assets/stars.png  used on input line 325.
+(pdftex.def)             Requested size: 298.75264pt x 168.04807pt.
+<./assets/poison_smoke.png, id=106, 1284.8pt x 722.7pt>
+File: ./assets/poison_smoke.png Graphic file (type png)
+<use ./assets/poison_smoke.png>
+Package pdftex.def Info: ./assets/poison_smoke.png  used on input line 345.
+(pdftex.def)             Requested size: 298.75264pt x 168.04807pt.
+ [8 <./assets/stars.png> <./assets/poison_smoke.png>]
+<./assets/fire.png, id=116, 1284.8pt x 722.7pt>
+File: ./assets/fire.png Graphic file (type png)
+<use ./assets/fire.png>
+Package pdftex.def Info: ./assets/fire.png  used on input line 353.
+(pdftex.def)             Requested size: 298.75264pt x 168.04807pt.
+<./assets/electricity.png, id=117, 1284.8pt x 722.7pt>
+File: ./assets/electricity.png Graphic file (type png)
+<use ./assets/electricity.png>
+Package pdftex.def Info: ./assets/electricity.png  used on input line 364.
+(pdftex.def)             Requested size: 298.75264pt x 168.04807pt.
+ [9 <./assets/fire.png> <./assets/electricity.png>]
+LaTeX Font Info:    Trying to load font information for LGR+cmtt on input line 
+383.
+ (/usr/share/texmf-dist/tex/latex/cbfonts-fd/lgrcmtt.fd
+File: lgrcmtt.fd 2017/07/29 v1.2 Greek European Computer Typewriter
+)
+Overfull \hbox (1.50821pt too wide) in paragraph at lines 391--392
+[][][][][][][][][][][][][][][][][][][][] 
+ []
+
+<./assets/trans_1.png, id=129, 301.125pt x 301.125pt>
+File: ./assets/trans_1.png Graphic file (type png)
+<use ./assets/trans_1.png>
+Package pdftex.def Info: ./assets/trans_1.png  used on input line 405.
+(pdftex.def)             Requested size: 170.71393pt x 170.71947pt.
+<./assets/trans_2.png, id=130, 301.125pt x 301.125pt>
+File: ./assets/trans_2.png Graphic file (type png)
+<use ./assets/trans_2.png>
+Package pdftex.def Info: ./assets/trans_2.png  used on input line 406.
+(pdftex.def)             Requested size: 170.71393pt x 170.71947pt.
+<./assets/trans_3.png, id=131, 301.125pt x 301.125pt>
+File: ./assets/trans_3.png Graphic file (type png)
+<use ./assets/trans_3.png>
+Package pdftex.def Info: ./assets/trans_3.png  used on input line 411.
+(pdftex.def)             Requested size: 170.71393pt x 170.71947pt.
+<./assets/trans_4.png, id=132, 301.125pt x 301.125pt>
+File: ./assets/trans_4.png Graphic file (type png)
+<use ./assets/trans_4.png>
+Package pdftex.def Info: ./assets/trans_4.png  used on input line 412.
+(pdftex.def)             Requested size: 170.71393pt x 170.71947pt.
+[10 <./assets/trans_1.png> <./assets/trans_2.png> <./assets/trans_3.png> <./ass
+ets/trans_4.png>]
+! Missing $ inserted.
+<inserted text> 
+                $
+l.442 ...s/3D_collision_detection AABB Collisions}
+                                                  
+? 
+! Missing $ inserted.
+<inserted text> 
+                $
+l.442 ...s/3D_collision_detection AABB Collisions}
+                                                  
+? 
+[11] (build/main.aux)
+Package rerunfilecheck Info: File `main.out' has not changed.
+(rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
+ ) 
 Here is how much of TeX's memory you used:
- 34702 strings out of 478353
- 849750 string characters out of 5854635
- 1442104 words of memory out of 5000000
- 52305 multiletter control sequences out of 15000+600000
- 425660 words of font info for 75 fonts, out of 8000000 for 9000
+ 42213 strings out of 478353
+ 967604 string characters out of 5854634
+ 1636147 words of memory out of 5000000
+ 59606 multiletter control sequences out of 15000+600000
+ 431863 words of font info for 89 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 108i,20n,106p,10613b,2079s stack positions out of 5000i,500n,10000p,200000b,80000s
-!  ==> Fatal error occurred, no output PDF file produced!
+ 108i,20n,106p,10599b,2088s stack positions out of 5000i,500n,10000p,200000b,80000s
+{/usr/share/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc}{/usr/share/t
+exmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc}</usr/share/texmf-dist/font
+s/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texmf-dist/fonts/type1/public
+/amsfonts/cm/cmmi10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/c
+mmi5.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/
+share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texmf-dis
+t/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texmf-dist/fonts/type1/p
+ublic/amsfonts/cm/cmsy10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts
+/cm/cmsy8.pfb></usr/share/texmf-dist/fonts/type1/public/cbfonts/grmc1095.pfb></
+usr/share/texmf-dist/fonts/type1/public/cbfonts/grmc1440.pfb></usr/share/texmf-
+dist/fonts/type1/public/cbfonts/grmi1095.pfb></usr/share/texmf-dist/fonts/type1
+/public/cbfonts/grmn0600.pfb></usr/share/texmf-dist/fonts/type1/public/cbfonts/
+grmn1095.pfb></usr/share/texmf-dist/fonts/type1/public/cbfonts/grmn1440.pfb></u
+sr/share/texmf-dist/fonts/type1/public/cbfonts/grmn1728.pfb></usr/share/texmf-d
+ist/fonts/type1/public/cbfonts/grxn1200.pfb></usr/share/texmf-dist/fonts/type1/
+public/cm-super/sfbx1200.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super
+/sfit1000.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sfrm0600.pfb><
+/usr/share/texmf-dist/fonts/type1/public/cm-super/sfrm1095.pfb></usr/share/texm
+f-dist/fonts/type1/public/cm-super/sfrm1440.pfb></usr/share/texmf-dist/fonts/ty
+pe1/public/cm-super/sftt0800.pfb></usr/share/texmf-dist/fonts/type1/public/cm-s
+uper/sftt1000.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sftt1095.p
+fb>
+Output written on build/main.pdf (11 pages, 21313880 bytes).
+PDF statistics:
+ 321 PDF objects out of 1000 (max. 8388607)
+ 222 compressed objects within 3 object streams
+ 56 named destinations out of 1000 (max. 500000)
+ 210 words of extra memory for PDF output out of 10000 (max. 10000000)
+

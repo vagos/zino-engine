@@ -208,14 +208,9 @@ void TransformingModel::doRender(Engine &eng)
 
     morph_factor = glm::clamp(morph_factor, 0.0f, 1.0f);
 
-    if (morph_factor < 0.5f)
-    {
-        glDrawArrays(GL_TRIANGLES, 0, model_first.vertices.size());
-    }
-    else 
-    {
-        glDrawArrays(GL_TRIANGLES, 0, model_second.vertices.size());
-    }
+    glDrawArrays(GL_TRIANGLES, 0, 
+            morph_factor < 0.5f ? 
+            model_first.vertices.size() : model_second.vertices.size());
 
 }
 

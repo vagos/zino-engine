@@ -18,7 +18,8 @@ float rand(vec2 co){
 void main()
 {
     mat4 mvp_i = mvp[gl_InstanceID];
-    vec4 pos = vec4(vertex_position + vertex_normal * abs(sin(2*time + 3*rand(vertex_uv))) * 2.0 , 1.0);
+    vec4 pos = vec4(vertex_position + 
+            vertex_normal * abs(sin(2*time + 3 * rand(vertex_uv))) * 2.0 , 1.0);
 
     vertex_position_worldspace = mvp_i * pos;
 

@@ -14,9 +14,10 @@ RigidBody::RigidBody(): rotation(1.0f), mass(1.0f), position(0.0f), velocity(0.0
 
 void RigidBody::doCollision(Vector3 &collision_direction, RigidBody &o_rb)
 {
-    // setVelocity(velocity - 2.0f * glm::dot(velocity, collision_direction) * collision_direction);
     auto v = velocity - 2.0f * glm::dot(velocity, collision_direction) * collision_direction;
     setVelocity(-v);
+//    collision_direction = V_UP;
+//    setVelocity(-velocity);
 }
 
 void RigidBody::applyGravity()

@@ -1,2 +1,2 @@
 all:
-	pdflatex -output-directory=build *.tex
+	pdflatex -output-directory=build main.tex

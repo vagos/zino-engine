@@ -10,5 +10,6 @@ out vec4 color;
 
 void main()
 {
-      gl_Position = mvp * vec4(vertex_position_first * (1 - morph_factor) + vertex_position_second * morph_factor, 1);
+      gl_Position = mvp * vec4(vertex_position_first * (1 - morph_factor) 
+              + vertex_position_second * morph_factor, 1);
 }

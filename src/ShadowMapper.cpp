@@ -32,6 +32,8 @@ namespace zge
         }
 
         f_b.doUnuse();
+    
+#ifdef DEBUG
 
         auto debug_shader = eng_getAssetTyped("Debug Shader", Shader);
 
@@ -39,6 +41,7 @@ namespace zge
         debug_shader->sendUniform("depthmap_sampler", d_t);
         
         quad.doRender(eng);
+#endif
     }
 
 }
