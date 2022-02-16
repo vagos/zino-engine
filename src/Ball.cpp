@@ -18,9 +18,6 @@ Ball::Ball(zge::Engine& eng)
     collider = std::make_shared<zge::CubeCollider>(*model, rigid_body->position);
     
     type = Object::Type::BALL;
-
-    // applyTransofrmation(glm::scale(zge::Matrix4x4(1), zge::Vector3(0.9)));
-    // applyTransofrmation(glm::translate(zge::Matrix4x4(1), zge::Vector3(0.0f, 0.0f, 0.0f)));
 }
 
 

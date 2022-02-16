@@ -28,19 +28,19 @@ class TestingEngine : public zge::Engine
 {
     void onCreate() override
     {
-        auto suzanne_model       = std::make_shared<zge::Model>("./assets/objs/suzanne.obj");
-        // auto heart_model      = std::make_shared<zge::Model>("./assets/objs/heart.obj");
-        auto cube_model          = std::make_shared<zge::Model>("./assets/objs/cube.obj");
-        auto tree_model          = std::make_shared<zge::Model>("./assets/objs/tree.obj");
-        auto sphere_model        = std::make_shared<zge::Model>("./assets/objs/sphere.obj");
-        auto star_model          = std::make_shared<zge::Model>("./assets/objs/star.obj");
-        auto pointy_ear_monster  = std::make_shared<zge::Model>("./assets/objs/little-monster.obj");
-        auto spider_monkey_model = std::make_shared<zge::Model>("./assets/objs/monkey.obj");
-        auto pokeball_model      = std::make_shared<zge::Model>("./assets/objs/pokeball.obj");
-        auto rock_model_a        = std::make_shared<zge::Model>("./assets/objs/rocks/rock-A.obj");
-        auto rock_model_g        = std::make_shared<zge::Model>("./assets/objs/rocks/rock-G.obj");
-        auto cat_model        = std::make_shared<zge::Model>("./assets/objs/cat.obj");
-        auto gorilla_model        = std::make_shared<zge::Model>("./assets/objs/gorilla.obj");
+        auto suzanne_model         = std::make_shared<zge::Model>("./assets/objs/suzanne.obj");
+        auto heart_model           = std::make_shared<zge::Model>("./assets/objs/heart.obj");
+        auto cube_model            = std::make_shared<zge::Model>("./assets/objs/cube.obj");
+        auto tree_model            = std::make_shared<zge::Model>("./assets/objs/tree.obj");
+        auto sphere_model          = std::make_shared<zge::Model>("./assets/objs/sphere.obj");
+        auto star_model            = std::make_shared<zge::Model>("./assets/objs/star.obj");
+        auto pointy_ear_monster    = std::make_shared<zge::Model>("./assets/objs/little-monster.obj");
+        auto spider_monkey_model   = std::make_shared<zge::Model>("./assets/objs/monkey.obj");
+        auto pokeball_model        = std::make_shared<zge::Model>("./assets/objs/pokeball.obj");
+        auto rock_model_a          = std::make_shared<zge::Model>("./assets/objs/rocks/rock-A.obj");
+        auto rock_model_g          = std::make_shared<zge::Model>("./assets/objs/rocks/rock-G.obj");
+        auto cat_model             = std::make_shared<zge::Model>("./assets/objs/cat.obj");
+        auto gorilla_model         = std::make_shared<zge::Model>("./assets/objs/gorilla.obj");
 
         auto moss_texture          = std::make_shared<zge::Texture>("./assets/textures/trees/Mossy_Tr.bmp");
         auto grass_texture         = std::make_shared<zge::Texture>("./assets/textures/grass/grass_o.bmp");
@@ -49,19 +49,19 @@ class TestingEngine : public zge::Engine
         auto spider_monkey_texture = std::make_shared<zge::Texture>("./assets/textures/monkey.bmp");
         auto fire_particle_texture = std::make_shared<zge::Texture>("./assets/textures/grass/grass_o.bmp");
         auto pokeball_texture      = std::make_shared<zge::Texture>("./assets/textures/pokeball.bmp");
-        auto pokeball_texture_b      = std::make_shared<zge::Texture>("./assets/textures/pokeball_b.bmp");
-        auto rock_texture      = std::make_shared<zge::Texture>("./assets/textures/rocks/rock.bmp");
-        auto cat_texture      = std::make_shared<zge::Texture>("./assets/textures/cat.bmp");
-        auto rock_normal_texture = std::make_shared<zge::Texture>("./assets/textures/rocks/rock-normals.bmp");
+        auto pokeball_texture_b    = std::make_shared<zge::Texture>("./assets/textures/pokeball_b.bmp");
+        auto rock_texture          = std::make_shared<zge::Texture>("./assets/textures/rocks/rock.bmp");
+        auto cat_texture           = std::make_shared<zge::Texture>("./assets/textures/cat.bmp");
+        auto rock_normal_texture   = std::make_shared<zge::Texture>("./assets/textures/rocks/rock-normals.bmp");
         
         addAsset(fiert_texture         , "Fiery Texture");
         addAsset(water_texture         , "Water Texture");
         addAsset(pokeball_texture      , "Pokeball Texture A");
-        addAsset(pokeball_texture_b      , "Pokeball Texture B");
+        addAsset(pokeball_texture_b    , "Pokeball Texture B");
         addAsset(spider_monkey_texture , "Spider Monkey Texture");
-        addAsset(rock_texture, "Rock Texture");
-        addAsset(rock_normal_texture, "Rock Normal Texture");
-        addAsset(cat_texture, "Cat Texture");
+        addAsset(rock_texture          , "Rock Texture");
+        addAsset(rock_normal_texture   , "Rock Normal Texture");
+        addAsset(cat_texture           , "Cat Texture");
 
         addAsset(tree_model            , "Tree Model");
         addAsset(sphere_model          , "Sphere Model");
@@ -71,34 +71,34 @@ class TestingEngine : public zge::Engine
         addAsset(pointy_ear_monster    , "Pointy Monster Model");
         addAsset(spider_monkey_model   , "Spider Monkey Model");
         addAsset(pokeball_model        , "Pokeball Model");
-        addAsset(gorilla_model        , "Gorilla Model");
+        addAsset(gorilla_model         , "Gorilla Model");
         addAsset(fire_particle_texture , "Fire Particle Texture");
-        addAsset(rock_model_a, "Rock Model A");
-        addAsset(rock_model_g, "Rock Model G");
-        addAsset(cat_model, "Cat Model");
+        addAsset(rock_model_a          , "Rock Model A");
+        addAsset(rock_model_g          , "Rock Model G");
+        addAsset(cat_model             , "Cat Model");
 
-        auto basic_shader         = std::make_shared<zge::Shader>("./assets/shaders/basic.vert"    , "./assets/shaders/basic.frag");
-        auto lighting_shader      = std::make_shared<zge::Shader>("./assets/shaders/basic.vert" , "./assets/shaders/lighting.frag"); // testing ligthing
+        auto basic_shader         = std::make_shared<zge::Shader>("./assets/shaders/basic.vert"         , "./assets/shaders/basic.frag");
+        auto lighting_shader      = std::make_shared<zge::Shader>("./assets/shaders/basic.vert"         , "./assets/shaders/lighting.frag"); // testing ligthing
 
         auto texture_shader       = std::make_shared<zge::Shader>("./assets/shaders/texture.vert"       , "./assets/shaders/texture.frag");
         auto transform_shader     = std::make_shared<zge::Shader>("./assets/shaders/transform.vert"     , "./assets/shaders/transform.frag");
         auto water_texture_shader = std::make_shared<zge::Shader>("./assets/shaders/water_texture.vert" , "./assets/shaders/water_texture.frag");
         auto fire_texture_shader  = std::make_shared<zge::Shader>("./assets/shaders/fire_texture.vert"  , "./assets/shaders/fire_texture.frag");
 
-        auto depth_shader = std::make_shared<zge::Shader>("./assets/shaders/depth.vert", "./assets/shaders/depth.frag");
-        auto debug_shader = std::make_shared<zge::Shader>("./assets/shaders/debug.vert", "./assets/shaders/debug.frag");
+        auto depth_shader         = std::make_shared<zge::Shader>("./assets/shaders/depth.vert"                 , "./assets/shaders/depth.frag");
+        auto debug_shader         = std::make_shared<zge::Shader>("./assets/shaders/debug.vert"                 , "./assets/shaders/debug.frag");
 
-        addAsset(basic_shader, "Basic Shader");
-        addAsset(transform_shader, "Transform Shader");
-        addAsset(texture_shader, "Texture Shader");
-        addAsset(depth_shader, "Depth Shader");
-        addAsset(debug_shader, "Debug Shader");
+        addAsset(basic_shader         , "Basic Shader");
+        addAsset(transform_shader     , "Transform Shader");
+        addAsset(texture_shader       , "Texture Shader");
+        addAsset(depth_shader         , "Depth Shader");
+        addAsset(debug_shader         , "Debug Shader");
 
-        addAsset(water_texture_shader, "Water Texture Shader");
-        addAsset(fire_texture_shader, "Fire Texture Shader");
+        addAsset(water_texture_shader , "Water Texture Shader");
+        addAsset(fire_texture_shader  , "Fire Texture Shader");
 
-        addAsset(moss_texture, "Moss Texture");
-        addAsset(grass_texture, "Grass Texture");
+        addAsset(moss_texture         , "Moss Texture");
+        addAsset(grass_texture        , "Grass Texture");
 
         // cubemap stuff (skybox)
         auto skybox = std::make_shared<zge::Skybox>();
@@ -124,7 +124,7 @@ class TestingEngine : public zge::Engine
             addObject(new_rock);
         }
 
-        for (int i = 0; i < 0; i++)
+        for (int i = 0; i < 0; i++) // extra islands
         {
             int gap = 200;
 
@@ -171,16 +171,13 @@ class TestingEngine : public zge::Engine
         auto star_particle_shader = std::make_shared<zge::Shader>("./assets/shaders/star_particle.vert", "./assets/shaders/star_particle.frag");
         addAsset(star_particle_shader, "Star Particle Shader");
 
-        // auto particle_emitter = std::make_shared<zge::ParticleEmitter>(*this, 50, "Fire Particle Shader", "Cube Model", "Fire Particle Texture");
-        // addObject(particle_emitter, "Particle Emitter");
-
         transforming_model = std::make_shared<zge::TransformingModel>("./assets/objs/spider_monkey.obj", "./assets/objs/spider_monkey_other.obj");
 
         Ball::caught_monsters.push_back( std::make_shared<WaterMonster>(*this) );
         Ball::caught_monsters.push_back( std::make_shared<FireMonster>(*this) );
         Ball::caught_monsters.push_back( std::make_shared<ElectricityMonster>(*this) );
 
-        auto player = std::make_shared<zge::Player>(*this);
+        auto player = std::make_shared<zge::Player>(*this); // create player
         addObject(player, "Player");
     }
 
@@ -192,18 +189,12 @@ class TestingEngine : public zge::Engine
            doExit(); 
         }
 
-        if (isKeyPressed(Key(N)))
-        {
-            auto main_light = std::static_pointer_cast<zge::LightSource>(getObject("Main Light"));
-            main_light->position = camera.position;
-            std::clog << glm::to_string(main_light->position) << '\n';
-        }
-
         if (isKeyPressed(Key(C)))
         {
            catching_monsters = !catching_monsters; 
-
+#ifdef DEBUG
            std::clog << "CATCH: " << (catching_monsters ? "True" : "False") << '\n';
+#endif
         }
 
         if (isKeyPressed(Key(T))) // throw ball 
@@ -265,7 +256,7 @@ int main()
 {
     TestingEngine engine{};
 
-    std::string name{"Testing"};
+    std::string name{"Graphics Project - Pokemon"};
 
     if (engine.doConsturct(1280, 720, name))
         engine.doStart();

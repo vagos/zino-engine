@@ -98,9 +98,6 @@ namespace zge
         min_z = min(max_v.z, min_v.z);
 */
 
-        max_v = Vector3(Matrix3x3(m) * max_v);
-        min_v = Vector3(Matrix3x3(m) * min_v);
-
         max_x = max_v.x;
         max_y = max_v.y;
         max_z = max_v.z;

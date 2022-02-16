@@ -14,23 +14,11 @@ INC_FLAGS := $(addprefix -I,$(INC_DIRS))
 
 CXX = g++
 
-#CPPFLAGS ?= $(INC_FLAGS) -MMD -MP
 CPPFLAGS ?= $(INC_FLAGS)  $(MY_FLAGS)
 
 $(BUILD_DIR)/$(TARGET_EXEC): $(OBJS)
 	$(CXX) $(OBJS) -o $@ $(LDFLAGS) $(CPPFLAGS)
 
-# # assembly
-# $(BUILD_DIR)/%.s.o: %.s
-# 	$(MKDIR_P) $(dir $@)
-# 	$(AS) $(ASFLAGS) -c $< -o $@
-
-# # c source
-# $(BUILD_DIR)/%.c.o: %.c
-# 	$(MKDIR_P) $(dir $@)
-# 	$(CC) $(CPPFLAGS) $(CFLAGS) -c $< -o $@
-
-# c++ source
 $(BUILD_DIR)/%.cpp.o: %.cpp
 	$(MKDIR_P) $(dir $@)
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $< -o $@
