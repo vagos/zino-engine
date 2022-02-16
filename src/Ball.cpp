@@ -43,6 +43,7 @@ void Ball::doRender(zge::Engine &eng)
 void Ball::spawnMonster(zge::Engine& eng, std::shared_ptr<Monster> monster)
 {
     monster->rigid_body->setPosition(rigid_body->position);
+    monster->rigid_body->setVelocity(zge::V_UP);
     monster->exists = true;
     
     auto particle_emitter = std::make_shared<zge::SmokeParticleEmitter>(eng, 50, "Particle Shader", "Cube Model");
@@ -72,7 +73,7 @@ void Ball::doUpdate(zge::Engine &eng)
             {
                 if (obj->type == zge::Object::Type::MONSTER) // catch a monster
                 {
-                    caught_monsters.push_back(std::static_pointer_cast<Monster>(obj)); 
+                    caught_monsters[monster_selected] = std::static_pointer_cast<Monster>(obj); 
 
                     auto particle_emitter = std::make_shared<zge::StarParticleEmitter>(eng, 20, "Star Particle Shader", "Star Model");
                     particle_emitter->total_time = 5.0f;
@@ -88,11 +89,17 @@ void Ball::doUpdate(zge::Engine &eng)
             if (type == zge::Object::Type::BALL && n_bounces == 2 && !caught_monsters.empty()) // spawn a monster
             {
                 exists = false;
-
+     
                 std::clog << "MONSTER SELECTED: " << monster_selected << '\n';
 
-                auto monster = caught_monsters[monster_selected % caught_monsters.size()];
-                spawnMonster(eng, monster);
+                auto monster = caught_monsters[monster_selected];
+                
+                if (monster) 
+                {
+                    spawnMonster(eng, monster);
+                    caught_monsters[monster_selected] = nullptr;
+                }
+
             }
        }
     }

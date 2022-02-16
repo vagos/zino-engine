@@ -101,7 +101,7 @@ struct SmokeParticleEmitter : public ParticleEmitter
     
     void doParticleInit(Engine& eng, Particle& p) override
     {
-        p.life = 5.0f;
+        p.life = eng.getRandomFloat(1.0f, 5.0f);
         p.velocity = Vector3(
                 ( 2.0f * eng.getRandomFloat() - 1.0f) * 5.0f,
                 1.0f, 

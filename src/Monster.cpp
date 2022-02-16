@@ -7,8 +7,6 @@
 #include "Shader.hpp"
 #include "Texture.hpp"
 #include "Particles.hpp"
-#include <glm/ext/quaternion_geometric.hpp>
-#include <glm/gtx/dual_quaternion.hpp>
 #include <glm/gtx/string_cast.hpp>
 
 Monster::Monster(zge::Engine& eng, std::string shader_n, std::string model_n, std::string texture_n)
@@ -20,6 +18,8 @@ Monster::Monster(zge::Engine& eng, std::string shader_n, std::string model_n, st
 
     rigid_body = std::make_shared<zge::RigidBody>();
     collider = std::make_shared<zge::CubeCollider>(*model, rigid_body->position);
+
+    rigid_body->mass = 1.0f;
 
     type = zge::Object::Type::MONSTER;
 }
@@ -51,15 +51,12 @@ void Monster::doUpdate(zge::Engine &eng)
 
        if ( obj && obj->collider && obj->rigid_body && collider->isColliding(*obj->collider, n) ) 
        {
-           // rigid_body->doCollision(n, *obj->rigid_body);
-           if (obj->type == zge::Object::Type::CATCH_BALL)
-           {
-                exists = false;
-           }
+           rigid_body->doCollision(n, *obj->rigid_body);
        }
     }
 
     doThink(eng);
+    rigid_body->applyGravity();
 
     rigid_body->doUpdate(eng);
     
@@ -90,14 +87,12 @@ void Monster::doThink(zge::Engine& eng)
         doAttack(eng);
     }
 
-    // rigid_body->setVelocity(new_v);
-
-    return;
+    rigid_body->setVelocity(new_v + zge::Vector3(0.0f, rigid_body->velocity.y, 0.0f));
 
     if (attack_cooldown < 0.0f)
     {
         doAttack(eng);
-        attack_cooldown = 0.5f;
+        attack_cooldown = eng.getRandomFloat(0.5f, 10.0f);
     }
 }
 
