@@ -16,6 +16,7 @@ Ball::Ball(zge::Engine& eng)
     model = eng_getAssetTyped("Pokeball Model", zge::Model);
     rigid_body = std::make_shared<zge::RigidBody>();
     collider = std::make_shared<zge::CubeCollider>(*model, rigid_body->position);
+
     
     type = Object::Type::BALL;
 }
@@ -49,12 +50,13 @@ void Ball::spawnMonster(zge::Engine& eng, std::shared_ptr<Monster> monster)
     auto particle_emitter = std::make_shared<zge::SmokeParticleEmitter>(eng, 50, "Particle Shader", "Cube Model");
     particle_emitter->total_time = 5.0f;
     particle_emitter->position = rigid_body->position;
-    eng.addObject(particle_emitter);
     eng.addObject(monster);
+    eng.addObject(particle_emitter);
 }
 
 void Ball::doUpdate(zge::Engine &eng)
 {
+    // rigid_body->angular_momentum = glm::normalize(zge::Vector3(1.0f, 0.0f, 0.0f));
     rigid_body->applyGravity();
     rigid_body->doUpdate(eng);
 
@@ -86,7 +88,7 @@ void Ball::doUpdate(zge::Engine &eng)
                 }
             }
 
-            if (type == zge::Object::Type::BALL && n_bounces == 2 && !caught_monsters.empty()) // spawn a monster
+            if (type == zge::Object::Type::BALL && n_bounces == 3 && !caught_monsters.empty()) // spawn a monster
             {
                 exists = false;
      
@@ -104,7 +106,7 @@ void Ball::doUpdate(zge::Engine &eng)
        }
     }
 
-    setModelMatrix(glm::translate(getModelMatrix(), rigid_body->position));
+    setModelMatrix(glm::translate(getModelMatrix(), rigid_body->position) * zge::Matrix4x4(rigid_body->rotation));
 }
 
 std::vector<std::shared_ptr<Monster>> Ball::caught_monsters;

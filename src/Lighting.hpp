@@ -3,7 +3,6 @@
 
 #include "Common.hpp"
 #include "Object.hpp"
-#include <glm/ext/matrix_transform.hpp>
 
 namespace zge
 {

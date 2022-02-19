@@ -41,7 +41,7 @@ void Model::doLoad(std::string m_path)
 
     std::vector<unsigned int>& indices = VEC_UINT_DEFAULT_VALUE; // TODO what is this???
 
-    if (!tinyobj::LoadObj(&attrib, &shapes, &materials, nullptr, &error, m_path.c_str()))
+    if (!tinyobj::LoadObj(&attrib, &shapes, &materials, &error, m_path.c_str()))
     {
         throw std::runtime_error(error);
     }

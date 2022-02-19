@@ -2,12 +2,6 @@
 #include "Common.hpp"
 #include "Engine.hpp"
 
-#include <glm/ext/matrix_transform.hpp>
-#include <glm/geometric.hpp>
-#include <glm/gtc/matrix_transform.hpp>
-#include <glm/gtx/dual_quaternion.hpp>
-#include <glm/gtx/string_cast.hpp>
-
 zge::Camera::Camera() 
 {
     look_at = glm::lookAt(position, Vector3(0, 0, 0), V_UP);
@@ -45,8 +39,6 @@ void zge::Camera::doUpdate(Engine& eng)
 
     if (eng.isKeyHeld(Key(Q))) position += Vector3(0, 1, 0) * eng.getElapsedTime() * speed;
     if (eng.isKeyHeld(Key(E))) position -= Vector3(0, 1, 0) * eng.getElapsedTime() * speed;
-
-    // position.y = 0; // player can't fly
     
     */
 

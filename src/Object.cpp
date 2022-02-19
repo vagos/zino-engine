@@ -1,12 +1,8 @@
-#include <glm/ext/matrix_transform.hpp>
-#include <glm/gtx/string_cast.hpp>
-#include <iostream>
-
-
 #include <stdexcept>
 #include <vector>
 #include <cassert>
 #include <algorithm>
+#include <iostream>
 
 #include "Object.hpp"
 #include "Common.hpp"

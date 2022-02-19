@@ -1,7 +1,6 @@
 #include "RigidBody.hpp"
 #include "Common.hpp"
 #include "Engine.hpp"
-#include <glm/gtx/dual_quaternion.hpp>
 
 namespace zge 
 {
@@ -16,8 +15,6 @@ void RigidBody::doCollision(Vector3 &collision_direction, RigidBody &o_rb)
 {
     auto v = velocity - 2.0f * glm::dot(velocity, collision_direction) * collision_direction;
     setVelocity(-v);
-//    collision_direction = V_UP;
-//    setVelocity(-velocity);
 }
 
 void RigidBody::applyGravity()
@@ -187,4 +184,4 @@ std::vector<float> RigidBody::RungeKuta4(const std::vector<float>& state_0, floa
     return state_4;
 }
 
-} // nameespace zge
+} // namespace zge

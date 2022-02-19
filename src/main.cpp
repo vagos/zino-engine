@@ -18,8 +18,6 @@
 #include "Tree.hpp"
 #include "Rock.hpp"
 
-#include <glm/ext/matrix_transform.hpp>
-#include <glm/gtx/string_cast.hpp>
 #include <memory>
 
 // #define DEBUG
@@ -258,6 +256,6 @@ int main()
 
     std::string name{"Graphics Project - Pokemon"};
 
-    if (engine.doConsturct(1280, 720, name))
+    if (engine.doConsturct(1920, 1080, name))
         engine.doStart();
 }

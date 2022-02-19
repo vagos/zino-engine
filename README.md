@@ -1,4 +1,4 @@
-# zino-engine
+# Pokemon Project
 
 ![three monsters](docs/assets/monsters.png)
 
@@ -9,7 +9,7 @@
 * glfw
 * glew
 
-## Installation Instruction 
+## Installation Instruction (Linux)
 
 ```bash
 $ git clone https://github.com/Vagos/zino-engine
