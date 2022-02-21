@@ -1,5 +1,4 @@
 build/*
 docs/build/*
-external/*
 
 .cache/clangd/index
