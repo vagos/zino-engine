@@ -9,11 +9,21 @@
 * glfw
 * glew
 
-## Installation Instruction (Linux)
+## Installation Instruction
+
+### Linux
 
 ```bash
 $ git clone https://github.com/Vagos/zino-engine
 $ cd zino-engine && make
+```
+### Windows
+
+```bash
+$ git clone https://github.com/Vagos/zino-engine
+$ cd zino-engine 
+$ mkdir build
+$ cmake ..
 ```
 
 ## Credits 

@@ -76,8 +76,6 @@ class TestingEngine : public zge::Engine
         addAsset(cat_model             , "Cat Model");
 
         auto basic_shader         = std::make_shared<zge::Shader>("./assets/shaders/basic.vert"         , "./assets/shaders/basic.frag");
-        auto lighting_shader      = std::make_shared<zge::Shader>("./assets/shaders/basic.vert"         , "./assets/shaders/lighting.frag"); // testing ligthing
-
         auto texture_shader       = std::make_shared<zge::Shader>("./assets/shaders/texture.vert"       , "./assets/shaders/texture.frag");
         auto transform_shader     = std::make_shared<zge::Shader>("./assets/shaders/transform.vert"     , "./assets/shaders/transform.frag");
         auto water_texture_shader = std::make_shared<zge::Shader>("./assets/shaders/water_texture.vert" , "./assets/shaders/water_texture.frag");
